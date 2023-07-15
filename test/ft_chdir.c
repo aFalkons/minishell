@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 04:47:52 by afalconi          #+#    #+#             */
-/*   Updated: 2023/07/14 16:35:48 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/07/15 03:10:41 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int main() {
 		return 1;
 	}
 
-	if (chdir("/tmp") == -1) {
+	if (chdir("/Users/afalconi/Desktop/programmi/minishell/test/tmp") == -1) {
 		perror("Errore durante il cambio directory");
 		return 1;
 	}

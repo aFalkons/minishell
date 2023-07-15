@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 04:51:29 by afalconi          #+#    #+#             */
-/*   Updated: 2023/07/14 04:51:31 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/07/15 04:24:58 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 #include <unistd.h>
 
 int main() {
-    char* const argv[] = {"ls", "-l", NULL};
-    char* const envp[] = {NULL};
+	char* const argv[] = {"env", NULL};
+    char* const envp[] = {"MY_OPTION=1", NULL};
 
-    if (execve("/bin/ls", argv, envp) == -1) {
-        perror("Errore durante l'esecuzione di execve");
-        return 1;
-    }
+	if (execve("/usr/bin/env", argv, envp) == -1) {
+		perror("Errore durante l'esecuzione di execve");
+		return 1;
+	}
 
-    return 0;
+	return 0;
 }
