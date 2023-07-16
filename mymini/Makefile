@@ -6,7 +6,7 @@
 #    By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/16 23:09:28 by afalconi          #+#    #+#              #
-#    Updated: 2023/07/17 01:10:53 by afalconi         ###   ########.fr        #
+#    Updated: 2023/07/17 01:33:00 by afalconi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,7 @@ $(NAME): $(OBJS)
 
 clean:
 	@make clean -s -C $(LIBFT)
-	@rm -f obj/*
+	@rm -rf obj
 
 fclean: clean
 	@make fclean -s -C $(LIBFT)
