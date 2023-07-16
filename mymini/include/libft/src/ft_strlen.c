@@ -1,35 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/16 23:09:31 by afalconi          #+#    #+#             */
-/*   Updated: 2023/07/17 00:59:19 by afalconi         ###   ########.fr       */
+/*   Created: 2023/07/16 23:54:34 by afalconi          #+#    #+#             */
+/*   Updated: 2023/07/17 00:36:46 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-int	main(int ac, char **av, char **env)
+size_t	ft_strlen(char *str)
 {
-	ac = 0;
-	av = NULL;
-	env = NULL;
-	int	i;
-	char str[10];
-	str[0] = 'a';
-	str[1] = 'a';
-	str[2] = 'a';
-	str[3] = 'a';
-	str[4] = 'a';
-	str[5] = 'a';
-	str[6] = 'a';
-	str[7] = 'a';
-	str[8] = 'a';
-	str[9] = '\0';
-	i = ft_strlen(str);
-	printf("%d\n", i);
-	return (0);
+	size_t	i;
+
+	i = -1;
+	while (str[++i])
+		;
+	return(i);
 }

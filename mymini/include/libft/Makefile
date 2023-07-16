@@ -5,37 +5,33 @@
 #                                                     +:+ +:+         +:+      #
 #    By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/07/16 23:09:28 by afalconi          #+#    #+#              #
-#    Updated: 2023/07/17 01:10:53 by afalconi         ###   ########.fr        #
+#    Created: 2023/07/16 23:56:29 by afalconi          #+#    #+#              #
+#    Updated: 2023/07/17 00:52:22 by afalconi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
+NAME = libft.a
+SRCS = ft_strlen.c
 
-NAME = minishell
-LIBFT = ./include/libft
-LIB_L = $(LIBFT)/bin/libft.a
-LIBS = $(LIB_L)
-SRCS = minishell.c
 OBJS = $(SRCS:.c=.o)
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -Iinclude
+CFLAGS = -Wall -Wextra -Werror
 
-all: $(NAME)
+all: $(%.c)
+	@$(CC) $(CFLAGS) -c src/$(SRCS)
+	@ar rcs $(NAME) $(OBJS)
+	@mv ./*.o ./obj 
+	@mv ./*.a ./bin
 
-$(NAME): $(OBJS)
-	@make -s -C $(LIBFT)
-	@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(LIBS) -lncurses -lreadline
-	mv ./*.o ./obj
+%.c:%.o
+	@$(CC) $(CFLAGS) -o $<
 
 clean:
-	@make clean -s -C $(LIBFT)
 	@rm -f obj/*
 
 fclean: clean
-	@make fclean -s -C $(LIBFT)
-	@rm -f $(NAME)
+	@rm -f bin/*
 
 re: fclean all
-	@make re -s -C $(LIBFT)
 
 .PHONY: all clean fclean re

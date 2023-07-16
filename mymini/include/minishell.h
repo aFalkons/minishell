@@ -6,7 +6,13 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 23:16:57 by afalconi          #+#    #+#             */
-/*   Updated: 2023/07/16 23:16:58 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/07/17 01:08:34 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#ifndef MINISHELL_H
+# define MINISHELL_H
+
+# include "./libft/src/libft.h"
+
+#endif
