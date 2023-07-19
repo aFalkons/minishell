@@ -1,32 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/16 23:09:31 by afalconi          #+#    #+#             */
-/*   Updated: 2023/07/19 14:11:34 by afalconi         ###   ########.fr       */
+/*   Created: 2023/07/19 08:44:26 by afalconi          #+#    #+#             */
+/*   Updated: 2023/07/19 09:02:50 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-int	main(int ac, char **av, char **env)
+void	*ft_calloc(size_t count, size_t size)
 {
-	t_shell_info		sh_info;
-	//struct s_minitree	mini_tree;
+	void	*ret;
+	size_t		i;
+	char	*cast;
 
-	ck_arg(ac, av);
-	init_val(env, &sh_info);
-	while(1)
-	{
-		sh_info.input = readline("Minishell>");
-		lexical(&sh_info);
-		if (sh_info.error != 1)
-		{
-			//si cntinua a fare robba
-		}
-	}
-	return (0);
+	i = -1;
+	if (count == SIZE_MAX && size == SIZE_MAX)
+		return (0);
+	ret = malloc(count * size);
+	if (!ret)
+		return (0);
+	cast = (char *)ret;
+	while (++i < size * count)
+		cast[i] = 0;
+	return (ret);
 }

@@ -6,27 +6,28 @@
 #    By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/16 23:56:29 by afalconi          #+#    #+#              #
-#    Updated: 2023/07/17 01:35:26 by afalconi         ###   ########.fr        #
+#    Updated: 2023/07/19 09:15:21 by afalconi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libft.a
-SRCS = ft_strlen.c
+SRCS = src/ft_strlen.c src/ft_calloc.c src/ft_exit.c
 
 OBJS = $(SRCS:.c=.o)
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
 
-all: $(%.c)
-	@$(CC) $(CFLAGS) -c src/$(SRCS)
+all: $(NAME)
+
+$(NAME): $(OBJS)
 	@ar rcs $(NAME) $(OBJS)
 	@mkdir -p obj
 	@mkdir -p bin
-	@mv ./*.o ./obj
-	@mv ./*.a ./bin
+	@mv $(OBJS) ./obj
+	@mv $(NAME) ./bin
 
-%.c:%.o
-	@$(CC) $(CFLAGS) -o $<
+%.o: %.c
+	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
 	@rm -rf obj

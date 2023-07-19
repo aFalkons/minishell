@@ -6,7 +6,7 @@
 #    By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/16 23:09:28 by afalconi          #+#    #+#              #
-#    Updated: 2023/07/17 01:33:00 by afalconi         ###   ########.fr        #
+#    Updated: 2023/07/19 13:52:54 by afalconi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ NAME = minishell
 LIBFT = ./include/libft
 LIB_L = $(LIBFT)/bin/libft.a
 LIBS = $(LIB_L)
-SRCS = minishell.c
+SRCS = minishell.c src/ck_input.c src/setup.c src/lx_init.c
 OBJS = $(SRCS:.c=.o)
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror -Iinclude
@@ -23,9 +23,12 @@ CFLAGS = -Wall -Wextra -Werror -Iinclude
 all: $(NAME)
 
 $(NAME): $(OBJS)
+	@mkdir -p obj
+	@mkdir -p bin
 	@make -s -C $(LIBFT)
 	@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(LIBS) -lncurses -lreadline
-	mv ./*.o ./obj
+	@mv $(OBJS) ./obj
+	@mv $(NAME) ./bin
 
 clean:
 	@make clean -s -C $(LIBFT)
@@ -33,7 +36,7 @@ clean:
 
 fclean: clean
 	@make fclean -s -C $(LIBFT)
-	@rm -f $(NAME)
+	@rm -rf bin
 
 re: fclean all
 	@make re -s -C $(LIBFT)
