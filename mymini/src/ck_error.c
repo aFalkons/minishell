@@ -1,34 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   ck_error.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/16 23:09:31 by afalconi          #+#    #+#             */
-/*   Updated: 2023/07/20 14:45:26 by afalconi         ###   ########.fr       */
+/*   Created: 2023/07/20 12:13:45 by afalconi          #+#    #+#             */
+/*   Updated: 2023/07/20 12:20:46 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	main(int ac, char **av, char **env)
+void	re_init_val(t_shell_info *sh_info)
 {
-	t_shell_info		sh_info;
-	//struct s_minitree	mini_tree;
+	sh_info->lx_error = 0;
+}
 
-	ck_arg(ac, av);
-	init_val(env, &sh_info);
-	while(1)
-	{
-		ck_error(&sh_info);
-		sh_info.input = readline("Minishell>");
-		add_history(sh_info.input);
-		lexical(&sh_info);
-		if (sh_info.lx_error != 1)
-		{
-			//si cntinua a fare robba
-		}
-	}
-	return (0);
+void	print_error(t_shell_info *sh_info)
+{
+	if (sh_info->lx_error == 1)
+		printf("error: lexical error\n");
+}
+
+void	ck_error(t_shell_info *sh_info)
+{
+	print_error(sh_info);
+	re_init_val(sh_info);
 }

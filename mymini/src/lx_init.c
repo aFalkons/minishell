@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 13:17:04 by afalconi          #+#    #+#             */
-/*   Updated: 2023/07/19 18:57:27 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/07/20 11:58:55 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	lx_sing_doble_q(t_shell_info *sh_info)
 			doble_q = 0;
 	}
 	if (doble_q == 1 || singol_q == 1)
-		sh_info->error = 1;
+		sh_info->lx_error = 1;
 }
 
 // il cuore el lexical
