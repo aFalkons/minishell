@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 23:16:57 by afalconi          #+#    #+#             */
-/*   Updated: 2023/07/20 13:40:57 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/07/23 12:53:46 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ typedef struct s_shell_info {
 
 typedef struct s_minitree {
 	char				*str;
+	char				token;
 	t_cmd				*cmd;
 	struct s_minitree	*next;
 	struct s_minitree	*subsh;

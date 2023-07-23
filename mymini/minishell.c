@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 23:09:31 by afalconi          #+#    #+#             */
-/*   Updated: 2023/07/20 14:45:26 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/07/23 15:40:37 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ int	main(int ac, char **av, char **env)
 	init_val(env, &sh_info);
 	while(1)
 	{
+		// if ((int)"&&" == AND)
 		ck_error(&sh_info);
 		sh_info.input = readline("Minishell>");
 		add_history(sh_info.input);
