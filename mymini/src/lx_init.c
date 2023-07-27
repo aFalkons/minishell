@@ -6,26 +6,32 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 13:17:04 by afalconi          #+#    #+#             */
-/*   Updated: 2023/07/23 19:15:46 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/07/27 16:57:55 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// vedo se sonoo messe bene le redirection
-void	lx_redirection(t_shell_info *sh_info)
+// vedo se sonoo messe bene le redirection posso essere accetate solo se hanno effetivamentte qualcosa a destra
+static void	lx_redirection(t_shell_info *sh_info, int i)
 {
-	int i;
 	int flag;
 
-	i = -1;
 	flag = 0;
-	while(sh_info->input[++i])
+	if (sh_info->input[i] == '>' || sh_info->input[i] == '<')
 	{
-		if (sh_info->input[i] == '>')
+		if (sh_info->input[i] == '>' && sh_info->input[i + 1] == '>')
+			i ++;
+		if (sh_info->input[i] == '<' && sh_info->input[i + 1] == '<')
+			i ++;
+		while(sh_info->input[++i])
 		{
-
+			if (sh_info->input[i] == '>' || sh_info->input[i] == '<')
+				sh_info->lx_error = 1;
+			if (sh_info->input[i] != ' ' || sh_info->input[i] == '>' || sh_info->input[i] == '<')
+				return ;
 		}
+		sh_info->lx_error = 1;
 	}
 }
 
@@ -36,7 +42,10 @@ static void	lx_dobble_token(t_shell_info *sh_info, int i)
 
 	if (sh_info->input[i] == '|' || sh_info->input[i] == '&')
 	{
-		if ()
+		if (sh_info->input[i + 1] == '|' && sh_info->input[i] == '|')
+			return ;
+		if (sh_info->input[i + 1] == '&' && sh_info->input[i] == '&')
+			return ;
 		if (flag == 1)
 			sh_info->lx_error = 1;
 		flag = 1;
@@ -79,5 +88,7 @@ void	lexical(t_shell_info *sh_info)
 	{
 		lx_sing_doble_q(sh_info, &i);
 		lx_dobble_token(sh_info, i);
+		lx_redirection(sh_info, i);
 	}
+	lx_list_token(sh_info);
 }

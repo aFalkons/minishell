@@ -1,34 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   ft_strndup.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/16 23:09:31 by afalconi          #+#    #+#             */
-/*   Updated: 2023/07/27 19:43:12 by afalconi         ###   ########.fr       */
+/*   Created: 2023/07/27 18:11:11 by afalconi          #+#    #+#             */
+/*   Updated: 2023/07/27 18:18:19 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-int	main(int ac, char **av, char **env)
+char	*ft_strndup(char *str, int start, int finish)
 {
-	t_shell_info		sh_info;
-	//struct s_minitree	mini_tree;
+	int	i;
+	char *ret;
 
-	ck_arg(ac, av);
-	init_val(env, &sh_info);
-	while(1)
+	i = 0;
+	ret = ft_calloc((finish - start) + 1, 1);
+	while(start < finish)
 	{
-		ck_error(&sh_info);
-		sh_info.input = readline("Minishell>");
-		add_history(sh_info.input);
-		lexical(&sh_info);
-		if (sh_info.lx_error != 1)
-		{
-			//si cntinua a fare robba
-		}
+		ret[i] = str[start];
+		i ++ ;
+		start ++;
 	}
-	return (0);
+	ret[i + 1] = 0;
+	return(ret);
 }

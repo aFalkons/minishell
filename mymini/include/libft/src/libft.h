@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 23:56:26 by afalconi          #+#    #+#             */
-/*   Updated: 2023/07/23 19:14:21 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/07/27 18:12:25 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,6 @@
 size_t	ft_strlen(char *str);
 void	ft_exit(char *str, int i);
 void	*ft_calloc(size_t count, size_t size);
+char	*ft_strndup(char *str, int start, int finish);
 
 #endif

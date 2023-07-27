@@ -6,12 +6,12 @@
 #    By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/16 23:56:29 by afalconi          #+#    #+#              #
-#    Updated: 2023/07/19 09:15:21 by afalconi         ###   ########.fr        #
+#    Updated: 2023/07/27 18:21:00 by afalconi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libft.a
-SRCS = src/ft_strlen.c src/ft_calloc.c src/ft_exit.c
+SRCS = src/ft_strlen.c src/ft_calloc.c src/ft_exit.c src/ft_strndup.c
 
 OBJS = $(SRCS:.c=.o)
 CC = gcc
