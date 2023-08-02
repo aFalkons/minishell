@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lx_create_ls.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: misidori <misidori@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 17:16:43 by afalconi          #+#    #+#             */
-/*   Updated: 2023/07/27 17:29:21 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/07/28 15:07:21 by misidori         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static void	lx_create_list(t_shell_info *sh_info)
 	sh_info->lx_ls_token_h = sh_info->lx_ls_token;
 }
 
-void 	lx_crate_or_insert(t_shell_info *sh_info)
+void 	lx_create_or_insert(t_shell_info *sh_info)
 {
 	if (sh_info->lx_ls_token == NULL)
 		lx_create_list(sh_info);

@@ -1,20 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ck_input.c                                         :+:      :+:    :+:   */
+/*   ft_print_message.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: misidori <misidori@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/19 09:06:01 by afalconi          #+#    #+#             */
-/*   Updated: 2023/07/19 09:16:14 by afalconi         ###   ########.fr       */
+/*   Created: 2023/07/28 15:00:23 by misidori          #+#    #+#             */
+/*   Updated: 2023/07/28 15:38:28 by misidori         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../include/libft.h"
 
-void	ck_arg(int ac, char **av)
+void	ft_print_message(char *message, int fd)
 {
-	if (ac != 1)
-		ft_exit("error: troppi argomenti\n", 1);
-	(void)av;
+	if (fd != 2)
+		ft_putstr_fd(message, fd);
+	else
+	{
+		ft_putstr_fd("\033[31m", fd);
+		ft_putstr_fd(message, fd);
+		ft_putstr_fd("\n\e[0m", fd);
+	}
 }

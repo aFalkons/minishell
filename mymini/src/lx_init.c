@@ -3,27 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   lx_init.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: matteo <matteo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 13:17:04 by afalconi          #+#    #+#             */
-/*   Updated: 2023/07/27 16:57:55 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/08/01 13:39:16 by matteo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// vedo se sonoo messe bene le redirection posso essere accetate solo se hanno effetivamentte qualcosa a destra
-static void	lx_redirection(t_shell_info *sh_info, int i)
+// vedo se sono messe bene le redirection possono essere accettate solo se hanno effettivamente qualcosa a destra
+static void	lx_redirections(t_shell_info *sh_info, int i)
 {
-	int flag;
+	// int	flag;
 
-	flag = 0;
+	// flag = 0;
 	if (sh_info->input[i] == '>' || sh_info->input[i] == '<')
 	{
 		if (sh_info->input[i] == '>' && sh_info->input[i + 1] == '>')
-			i ++;
+			i++;
 		if (sh_info->input[i] == '<' && sh_info->input[i + 1] == '<')
-			i ++;
+			i++;
 		while(sh_info->input[++i])
 		{
 			if (sh_info->input[i] == '>' || sh_info->input[i] == '<')
@@ -36,7 +36,7 @@ static void	lx_redirection(t_shell_info *sh_info, int i)
 }
 
 // controllo se ci sono due token uno dopo l'altro per la maggior parte dei token non si puo fare come per | && ||
-static void	lx_dobble_token(t_shell_info *sh_info, int i)
+static void	lx_double_tokens(t_shell_info *sh_info, int i)
 {
 	static int	flag;
 
@@ -57,7 +57,7 @@ static void	lx_dobble_token(t_shell_info *sh_info, int i)
 }
 
 // controllo se si lasciano le virgolette sia singole che doppie aperte
-static void	lx_sing_doble_q(t_shell_info *sh_info, int *i)
+static void	lx_check_quotes(t_shell_info *sh_info, int *i)
 {
 	char	sing_doub_q;
 
@@ -78,17 +78,17 @@ static void	lx_sing_doble_q(t_shell_info *sh_info, int *i)
 	}
 }
 
-// il cuore el lexical
-void	lexical(t_shell_info *sh_info)
+// il cuore del ft_lexical
+void	ft_lexical(t_shell_info *sh_info)
 {
 	int	i;
 
 	i = -1;
 	while(sh_info->input[++i])
 	{
-		lx_sing_doble_q(sh_info, &i);
-		lx_dobble_token(sh_info, i);
-		lx_redirection(sh_info, i);
+		lx_check_quotes(sh_info, &i);
+		lx_double_tokens(sh_info, i);
+		lx_redirections(sh_info, i);
 	}
 	lx_list_token(sh_info);
 }

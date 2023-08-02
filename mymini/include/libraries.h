@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   libft.h                                            :+:      :+:    :+:   */
+/*   libraries.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: matteo <matteo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/16 23:56:26 by afalconi          #+#    #+#             */
-/*   Updated: 2023/07/27 18:12:25 by afalconi         ###   ########.fr       */
+/*   Created: 2023/07/28 15:18:16 by misidori          #+#    #+#             */
+/*   Updated: 2023/08/01 18:37:28 by matteo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIBFT_H
-# define LIBFT_H
+#ifndef LIBRARIES_H
+# define LIBRARIES_H
 
 # include <unistd.h>
 # include <limits.h>
@@ -25,10 +25,8 @@
 # include <sys/ttydefaults.h>
 # include <readline/readline.h>
 # include <readline/history.h>
-
-size_t	ft_strlen(char *str);
-void	ft_exit(char *str, int i);
-void	*ft_calloc(size_t count, size_t size);
-char	*ft_strndup(char *str, int start, int finish);
+# include <errno.h>
+# include <string.h>
+# include <stdbool.h>
 
 #endif

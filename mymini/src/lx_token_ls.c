@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lx_token_ls.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: misidori <misidori@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 16:54:47 by afalconi          #+#    #+#             */
-/*   Updated: 2023/07/27 20:00:58 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/07/28 15:07:21 by misidori         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 // con questa vado a inserire un nodo differenzaiando se e una pipe "|" o un or "||"
 static void	lx_insert_OR_PIPE(t_shell_info *sh_info, int *i)
 {
-	lx_crate_or_insert(sh_info);
+	lx_create_or_insert(sh_info);
 	sh_info->lx_ls_token->next = NULL;
 	if (sh_info->input[*i + 1] == '|')
 	{
@@ -35,7 +35,7 @@ static void	lx_insert_AND(t_shell_info *sh_info, int *i)
 {
 	if (sh_info->input[*i + 1] == '&')
 	{
-		lx_crate_or_insert(sh_info);
+		lx_create_or_insert(sh_info);
 		sh_info->lx_ls_token->token = AND;
 		sh_info->lx_ls_token->str = "&&";
 		sh_info->lx_ls_token->next = NULL;
@@ -51,7 +51,7 @@ static void	lx_insert_OUT_APP(t_shell_info *sh_info, int *i)
 
 	finish = *i + 1;
 	start = *i;
-	lx_crate_or_insert(sh_info);
+	lx_create_or_insert(sh_info);
 	sh_info->lx_ls_token->next = NULL;
 	if (sh_info->input[*i + 1] == '>')
 	{
@@ -75,7 +75,7 @@ static void	lx_insert_INP_HDOC(t_shell_info *sh_info, int *i)
 
 	finish = *i + 1;
 	start = *i;
-	lx_crate_or_insert(sh_info);
+	lx_create_or_insert(sh_info);
 	sh_info->lx_ls_token->next = NULL;
 	if (sh_info->input[*i + 1] == '<')
 	{
@@ -107,7 +107,7 @@ void	lx_list_token(t_shell_info *sh_info)
 			lx_insert_OUT_APP(sh_info, &i);
 		else if (sh_info->input[i] == '<')
 			lx_insert_INP_HDOC(sh_info, &i);
-		else if (sh_info->input[i] != ' ')
-			lx_insert_CMD_ARG(sh_info, &i);
+//		else if (sh_info->input[i] != ' ')
+//			lx_insert_CMD_ARG(sh_info, &i);
 	}
 }

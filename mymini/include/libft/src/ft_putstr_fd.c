@@ -1,20 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_exit.c                                          :+:      :+:    :+:   */
+/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: misidori <misidori@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/19 08:59:09 by afalconi          #+#    #+#             */
-/*   Updated: 2023/07/28 15:38:25 by misidori         ###   ########.fr       */
+/*   Created: 2023/07/28 14:36:54 by misidori          #+#    #+#             */
+/*   Updated: 2023/07/28 15:38:30 by misidori         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/libft.h"
 
-void	ft_exit(char *str, int i)
+void	ft_putstr_fd(char *s, int fd)
 {
-	if (str != NULL)
-		write(i, str, ft_strlen(str));
-	exit(i);
+	int	i;
+
+	i = 0;
+	if (!s)
+		return ;
+	while (s[i])
+	{
+		write(fd, &s[i], 1);
+		i++;
+	}
 }
