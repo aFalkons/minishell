@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: misidori <misidori@student.42.fr>          +#+  +:+       +#+        */
+/*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 23:16:57 by afalconi          #+#    #+#             */
-/*   Updated: 2023/08/02 15:26:08 by misidori         ###   ########.fr       */
+/*   Updated: 2023/08/02 18:46:31 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,9 @@ void	ft_check_lexical_error(t_shell_info *sh_info);
 void	ft_lexical(t_shell_info *sh_info);
 void	lx_list_token(t_shell_info *sh_info);
 void 	lx_create_or_insert(t_shell_info *sh_info);
+void	lx_insert_CMD_ARG(t_shell_info *sh_info, int *i);
+void	lx_check_quotes(t_shell_info *sh_info, int *i);
+
 
 /*	bultins.c	*/
 int		ft_pwd(t_shell_info *sh_info, t_builtins *builtins, int j, int argc);

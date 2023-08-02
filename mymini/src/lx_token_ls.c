@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lx_token_ls.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: misidori <misidori@student.42.fr>          +#+  +:+       +#+        */
+/*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 16:54:47 by afalconi          #+#    #+#             */
-/*   Updated: 2023/07/28 15:07:21 by misidori         ###   ########.fr       */
+/*   Updated: 2023/08/02 19:00:29 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,15 @@
 static void	lx_insert_OR_PIPE(t_shell_info *sh_info, int *i)
 {
 	lx_create_or_insert(sh_info);
-	sh_info->lx_ls_token->next = NULL;
 	if (sh_info->input[*i + 1] == '|')
 	{
 		sh_info->lx_ls_token->token = OR;
 		sh_info->lx_ls_token->str = "||";
-		*i = *i + 1;
+		*i = *i + 2;
 	}
 	else
 	{
+		*i = *i + 1;
 		sh_info->lx_ls_token->token = PIPE;
 		sh_info->lx_ls_token->str = "|";
 	}
@@ -38,8 +38,7 @@ static void	lx_insert_AND(t_shell_info *sh_info, int *i)
 		lx_create_or_insert(sh_info);
 		sh_info->lx_ls_token->token = AND;
 		sh_info->lx_ls_token->str = "&&";
-		sh_info->lx_ls_token->next = NULL;
-		*i = *i + 1;
+		*i = *i + 2;
 	}
 }
 
@@ -49,10 +48,9 @@ static void	lx_insert_OUT_APP(t_shell_info *sh_info, int *i)
 	int	finish;
 	int	start;
 
-	finish = *i + 1;
 	start = *i;
+	finish = 0;
 	lx_create_or_insert(sh_info);
-	sh_info->lx_ls_token->next = NULL;
 	if (sh_info->input[*i + 1] == '>')
 	{
 		*i = *i + 1;
@@ -60,11 +58,17 @@ static void	lx_insert_OUT_APP(t_shell_info *sh_info, int *i)
 	}
 	else
 		sh_info->lx_ls_token->token = OUT;
+	finish = *i + 1;
 	while (sh_info->input[finish] == ' ')
 		finish ++;
 	while (sh_info->input[finish] != ' ')
+	{
+		if (!(sh_info->input[finish]))
+			break ;
 		finish++;
+	}
 	sh_info->lx_ls_token->str = ft_strndup(sh_info->input, start, finish);
+	*i = finish;
 }
 
 // con questa vado a inserire un nodo differenzaiando se e input "<" o heredoc "<<"
@@ -76,7 +80,6 @@ static void	lx_insert_INP_HDOC(t_shell_info *sh_info, int *i)
 	finish = *i + 1;
 	start = *i;
 	lx_create_or_insert(sh_info);
-	sh_info->lx_ls_token->next = NULL;
 	if (sh_info->input[*i + 1] == '<')
 	{
 		*i = *i + 1;
@@ -107,7 +110,13 @@ void	lx_list_token(t_shell_info *sh_info)
 			lx_insert_OUT_APP(sh_info, &i);
 		else if (sh_info->input[i] == '<')
 			lx_insert_INP_HDOC(sh_info, &i);
-//		else if (sh_info->input[i] != ' ')
-//			lx_insert_CMD_ARG(sh_info, &i);
+		else if (sh_info->input[i] != ' ')
+			lx_insert_CMD_ARG(sh_info, &i);
+	}
+	sh_info->lx_ls_token = sh_info->lx_ls_token_h;
+	while(sh_info->lx_ls_token->next != NULL)
+	{
+		printf("%s -- %c\n", sh_info->lx_ls_token->str, sh_info->lx_ls_token->token);
+		sh_info->lx_ls_token = sh_info->lx_ls_token->next;
 	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lx_init.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: matteo <matteo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 13:17:04 by afalconi          #+#    #+#             */
-/*   Updated: 2023/08/01 13:39:16 by matteo           ###   ########.fr       */
+/*   Updated: 2023/08/02 18:43:52 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static void	lx_double_tokens(t_shell_info *sh_info, int i)
 }
 
 // controllo se si lasciano le virgolette sia singole che doppie aperte
-static void	lx_check_quotes(t_shell_info *sh_info, int *i)
+void	lx_check_quotes(t_shell_info *sh_info, int *i)
 {
 	char	sing_doub_q;
 
