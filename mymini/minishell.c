@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 23:09:31 by afalconi          #+#    #+#             */
-/*   Updated: 2023/08/02 17:34:54 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/08/05 06:10:33 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	main(int argc, char **argv, char **env)
 		{
 			//si continua a fare robba
 		}
-		
+		lx_free_ls(&sh_info);
 	}
 	return (0);
 }

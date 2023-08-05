@@ -1,34 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   lx_destroy_ls.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/28 19:56:25 by misidori          #+#    #+#             */
-/*   Updated: 2023/08/05 05:39:03 by afalconi         ###   ########.fr       */
+/*   Created: 2023/08/05 00:42:57 by afalconi          #+#    #+#             */
+/*   Updated: 2023/08/05 06:10:28 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/libft.h"
+#include "minishell.h"
 
-char	*ft_strdup(const char *s1)
+void	lx_free_ls(t_shell_info *sh_info)
 {
-	char	*copy;
-	int		i;
-	int		len;
+	int	i;
+	struct s_lx_list_token *tmp;
 
-	i = 0;
-	len = ft_strlen(s1) + 1;
-	if (!s1)
-		return (0);
-	copy = (char *) malloc(len * sizeof(char));
-	if (!copy)
-		return (0);
-	while (i < len)
+	if (sh_info->lx_ls_token_h == NULL)
+		return ;
+	i = -1;
+	tmp = sh_info->lx_ls_token_h;
+	while (tmp != NULL)
 	{
-		copy[i] = s1[i];
-		i++;
+		sh_info->lx_ls_token_h = sh_info->lx_ls_token_h->next;
+		free(tmp->str);
+		free(tmp);
+		tmp = sh_info->lx_ls_token_h;
 	}
-	return (copy);
+	sh_info->lx_ls_token_h = NULL;
+	sh_info->lx_ls_token = NULL;
 }

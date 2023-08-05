@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 23:16:57 by afalconi          #+#    #+#             */
-/*   Updated: 2023/08/02 18:46:31 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/08/05 05:04:53 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,9 +70,10 @@ void	ft_check_lexical_error(t_shell_info *sh_info);
 /*	lexical	*/
 void	ft_lexical(t_shell_info *sh_info);
 void	lx_list_token(t_shell_info *sh_info);
-void 	lx_create_or_insert(t_shell_info *sh_info);
+void 	lx_create_or_insert(t_shell_info *sh_info, char *str, char token);
 void	lx_insert_CMD_ARG(t_shell_info *sh_info, int *i);
 void	lx_check_quotes(t_shell_info *sh_info, int *i);
+void	lx_free_ls(t_shell_info *sh_info);
 
 
 /*	bultins.c	*/

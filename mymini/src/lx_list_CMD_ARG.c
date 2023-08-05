@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 16:14:19 by afalconi          #+#    #+#             */
-/*   Updated: 2023/08/02 19:00:40 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/08/05 07:01:57 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,15 @@ void	lx_insert_ARG(t_shell_info *sh_info, int *i)
 
 	start = *i;
 	finish = *i;
-	lx_create_or_insert(sh_info);
-	// while(sh_info->input[finish] != PIPE || sh_info->input[finish] != INP || sh_info->input[finish] != OUT || sh_info->input[finish] != '&' || sh_info->input[finish] != 0)
-	while(sh_info->input[finish] != 0)
+	while(sh_info->input[finish])
 	{
 		lx_check_quotes(sh_info, &finish);
 		finish ++;
+		if (sh_info->input[finish] == PIPE || sh_info->input[finish] == INP || sh_info->input[finish] == OUT || sh_info->input[finish] == '&')
+			break ;
 	}
-	sh_info->lx_ls_token->token = ARG;
-	sh_info->lx_ls_token->str = ft_strndup(sh_info->input, start, finish);
-	*i = finish;
+	lx_create_or_insert(sh_info, ft_strndup(sh_info->input, start, finish), ARG);
+	*i = finish - 1;
 }
 
 void	lx_insert_CMD_ARG(t_shell_info *sh_info, int *i)
@@ -39,11 +38,9 @@ void	lx_insert_CMD_ARG(t_shell_info *sh_info, int *i)
 
 	start = *i;
 	finish = *i;
-	lx_create_or_insert(sh_info);
 	while (sh_info->input[finish] && sh_info->input[finish] != ' ')
 		finish ++;
-	sh_info->lx_ls_token->token = CMD;
-	sh_info->lx_ls_token->str = ft_strndup(sh_info->input, start, finish);
+	lx_create_or_insert(sh_info, ft_strndup(sh_info->input, start, finish), CMD);
 	*i = finish;
 	lx_insert_ARG(sh_info, i);
 }
