@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 16:14:19 by afalconi          #+#    #+#             */
-/*   Updated: 2023/08/05 07:01:57 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/08/07 19:27:36 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,5 +42,12 @@ void	lx_insert_CMD_ARG(t_shell_info *sh_info, int *i)
 		finish ++;
 	lx_create_or_insert(sh_info, ft_strndup(sh_info->input, start, finish), CMD);
 	*i = finish;
+	lx_skip_space(sh_info, i);
 	lx_insert_ARG(sh_info, i);
+}
+
+void	lx_skip_space(t_shell_info *sh_info, int *i)
+{
+	while (sh_info->input[*i] == ' ')
+		*i = *i + 1;
 }

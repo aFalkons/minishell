@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 23:16:57 by afalconi          #+#    #+#             */
-/*   Updated: 2023/08/05 05:04:53 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/08/07 19:30:12 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,8 @@ void 	lx_create_or_insert(t_shell_info *sh_info, char *str, char token);
 void	lx_insert_CMD_ARG(t_shell_info *sh_info, int *i);
 void	lx_check_quotes(t_shell_info *sh_info, int *i);
 void	lx_free_ls(t_shell_info *sh_info);
+void	lx_skip_space(t_shell_info *sh_info, int *i);
+void	ck_list(t_shell_info *sh_info);
 
 
 /*	bultins.c	*/

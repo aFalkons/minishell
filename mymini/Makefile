@@ -6,7 +6,7 @@
 #    By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/16 23:09:28 by afalconi          #+#    #+#              #
-#    Updated: 2023/08/05 00:59:29 by afalconi         ###   ########.fr        #
+#    Updated: 2023/08/07 19:31:04 by afalconi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ LIB_L = $(LIBFT)/bin/libft.a
 LIBS = $(LIB_L)
 SRCS =	minishell.c src/check_errors.c src/setup.c src/lx_init.c \
 		src/lx_token_ls.c src/lx_create_insert_list.c src/lx_destroy_ls.c\
-		src/lx_list_CMD_ARG.c src/builtins.c
+		src/lx_list_CMD_ARG.c src/builtins.c src/lx_ck_list_token.c
 OBJS = $(SRCS:.c=.o)
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror -Iinclude

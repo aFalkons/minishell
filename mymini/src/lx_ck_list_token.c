@@ -1,23 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   setup.c                                            :+:      :+:    :+:   */
+/*   lx_ck_list_token.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/19 12:07:42 by afalconi          #+#    #+#             */
-/*   Updated: 2023/08/07 19:14:48 by afalconi         ###   ########.fr       */
+/*   Created: 2023/08/07 19:29:04 by afalconi          #+#    #+#             */
+/*   Updated: 2023/08/07 19:36:39 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-//inizializzazione delle variabili d'ambiente
-void	ft_init_variables(char **env, t_shell_info *sh_info)
+void	ck_list_token(char old_t, char new_t)
 {
-	sh_info->env = env;
-	sh_info->input = NULL;
-	sh_info->pwd = 0;
-	sh_info->lx_ls_token = NULL;
-	sh_info->lx_ls_token_h = NULL;
+
 }

@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 16:54:47 by afalconi          #+#    #+#             */
-/*   Updated: 2023/08/05 06:58:10 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/08/07 19:36:08 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,7 @@ void	lx_list_token(t_shell_info *sh_info)
 	i = -1;
 	while(sh_info->input[++i])
 	{
+		lx_skip_space(sh_info, &i);
 		if (sh_info->input[i] == '&')
 			lx_insert_AND(sh_info, &i);
 		else if (sh_info->input[i] == '|')
@@ -127,4 +128,8 @@ void	lx_list_token(t_shell_info *sh_info)
 			lx_insert_CMD_ARG(sh_info, &i);
 	}
 	print_list(sh_info);
+	while(sh_info->lx_ls_token->next != NULL)
+	{
+		ck_list_token(sh_info->lx_ls_token->token, sh_info->lx_ls_token->next->token)
+	}
 }
