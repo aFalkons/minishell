@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 16:54:47 by afalconi          #+#    #+#             */
-/*   Updated: 2023/08/07 19:36:08 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/08/07 22:43:22 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ static void	lx_insert_OR_PIPE(t_shell_info *sh_info, int *i)
 		lx_create_or_insert(sh_info,  ft_strdup("|"), PIPE);
 		*i = *i + 1;
 	}
+	if (sh_info->input[*i] != ' ')
+		*i = *i - 1;
 }
 
 // qui vado a inserire un nodo se trovo un and "&&"
@@ -34,6 +36,8 @@ static void	lx_insert_AND(t_shell_info *sh_info, int *i)
 	{
 		lx_create_or_insert(sh_info, ft_strdup("&&"), AND);
 		*i = *i + 2;
+		if (sh_info->input[*i] != ' ')
+			*i = *i - 1;
 	}
 }
 
@@ -53,7 +57,6 @@ static void	lx_insert_OUT_APP(t_shell_info *sh_info, int *i)
 	}
 	else
 		token = OUT;
-	finish = *i + 1;
 	while (sh_info->input[finish] == ' ')
 		finish ++;
 	while (sh_info->input[finish] != ' ')
@@ -124,12 +127,14 @@ void	lx_list_token(t_shell_info *sh_info)
 			lx_insert_OUT_APP(sh_info, &i);
 		else if (sh_info->input[i] == '<')
 			lx_insert_INP_HDOC(sh_info, &i);
+		else if (sh_info->input[i] == '(')
+			lx_create_or_insert(sh_info, ft_strdup("("), OP_S);
+		else if (sh_info->input[i] == ')')
+			lx_create_or_insert(sh_info, ft_strdup(")"), CL_S);
 		else if (sh_info->input[i] != ' ')
 			lx_insert_CMD_ARG(sh_info, &i);
 	}
 	print_list(sh_info);
-	while(sh_info->lx_ls_token->next != NULL)
-	{
-		ck_list_token(sh_info->lx_ls_token->token, sh_info->lx_ls_token->next->token)
-	}
+	sh_info->lx_ls_token = sh_info->lx_ls_token_h;
+	ck_list_token(sh_info);
 }

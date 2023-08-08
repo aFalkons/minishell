@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 23:16:57 by afalconi          #+#    #+#             */
-/*   Updated: 2023/08/07 19:30:12 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/08/07 22:41:57 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@
 # define HDOC	0b01000101
 # define OUT	'>'
 # define APP	0b01000110
+# define OP_S	'('
+# define CL_S	')'
 
 typedef struct s_builtins
 {
@@ -75,7 +77,8 @@ void	lx_insert_CMD_ARG(t_shell_info *sh_info, int *i);
 void	lx_check_quotes(t_shell_info *sh_info, int *i);
 void	lx_free_ls(t_shell_info *sh_info);
 void	lx_skip_space(t_shell_info *sh_info, int *i);
-void	ck_list(t_shell_info *sh_info);
+void	ck_list_token(t_shell_info *sh_info);
+
 
 
 /*	bultins.c	*/

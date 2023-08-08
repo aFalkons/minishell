@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 13:17:04 by afalconi          #+#    #+#             */
-/*   Updated: 2023/08/02 18:43:52 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/08/08 05:29:23 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,23 @@ void	lx_check_quotes(t_shell_info *sh_info, int *i)
 	}
 }
 
+static void	lx_check_subsh(t_shell_info *sh_info, int *i)
+{
+	if (sh_info->input[*i] == '(')
+	{
+		*i = *i + 1;
+		while(sh_info->input[*i] != ')')
+		{
+			*i = *i + 1;
+			if (!sh_info->input[*i])
+			{
+				sh_info->lx_error = 1;
+				break;
+			}
+		}
+	}
+}
+
 // il cuore del ft_lexical
 void	ft_lexical(t_shell_info *sh_info)
 {
@@ -87,6 +104,7 @@ void	ft_lexical(t_shell_info *sh_info)
 	while(sh_info->input[++i])
 	{
 		lx_check_quotes(sh_info, &i);
+		lx_check_subsh(sh_info, &i);
 		lx_double_tokens(sh_info, i);
 		lx_redirections(sh_info, i);
 	}
