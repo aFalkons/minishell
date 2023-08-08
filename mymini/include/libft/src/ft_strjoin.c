@@ -3,33 +3,43 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: matteo <matteo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 15:49:07 by matteo            #+#    #+#             */
-/*   Updated: 2023/08/01 13:27:30 by matteo           ###   ########.fr       */
+/*   Updated: 2023/08/08 07:42:30 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/libft.h"
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin(char *s1, char *s2)
 {
 	char	*joined_str;
 	size_t	i;
 	size_t	j;
 
-	if (!s1 || !s2)
-		return (NULL);
+	// if (!s1 || !s2)
+	// 	return (NULL);
 	i = 0;
 	j = 0;
-	joined_str = malloc((ft_strlen(s1) + ft_strlen(s2)) + 1);
+	joined_str = malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
 	if (!joined_str)
-		return (NULL);
-	while (s1[i])
-		joined_str[j++] = s1[i++];
+		return (0);
+	if (s1 != 0)
+	{
+		while (s1[i])
+			joined_str[j++] = s1[i++];
+	}
 	i = 0;
-	while (s2[i])
-		joined_str[j++] = s2[i++];
+	if (s2 != 0)
+	{
+		printf("GG\n");
+		while (s2[i])
+		{
+			joined_str[j++] = s2[i++];
+			printf("%s\n", joined_str);
+		}
+	}
 	joined_str[j] = '\0';
 	return (joined_str);
 }

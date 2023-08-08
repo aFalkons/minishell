@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 19:29:04 by afalconi          #+#    #+#             */
-/*   Updated: 2023/08/08 05:50:43 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/08/08 05:58:29 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,34 +44,24 @@ static int	lx_all_token_ck(char token)
 	if (!old_token)
 	{
 		if (token != CMD && token != OP_S && token && token != INP && token != OUT && token != HDOC)
-		{
-			printf("GG\n");
 			return (-1);
-		}
 		old_token = token;
 		return (0);
 	}
 	else if (token == CMD || token == ARG)
 	{
 		if (old_token == CL_S)
-		{
-			printf("GGG\n");
 			return (-1);
-		}
 		old_token = token;
 		return (0);
 	}
 	else if (token == AND || token == PIPE || token == OR)
 	{
 		if (!(old_token == CMD || old_token == OP_S || old_token == CL_S || old_token == ARG || old_token == INP || old_token == OUT || old_token == APP|| old_token == HDOC))
-		{
-			printf("GGGG\n");
 			return (-1);
-		}
 		old_token = token;
 		return (0);
 	}
-	printf("----%c\n", old_token);
 	return (lx_second_token_ck(token, &old_token));
 }
 

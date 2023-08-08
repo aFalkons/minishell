@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 23:16:57 by afalconi          #+#    #+#             */
-/*   Updated: 2023/08/07 22:41:57 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/08/08 06:14:17 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ typedef struct s_lx_list_token
 typedef struct s_shell_info
 {
 	char			**env;
+	char			*complite;
 	char			*input;
 	char			*pwd;
 	int				lx_error;

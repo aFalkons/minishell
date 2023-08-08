@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: matteo <matteo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 13:21:24 by matteo            #+#    #+#             */
-/*   Updated: 2023/08/01 16:19:45 by matteo           ###   ########.fr       */
+/*   Updated: 2023/08/08 06:33:20 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	**ft_split(char const *s, char c)
 	if (!s)
 		return (0);
 	i = 0;
-	array_strings = malloc ((ft_count_char(s, c) + 2) * sizeof(char *));
+	array_strings = malloc ((ft_count_char_split(s, c) + 2) * sizeof(char *));
 	if (!array_strings)
 		return (0);
 	while (*s)

@@ -1,24 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   setup.c                                            :+:      :+:    :+:   */
+/*   ft_count_char_split.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/19 12:07:42 by afalconi          #+#    #+#             */
-/*   Updated: 2023/08/08 06:44:42 by afalconi         ###   ########.fr       */
+/*   Created: 2023/08/01 16:18:44 by matteo            #+#    #+#             */
+/*   Updated: 2023/08/08 06:51:31 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../include/libft.h"
 
-//inizializzazione delle variabili d'ambiente
-void	ft_init_variables(char **env, t_shell_info *sh_info)
+int	ft_count_char_split(char const *s, char c)
 {
-	sh_info->env = env;
-	sh_info->input = NULL;
-	sh_info->pwd = 0;
-	sh_info->lx_ls_token = NULL;
-	sh_info->lx_ls_token_h = NULL;
-	sh_info->complite = NULL;
+	int	i;
+	int	counter;
+
+	i = 0;
+	counter = 0;
+	if (!s)
+		return (0);
+	if (!c)
+		return (1);
+	while (s[i] == c)
+		i++;
+	while (s[i])
+	{
+		if (s[i] == c && s[i + 1] != c)
+		{
+			counter++;
+			if (s[i + 1] == '\0')
+				counter--;
+		}
+		i++;
+	}
+	return (counter);
 }

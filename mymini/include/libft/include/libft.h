@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: matteo <matteo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 23:56:26 by afalconi          #+#    #+#             */
-/*   Updated: 2023/08/01 17:42:26 by matteo           ###   ########.fr       */
+/*   Updated: 2023/08/08 07:11:05 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,10 @@ void	ft_print_message(char *message, int fd);
 size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 char	*ft_strdup(const char *s1);
-char	*ft_strjoin(char const *s1, char const *s2);
-int		ft_count_char(char const *s, char c);
+char	*ft_strjoin(char *s1, char *s2);
+int		ft_count_char_split(char const *s, char c);
 char	**ft_split(char const *s, char c);
 char	*ft_substr(char const *s, int start, int len);
+int		ft_contchar(char *str, char c);
 
 #endif
