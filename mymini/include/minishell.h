@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 23:16:57 by afalconi          #+#    #+#             */
-/*   Updated: 2023/08/08 06:14:17 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/08/10 10:53:44 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,13 @@ typedef struct s_lx_list_token
 	struct s_lx_list_token	*next;
 }	t_list_token;
 
+typedef struct s_minitree
+{
+	struct s_lx_list_token	*token;
+	struct s_minitree	*next;
+	struct s_minitree	*subsh;
+}	t_minitree;
+
 typedef struct s_shell_info
 {
 	char			**env;
@@ -54,32 +61,28 @@ typedef struct s_shell_info
 	int				lx_error;
 	t_list_token	*lx_ls_token;
 	t_list_token	*lx_ls_token_h;
+	t_minitree		*node;
+	t_minitree		*node_h;
 }	t_shell_info;
-
-typedef struct s_minitree
-{
-	char				*str;
-	char				token;
-	t_cmd				*cmd;
-	struct s_minitree	*next;
-	struct s_minitree	*subsh;
-	struct s_minitree	*back;
-}	t_minitree;
 
 void	ft_check_args(int argc, char **argv);
 void	ft_init_variables(char **env, t_shell_info *sh_info);
 void	ft_check_lexical_error(t_shell_info *sh_info);
+void	ft_init_var_newcmd(t_shell_info *sh_info);
 
 /*	lexical	*/
 void	ft_lexical(t_shell_info *sh_info);
 void	lx_list_token(t_shell_info *sh_info);
 void 	lx_create_or_insert(t_shell_info *sh_info, char *str, char token);
-void	lx_insert_CMD_ARG(t_shell_info *sh_info, int *i);
+void	lx_insert_cmd_arg(t_shell_info *sh_info, int *i);
 void	lx_check_quotes(t_shell_info *sh_info, int *i);
 void	lx_free_ls(t_shell_info *sh_info);
 void	lx_skip_space(t_shell_info *sh_info, int *i);
 void	ck_list_token(t_shell_info *sh_info);
 
+void				ft_parser(t_shell_info *sh_info, struct s_minitree  *tree_node);
+struct s_minitree	*ps_create_or_insert();
+void				print_tree(struct s_minitree *tree_node);
 
 
 /*	bultins.c	*/

@@ -6,36 +6,36 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 13:17:04 by afalconi          #+#    #+#             */
-/*   Updated: 2023/08/08 07:38:46 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/08/10 12:14:49 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// vedo se sono messe bene le redirection possono essere accettate solo se hanno effettivamente qualcosa a destra
+// vedo se sono messe bene le redirection possono essere
+// accettate solo se hanno effettivamente qualcosa a destra
 static void	lx_redirections(t_shell_info *sh_info, int i)
 {
-	// int	flag;
-
-	// flag = 0;
 	if (sh_info->input[i] == '>' || sh_info->input[i] == '<')
 	{
 		if (sh_info->input[i] == '>' && sh_info->input[i + 1] == '>')
 			i++;
 		if (sh_info->input[i] == '<' && sh_info->input[i + 1] == '<')
 			i++;
-		while(sh_info->input[++i])
+		while (sh_info->input[++i])
 		{
 			if (sh_info->input[i] == '>' || sh_info->input[i] == '<')
 				sh_info->lx_error = 1;
-			if (sh_info->input[i] != ' ' || sh_info->input[i] == '>' || sh_info->input[i] == '<')
+			if (sh_info->input[i] != ' ' || sh_info->input[i] == '>'
+				|| sh_info->input[i] == '<')
 				return ;
 		}
 		sh_info->lx_error = 1;
 	}
 }
 
-// controllo se ci sono due token uno dopo l'altro per la maggior parte dei token non si puo fare come per | && ||
+// controllo se ci sono due token uno dopo l'altro per la
+//  maggior parte dei token non si puo fare come per | && ||
 static void	lx_double_tokens(t_shell_info *sh_info, int i)
 {
 	static int	flag;
@@ -56,6 +56,25 @@ static void	lx_double_tokens(t_shell_info *sh_info, int i)
 	}
 }
 
+static int	complete_quotes(t_shell_info *sh_info, char quotes, int i)
+{
+	char	*str;
+	char	*complite;
+
+	str = NULL;
+	complite = NULL;
+	while (ft_contchar(str, quotes) % 2 == 0 || ft_contchar(str, quotes) == 0)
+	{
+		complite = ft_strjoin(complite, "\n");
+		str = readline("quote> ");
+		complite = ft_strjoin(complite, str);
+	}
+	sh_info->input = ft_strjoin(sh_info->input, complite);
+	while (sh_info->input[i] != quotes)
+		i ++;
+	return (i);
+}
+
 // controllo se si lasciano le virgolette sia singole che doppie aperte
 void	lx_check_quotes(t_shell_info *sh_info, int *i)
 {
@@ -66,36 +85,17 @@ void	lx_check_quotes(t_shell_info *sh_info, int *i)
 	{
 		sing_doub_q = sh_info->input[*i];
 		*i = *i + 1;
-		while(sh_info->input[*i] != sing_doub_q)
+		while (sh_info->input[*i] != sing_doub_q)
 		{
-			*i = *i + 1;
 			if (!sh_info->input[*i])
 			{
-				sh_info->lx_error = sing_doub_q;
-				break;
+				*i = complete_quotes(sh_info, sing_doub_q, *i);
+				sing_doub_q = 0;
+				break ;
 			}
+			*i = *i + 1;
 		}
 	}
-}
-
-static void	complete_quotes(t_shell_info *sh_info)
-{
-	char	*str;
-	char	*str2;
-
-	str = NULL;
-	str2 = NULL;
-	while(ft_contchar(str, sh_info->lx_error) % 2 == 0 || ft_contchar(str, sh_info->lx_error) == 0)
-	{
-		str = readline("quote> ");
-		str2 = ft_strdup(str);
-		printf("%s\n", str);
-		sh_info->complite = ft_strjoin(sh_info->complite, str2);
-		printf("%s\n", sh_info->complite);
-	}
-	printf("%s\n", sh_info->input);
-	printf("%s\n", sh_info->complite);
-	sh_info->input = ft_strjoin(sh_info->input, sh_info->complite);
 }
 
 // il cuore del ft_lexical
@@ -104,16 +104,11 @@ void	ft_lexical(t_shell_info *sh_info)
 	int	i;
 
 	i = -1;
-	while(sh_info->input[++i])
+	while (sh_info->input[++i])
 	{
 		lx_check_quotes(sh_info, &i);
 		lx_double_tokens(sh_info, i);
 		lx_redirections(sh_info, i);
 	}
-	if (sh_info->lx_error == 39 || sh_info->lx_error == 34)
-	{
-		complete_quotes(sh_info);
-	}
-	printf("%s\n", sh_info->input);
 	lx_list_token(sh_info);
 }

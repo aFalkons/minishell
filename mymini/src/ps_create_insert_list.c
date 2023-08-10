@@ -1,25 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ps_create_insert_list.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/16 23:54:34 by afalconi          #+#    #+#             */
-/*   Updated: 2023/08/08 08:17:24 by afalconi         ###   ########.fr       */
+/*   Created: 2023/08/10 03:50:51 by afalconi          #+#    #+#             */
+/*   Updated: 2023/08/10 10:03:46 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/libft.h"
+#include "minishell.h"
 
-int	ft_strlen(const char *str)
+struct s_minitree	*ps_create_or_insert()
 {
-	int	i;
+	struct s_minitree *tree_node;
 
-	i = -1;
-	if (!str)
-		return (0);
-	while (str[++i])
-		;
-	return (i);
+	tree_node = NULL;
+	tree_node = ft_calloc(sizeof(struct s_minitree), 1);
+	tree_node->subsh = NULL;
+	tree_node->next = NULL;
+	tree_node->token = NULL;
+	return(tree_node);
 }
