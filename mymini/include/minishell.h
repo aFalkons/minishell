@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 23:16:57 by afalconi          #+#    #+#             */
-/*   Updated: 2023/08/10 10:53:44 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/08/11 08:42:26 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,8 @@ void	ck_list_token(t_shell_info *sh_info);
 
 void				ft_parser(t_shell_info *sh_info, struct s_minitree  *tree_node);
 struct s_minitree	*ps_create_or_insert();
-void				print_tree(struct s_minitree *tree_node);
+void				print_tree(struct s_minitree *tree_node, int i);
+void				ps_recursiv_tree(t_shell_info *sh_info, struct s_minitree *tree_node);
 
 
 /*	bultins.c	*/

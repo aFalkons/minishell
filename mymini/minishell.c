@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 23:09:31 by afalconi          #+#    #+#             */
-/*   Updated: 2023/08/10 13:19:17 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/08/11 08:39:01 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,7 @@ int	main(int argc, char **argv, char **env)
 		sh_info.input = readline("\033[32mminishell> \033[0m");
 		add_history(sh_info.input);
 		ft_lexical(&sh_info);
-		printf("---&---%p\n", sh_info.node);
 		ft_parser(&sh_info, sh_info.node);
-		printf("---&---%p\n", sh_info.node);
-		printf("---&&&---%p\n", sh_info.node->subsh);
-		printf("---&&&---%p\n", sh_info.node->next);
-		print_tree(sh_info.node);
 		// ft_builtins_cmd(&sh_info, &builtins);
 		lx_free_ls(&sh_info);
 	}
