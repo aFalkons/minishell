@@ -1,29 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ps_create_insert_list.c                            :+:      :+:    :+:   */
+/*   ft_matrixdup.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/10 03:50:51 by afalconi          #+#    #+#             */
-/*   Updated: 2023/08/12 11:33:31 by afalconi         ###   ########.fr       */
+/*   Created: 2023/08/12 08:01:08 by afalconi          #+#    #+#             */
+/*   Updated: 2023/08/12 08:06:34 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../include/libft.h"
 
-struct s_minitree	*ps_create_or_insert(t_shell_info *sh_info)
+char	**ft_matrixdup(char **matrix)
 {
-	struct s_minitree *tree_node;
-	int	i;
+	int		i;
+	char	**ret;
 
 	i = -1;
-	tree_node = NULL;
-	tree_node = ft_calloc(sizeof(struct s_minitree), 1);
-	tree_node->subsh = NULL;
-	tree_node->next = NULL;
-	tree_node->token = NULL;
-	tree_node->exit_status = 0;
-	tree_node->env = sh_info->env;
-	return(tree_node);
+	ret = ft_calloc(sizeof(matrix), 1);
+	while (matrix[++i])
+		ret[i] = ft_strdup(matrix[i]);
+	ret[i] = NULL;
+	return(ret);
 }

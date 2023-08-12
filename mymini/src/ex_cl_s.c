@@ -1,33 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lx_destroy_ls.c                                    :+:      :+:    :+:   */
+/*   ex_cl_s.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/05 00:42:57 by afalconi          #+#    #+#             */
-/*   Updated: 2023/08/10 03:18:49 by afalconi         ###   ########.fr       */
+/*   Created: 2023/08/12 07:56:46 by afalconi          #+#    #+#             */
+/*   Updated: 2023/08/12 11:34:36 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	lx_free_ls(t_shell_info *sh_info)
+static void	ex_update_env(t_minitree *node, void *env)
 {
-	int	i;
-	struct s_lx_list_token	*tmp;
+	if (node->next)
+		ex_update_env(node->next, env);
+	node->env = env;
+}
 
-	if (sh_info->lx_ls_token_h == NULL)
-		return ;
-	i = -1;
-	tmp = sh_info->lx_ls_token_h;
-	while (tmp != NULL)
-	{
-		sh_info->lx_ls_token_h = sh_info->lx_ls_token_h->next;
-		free(tmp->str);
-		free(tmp);
-		tmp = sh_info->lx_ls_token_h;
-	}
-	sh_info->lx_ls_token_h = NULL;
-	sh_info->lx_ls_token = NULL;
+void	ex_po_s(t_minitree *node)
+{
+	char	**tmp;
+
+	tmp = ft_matrixdup(node->env);
+	node->env = tmp;
+	ex_update_env(node, tmp);
 }

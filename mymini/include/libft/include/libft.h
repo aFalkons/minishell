@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 23:56:26 by afalconi          #+#    #+#             */
-/*   Updated: 2023/08/08 07:11:05 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/08/12 08:02:36 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,6 @@ int		ft_count_char_split(char const *s, char c);
 char	**ft_split(char const *s, char c);
 char	*ft_substr(char const *s, int start, int len);
 int		ft_contchar(char *str, char c);
+char	**ft_matrixdup(char **matrix);
 
 #endif

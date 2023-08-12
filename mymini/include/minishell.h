@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 23:16:57 by afalconi          #+#    #+#             */
-/*   Updated: 2023/08/11 08:42:26 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/08/12 12:01:44 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,10 @@ typedef struct s_lx_list_token
 typedef struct s_minitree
 {
 	struct s_lx_list_token	*token;
-	struct s_minitree	*next;
-	struct s_minitree	*subsh;
+	int						exit_status;
+	char					**env;
+	struct s_minitree		*next;
+	struct s_minitree		*subsh;
 }	t_minitree;
 
 typedef struct s_shell_info
@@ -80,10 +82,19 @@ void	lx_free_ls(t_shell_info *sh_info);
 void	lx_skip_space(t_shell_info *sh_info, int *i);
 void	ck_list_token(t_shell_info *sh_info);
 
+/*	parser	*/
 void				ft_parser(t_shell_info *sh_info, struct s_minitree  *tree_node);
 struct s_minitree	*ps_create_or_insert();
-void				print_tree(struct s_minitree *tree_node, int i);
 void				ps_recursiv_tree(t_shell_info *sh_info, struct s_minitree *tree_node);
+void				ps_free_tree(t_shell_info *sh_info);
+
+
+/*	executor	*/
+void	ft_executor(t_shell_info *sh_info);
+void 	ex_cmd(struct s_lx_list_token *cmd, struct s_lx_list_token *arg,  struct s_minitree *node);
+void	ex_po_s(t_minitree *node);
+char	*ex_ck_cmd(struct s_lx_list_token *cmd,  struct s_minitree *node);
+
 
 
 /*	bultins.c	*/

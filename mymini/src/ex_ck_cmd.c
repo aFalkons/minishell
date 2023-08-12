@@ -1,29 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ps_create_insert_list.c                            :+:      :+:    :+:   */
+/*   ex_ck_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/10 03:50:51 by afalconi          #+#    #+#             */
-/*   Updated: 2023/08/12 11:33:31 by afalconi         ###   ########.fr       */
+/*   Created: 2023/08/12 11:52:02 by afalconi          #+#    #+#             */
+/*   Updated: 2023/08/12 13:10:15 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-struct s_minitree	*ps_create_or_insert(t_shell_info *sh_info)
+static char	*ex_create_path(char **env)
 {
-	struct s_minitree *tree_node;
 	int	i;
 
 	i = -1;
-	tree_node = NULL;
-	tree_node = ft_calloc(sizeof(struct s_minitree), 1);
-	tree_node->subsh = NULL;
-	tree_node->next = NULL;
-	tree_node->token = NULL;
-	tree_node->exit_status = 0;
-	tree_node->env = sh_info->env;
-	return(tree_node);
+	while(env[++i])
+	{
+		if (env[i][0] == 'P' && env[i][1] == 'A' && env[i][2] == 'T' && env[i][3] == 'H')
+			return(env[i]);
+	}
+	return(NULL);
+}
+
+char	*ex_ck_cmd(struct s_lx_list_token *cmd,  struct s_minitree *node)
+{
+	char	*path;
+	char	**paths;
+
+	path = NULL;
+	path = ex_create_path(node->env)
+	// paths = ft_split(path, '');
 }

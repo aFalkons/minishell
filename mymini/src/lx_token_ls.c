@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 16:54:47 by afalconi          #+#    #+#             */
-/*   Updated: 2023/08/10 20:01:05 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/08/12 06:38:02 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,11 +65,12 @@ static void	lx_insert_out_app(t_shell_info *sh_info, int *i)
 	{
 		if (sh_info->input[fi] == PIPE || sh_info->input[fi] == INP
 			|| sh_info->input[fi] == OUT || sh_info->input[fi] == '&'
-			|| sh_info->input[fi] == 0)
+			|| sh_info->input[fi] == 0 || sh_info->input[fi] == OP_S || sh_info->input[fi] == CL_S)
 			break ;
 		fi++;
 	}
 	lx_create_or_insert(sh_info, ft_strndup(sh_info->input, st, fi), token);
+	fi --;
 	*i = fi;
 }
 
@@ -96,13 +97,28 @@ static void	lx_insert_inp_hdoc(t_shell_info *sh_info, int *i)
 	{
 		if (sh_info->input[fi] == PIPE || sh_info->input[fi] == INP
 			|| sh_info->input[fi] == OUT || sh_info->input[fi] == '&'
-			|| sh_info->input[fi] == 0)
+			|| sh_info->input[fi] == 0 || sh_info->input[fi] == OP_S || sh_info->input[fi] == CL_S)
 			break ;
 		fi++;
 	}
 	lx_create_or_insert(sh_info, ft_strndup(sh_info->input, st, fi), token);
+	fi --;
 	*i = fi;
 }
+
+// static void	print_list(t_shell_info *sh_info)
+// {
+// 	t_list_token	*tmp;
+
+// 	tmp = sh_info->lx_ls_token;
+// 	while (tmp != NULL)
+// 	{
+// 		printf("%s\n", tmp->str);
+// 		printf("%c\n", tmp->token);
+// 		tmp = tmp->next;
+// 	}
+// }
+
 // con questa funzione mi vado a creare una
 //  lista per sapere se il coomando iserito e concettualmente giusto
 
@@ -130,5 +146,6 @@ void	lx_list_token(t_shell_info *sh_info)
 			lx_insert_cmd_arg(sh_info, &i);
 	}
 	sh_info->lx_ls_token = sh_info->lx_ls_token_h;
+	// print_list(sh_info);
 	ck_list_token(sh_info);
 }
