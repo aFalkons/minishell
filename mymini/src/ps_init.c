@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 03:43:42 by afalconi          #+#    #+#             */
-/*   Updated: 2023/08/12 12:43:10 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/08/12 16:15:02 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,6 @@ static void ps_create_node_sub(t_shell_info *sh_info, int flag, struct s_minitre
 		tree_node = tree_node->next;
 	else
 		tree_node = tree_node->subsh;
-	// if (sh_info->lx_ls_token->token == ARG)
-	// 	sh_info->lx_ls_token = sh_info->lx_ls_token->next;
 	tree_node->token = sh_info->lx_ls_token;
 	while (!(sh_info->lx_ls_token->token == AND || sh_info->lx_ls_token->token == OR || sh_info->lx_ls_token->token == PIPE || sh_info->lx_ls_token->token == OP_S || sh_info->lx_ls_token->token == CL_S))
 	{
@@ -51,11 +49,6 @@ void	ps_recursiv_tree(t_shell_info *sh_info, struct s_minitree *tree_node)
 			ps_create_node_sub(sh_info, 0, tree_node);
 			sh_info->lx_ls_token = sh_info->lx_ls_token->next;
 			break ;
-		}
-		if (sh_info->lx_ls_token->token == AND || sh_info->lx_ls_token->token == OR || sh_info->lx_ls_token->token == PIPE)
-		{
-			ps_create_node_sub(sh_info, 0, tree_node);
-			tree_node = tree_node->next;
 		}
 		else if (sh_info->lx_ls_token->token == CL_S)
 		{
@@ -93,26 +86,38 @@ static void	ps_swap_list(struct s_lx_list_token *lx_ls_token, struct s_lx_list_t
 	lx_ls_token->next = tmp;
 }
 
-static void	print_list(t_shell_info *sh_info)
-{
-	t_list_token	*tmp;
+// static void	print_list(t_shell_info *sh_info)
+// {
+// 	t_list_token	*tmp;
 
-	tmp = sh_info->lx_ls_token;
-	while (tmp != NULL)
-	{
-		printf("%s\n", tmp->str);
-		printf("%c\n", tmp->token);
-		tmp = tmp->next;
-	}
-}
+// 	tmp = sh_info->lx_ls_token;
+// 	while (tmp != NULL)
+// 	{
+// 		printf("%s\n", tmp->str);
+// 		printf("%c\n", tmp->token);
+// 		tmp = tmp->next;
+// 	}
+// }
 
-
+// static void	print_tree_test(struct s_minitree *tree_node, struct s_minitree *tree_node_h)
+// {
+// 	if (tree_node->next)
+// 		print_tree_test(tree_node->next, tree_node_h);
+// 	if (tree_node->subsh)
+// 		print_tree_test(tree_node->subsh, tree_node_h);
+// 	if (tree_node != tree_node_h)
+// 	{
+// 		printf("---%s\n", tree_node->token->str);
+// 		// printf("--%p\n", tree_node->env);
+// 	}
+// }
 
 void	ft_parser(t_shell_info *sh_info, struct s_minitree *tree_node)
 {
 	ps_swap_list(sh_info->lx_ls_token, NULL, sh_info);
 	sh_info->lx_ls_token = sh_info->lx_ls_token_h;
-	print_list(sh_info);
+	// print_list(sh_info);
 	ps_recursiv_tree(sh_info, tree_node);
 	sh_info->node = sh_info->node_h;
+	// print_tree_test(sh_info->node, sh_info->node_h);
 }
