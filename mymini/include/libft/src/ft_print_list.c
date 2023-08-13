@@ -1,32 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   libraries.h                                        :+:      :+:    :+:   */
+/*   ft_print_list.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/28 15:18:16 by misidori          #+#    #+#             */
-/*   Updated: 2023/08/13 12:55:03 by afalconi         ###   ########.fr       */
+/*   Created: 2023/08/13 12:37:01 by afalconi          #+#    #+#             */
+/*   Updated: 2023/08/13 13:14:32 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIBRARIES_H
-# define LIBRARIES_H
+#include "../include/libft.h"
 
-# include <unistd.h>
-# include <limits.h>
-# include <stdlib.h>
-# include <stdio.h>
-# include <signal.h>
-# include <fcntl.h>
-# include <sys/ioctl.h>
-# include <sys/wait.h>
-# include <termios.h>
-# include <sys/ttydefaults.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-# include <errno.h>
-# include <string.h>
-# include <stdbool.h>
-
-#endif
+void	print_list(t_lx_list_token *list)
+{
+	while (list != NULL)
+	{
+		printf("%s\n", list->str);
+		printf("%c\n", list->token);
+		list = list->next;
+	}
+}

@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 23:09:31 by afalconi          #+#    #+#             */
-/*   Updated: 2023/08/12 15:06:06 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/08/13 13:23:21 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ int	main(int argc, char **argv, char **env)
 	// t_builtins			builtins;
 	ft_check_args(argc, argv);
 	ft_init_variables(env, &sh_info);
+	add_history("(echo 1 && (echo 2 || echo 3)) && (echo 4 && echo 5) | echo 6");
 	while (1)
 	{
 		ft_init_var_newcmd(&sh_info);

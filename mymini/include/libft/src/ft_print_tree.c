@@ -1,32 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   libraries.h                                        :+:      :+:    :+:   */
+/*   ft_print_tree.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/28 15:18:16 by misidori          #+#    #+#             */
-/*   Updated: 2023/08/13 12:55:03 by afalconi         ###   ########.fr       */
+/*   Created: 2023/08/13 12:49:08 by afalconi          #+#    #+#             */
+/*   Updated: 2023/08/13 13:20:02 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIBRARIES_H
-# define LIBRARIES_H
+#include "../include/libft.h"
 
-# include <unistd.h>
-# include <limits.h>
-# include <stdlib.h>
-# include <stdio.h>
-# include <signal.h>
-# include <fcntl.h>
-# include <sys/ioctl.h>
-# include <sys/wait.h>
-# include <termios.h>
-# include <sys/ttydefaults.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-# include <errno.h>
-# include <string.h>
-# include <stdbool.h>
-
-#endif
+void	print_tree(t_minitree *tree_node, t_minitree *tree_node_h)
+{
+	if (tree_node->next)
+		print_tree(tree_node->next, tree_node_h);
+	if (tree_node->subsh)
+		print_tree(tree_node->subsh, tree_node_h);
+	if (tree_node != tree_node_h)
+		printf("---%s\n", tree_node->token->str);
+}

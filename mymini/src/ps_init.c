@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 03:43:42 by afalconi          #+#    #+#             */
-/*   Updated: 2023/08/12 16:15:02 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/08/13 12:51:29 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,21 +62,6 @@ void	ps_recursiv_tree(t_shell_info *sh_info, struct s_minitree *tree_node)
 	}
 }
 
-// void	print_tree(struct s_minitree *tree_node, int i)
-// {
-// 	while (tree_node != NULL)
-// 	{
-// 		if (tree_node->token != NULL)
-// 		{
-// 			printf("%d",i);
-// 			printf("------%c\n", tree_node->token->token);
-// 		}
-// 		if (tree_node->subsh)
-// 			print_tree(tree_node->subsh, i++);
-// 		tree_node = tree_node->next;
-// 	}
-// }
-
 static void	ps_swap_list(struct s_lx_list_token *lx_ls_token, struct s_lx_list_token *tmp, t_shell_info *sh_info)
 {
 	if (lx_ls_token->next == NULL)
@@ -86,38 +71,10 @@ static void	ps_swap_list(struct s_lx_list_token *lx_ls_token, struct s_lx_list_t
 	lx_ls_token->next = tmp;
 }
 
-// static void	print_list(t_shell_info *sh_info)
-// {
-// 	t_list_token	*tmp;
-
-// 	tmp = sh_info->lx_ls_token;
-// 	while (tmp != NULL)
-// 	{
-// 		printf("%s\n", tmp->str);
-// 		printf("%c\n", tmp->token);
-// 		tmp = tmp->next;
-// 	}
-// }
-
-// static void	print_tree_test(struct s_minitree *tree_node, struct s_minitree *tree_node_h)
-// {
-// 	if (tree_node->next)
-// 		print_tree_test(tree_node->next, tree_node_h);
-// 	if (tree_node->subsh)
-// 		print_tree_test(tree_node->subsh, tree_node_h);
-// 	if (tree_node != tree_node_h)
-// 	{
-// 		printf("---%s\n", tree_node->token->str);
-// 		// printf("--%p\n", tree_node->env);
-// 	}
-// }
-
 void	ft_parser(t_shell_info *sh_info, struct s_minitree *tree_node)
 {
 	ps_swap_list(sh_info->lx_ls_token, NULL, sh_info);
 	sh_info->lx_ls_token = sh_info->lx_ls_token_h;
-	// print_list(sh_info);
 	ps_recursiv_tree(sh_info, tree_node);
 	sh_info->node = sh_info->node_h;
-	// print_tree_test(sh_info->node, sh_info->node_h);
 }

@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 07:43:55 by afalconi          #+#    #+#             */
-/*   Updated: 2023/08/12 14:49:31 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/08/13 17:51:04 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ static int	ex_cont_formated_arg(struct s_lx_list_token *arg)
 
 	i = -1;
 	x = 0;
+	if (arg == NULL)
+		return(2);
 	while(arg->str[++i])
 	{
 		while(arg->str[i] == ' ')
@@ -41,21 +43,28 @@ static int	ex_cont_formated_arg(struct s_lx_list_token *arg)
 			ex_check_quotes(arg->str, &i);
 		x++;
 	}
-	return(x + 1);
+	return(x + 2);
 }
 
-static char	**ex_formated_arg(struct s_lx_list_token *arg)
+static char	**ex_formated(struct s_lx_list_token *arg, char *cmd)
 {
 	int		i;
 	int		j;
 	int		x;
 	char	**ret;
 
-	i = -1;
+	i = 0;
 	j = 0;
 	x = 0;
 	ret = NULL;
 	ret = ft_calloc(ex_cont_formated_arg(arg) * 8 , 1);
+	ret[0] = cmd;
+	if (arg == NULL)
+	{
+		ret[1] = NULL;
+		return (ret);
+	}
+	printf("%s\n", arg->str);
 	while(arg->str[++i])
 	{
 		j = i;
@@ -65,21 +74,25 @@ static char	**ex_formated_arg(struct s_lx_list_token *arg)
 		while(arg->str[++i] != ' ' && arg->str[i])
 			ex_check_quotes(arg->str, &i);
 		ret[x] = ft_strndup(arg->str, j, i);
+		printf("%s\n", ret[x]);
 		x++;
 	}
 	ret[x] = NULL;
+	i = -1;
 	return(ret);
 }
 
 void ex_cmd(struct s_lx_list_token *cmd, struct s_lx_list_token *arg, struct s_minitree *node)
 {
 	char	*path_cmd;
-	char	**arr_arg;
-	(void)cmd;
-	(void)node;
+	char	**arr_cmd_arg;
+	// int i = -1;
 
-	arr_arg = NULL;
+	path_cmd = NULL;
 	path_cmd = ex_ck_cmd(cmd, node);
-	if (arg != NULL)
-		arr_arg = ex_formated_arg(arg);
+	if (path_cmd == NULL && node->exit_status == -1)
+		printf("comando non esiste\ncoglione\n");
+	arr_cmd_arg = ex_formated(arg, cmd->str);
+	// while(arr_cmd_arg[++i])
+	// 	printf("-----%s\n", arr_cmd_arg[i]);
 }

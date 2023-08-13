@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 23:16:57 by afalconi          #+#    #+#             */
-/*   Updated: 2023/08/12 12:01:44 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/08/13 13:16:05 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 # include "./libft/include/libft.h"
 # include "./libraries.h"
+# include "./structures.h"
+
 
 # define AND	0b01000001
 # define OR		0b01000010
@@ -27,45 +29,6 @@
 # define APP	0b01000110
 # define OP_S	'('
 # define CL_S	')'
-
-typedef struct s_builtins
-{
-	char	current_directory[4096];
-}	t_builtins;
-
-typedef struct s_cmd {
-	char			**cmd;
-	char			*path;
-}	t_cmd;
-
-typedef struct s_lx_list_token
-{
-	char					*str;
-	char					token;
-	struct s_lx_list_token	*next;
-}	t_list_token;
-
-typedef struct s_minitree
-{
-	struct s_lx_list_token	*token;
-	int						exit_status;
-	char					**env;
-	struct s_minitree		*next;
-	struct s_minitree		*subsh;
-}	t_minitree;
-
-typedef struct s_shell_info
-{
-	char			**env;
-	char			*complite;
-	char			*input;
-	char			*pwd;
-	int				lx_error;
-	t_list_token	*lx_ls_token;
-	t_list_token	*lx_ls_token_h;
-	t_minitree		*node;
-	t_minitree		*node_h;
-}	t_shell_info;
 
 void	ft_check_args(int argc, char **argv);
 void	ft_init_variables(char **env, t_shell_info *sh_info);
@@ -80,7 +43,7 @@ void	lx_insert_cmd_arg(t_shell_info *sh_info, int *i);
 void	lx_check_quotes(t_shell_info *sh_info, int *i);
 void	lx_free_ls(t_shell_info *sh_info);
 void	lx_skip_space(t_shell_info *sh_info, int *i);
-void	ck_list_token(t_shell_info *sh_info);
+void	lx_ck_list_token(t_shell_info *sh_info);
 
 /*	parser	*/
 void				ft_parser(t_shell_info *sh_info, struct s_minitree  *tree_node);
@@ -92,7 +55,7 @@ void				ps_free_tree(t_shell_info *sh_info);
 /*	executor	*/
 void	ft_executor(t_shell_info *sh_info);
 void 	ex_cmd(struct s_lx_list_token *cmd, struct s_lx_list_token *arg,  struct s_minitree *node);
-void	ex_po_s(t_minitree *node);
+void	ex_cl_s(t_minitree *node);
 char	*ex_ck_cmd(struct s_lx_list_token *cmd,  struct s_minitree *node);
 
 

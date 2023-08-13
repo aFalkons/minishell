@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 19:29:04 by afalconi          #+#    #+#             */
-/*   Updated: 2023/08/12 12:18:44 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/08/13 13:15:58 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ static int	lx_all_token_ck(char token, int flag)
 	return (lx_second_token_ck(token, &old_token));
 }
 
-void	ck_list_token(t_shell_info *sh_info)
+void	lx_ck_list_token(t_shell_info *sh_info)
 {
 	int	i;
 	int	exit;

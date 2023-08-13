@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 16:54:47 by afalconi          #+#    #+#             */
-/*   Updated: 2023/08/12 06:38:02 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/08/13 13:16:21 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,5 +147,5 @@ void	lx_list_token(t_shell_info *sh_info)
 	}
 	sh_info->lx_ls_token = sh_info->lx_ls_token_h;
 	// print_list(sh_info);
-	ck_list_token(sh_info);
+	lx_ck_list_token(sh_info);
 }
