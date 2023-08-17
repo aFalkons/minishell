@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 16:54:47 by afalconi          #+#    #+#             */
-/*   Updated: 2023/08/13 13:16:21 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/08/17 16:05:33 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,19 +106,6 @@ static void	lx_insert_inp_hdoc(t_shell_info *sh_info, int *i)
 	*i = fi;
 }
 
-// static void	print_list(t_shell_info *sh_info)
-// {
-// 	t_list_token	*tmp;
-
-// 	tmp = sh_info->lx_ls_token;
-// 	while (tmp != NULL)
-// 	{
-// 		printf("%s\n", tmp->str);
-// 		printf("%c\n", tmp->token);
-// 		tmp = tmp->next;
-// 	}
-// }
-
 // con questa funzione mi vado a creare una
 //  lista per sapere se il coomando iserito e concettualmente giusto
 
@@ -146,6 +133,5 @@ void	lx_list_token(t_shell_info *sh_info)
 			lx_insert_cmd_arg(sh_info, &i);
 	}
 	sh_info->lx_ls_token = sh_info->lx_ls_token_h;
-	// print_list(sh_info);
 	lx_ck_list_token(sh_info);
 }

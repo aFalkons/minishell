@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 03:50:51 by afalconi          #+#    #+#             */
-/*   Updated: 2023/08/13 15:56:36 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/08/17 16:11:01 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ struct s_minitree	*ps_create_or_insert(t_shell_info *sh_info)
 	tree_node->next = NULL;
 	tree_node->token = NULL;
 	tree_node->exit_status = 0;
-	tree_node->fd_output = STDOUT_FILENO;
+	tree_node->fd_output = sh_info->fd_stdout;
+	tree_node->fd_input = sh_info->fd_stdin;
 	tree_node->env = sh_info->env;
 	return(tree_node);
 }

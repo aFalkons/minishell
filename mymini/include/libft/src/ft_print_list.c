@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 12:37:01 by afalconi          #+#    #+#             */
-/*   Updated: 2023/08/13 13:14:32 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/08/15 16:28:01 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	print_list(t_lx_list_token *list)
 	while (list != NULL)
 	{
 		printf("%s\n", list->str);
-		printf("%c\n", list->token);
+		// printf("%c\n", list->token);
 		list = list->next;
 	}
 }

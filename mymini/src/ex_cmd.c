@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 07:43:55 by afalconi          #+#    #+#             */
-/*   Updated: 2023/08/13 17:51:04 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/08/17 20:06:04 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,9 @@ static char	**ex_formated(struct s_lx_list_token *arg, char *cmd)
 	int		x;
 	char	**ret;
 
-	i = 0;
+	i = -1;
 	j = 0;
-	x = 0;
+	x = 1;
 	ret = NULL;
 	ret = ft_calloc(ex_cont_formated_arg(arg) * 8 , 1);
 	ret[0] = cmd;
@@ -64,7 +64,7 @@ static char	**ex_formated(struct s_lx_list_token *arg, char *cmd)
 		ret[1] = NULL;
 		return (ret);
 	}
-	printf("%s\n", arg->str);
+	// printf("%s\n", arg->str);
 	while(arg->str[++i])
 	{
 		j = i;
@@ -74,7 +74,7 @@ static char	**ex_formated(struct s_lx_list_token *arg, char *cmd)
 		while(arg->str[++i] != ' ' && arg->str[i])
 			ex_check_quotes(arg->str, &i);
 		ret[x] = ft_strndup(arg->str, j, i);
-		printf("%s\n", ret[x]);
+		// printf("%s\n", ret[x]);
 		x++;
 	}
 	ret[x] = NULL;
@@ -86,13 +86,15 @@ void ex_cmd(struct s_lx_list_token *cmd, struct s_lx_list_token *arg, struct s_m
 {
 	char	*path_cmd;
 	char	**arr_cmd_arg;
-	// int i = -1;
 
+	// printf("--%s\n", cmd->str);
+	if (arg != NULL)
+		// printf("--%s\n", arg->str);
 	path_cmd = NULL;
 	path_cmd = ex_ck_cmd(cmd, node);
+	// printf("--%s\n", path_cmd);
 	if (path_cmd == NULL && node->exit_status == -1)
 		printf("comando non esiste\ncoglione\n");
 	arr_cmd_arg = ex_formated(arg, cmd->str);
-	// while(arr_cmd_arg[++i])
-	// 	printf("-----%s\n", arr_cmd_arg[i]);
+	ex_real_esecution(path_cmd, arr_cmd_arg, node);
 }

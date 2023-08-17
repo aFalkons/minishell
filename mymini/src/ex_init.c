@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 06:46:09 by afalconi          #+#    #+#             */
-/*   Updated: 2023/08/13 15:11:22 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/08/17 16:23:51 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,27 +19,34 @@ static void	ex_chose_token(t_minitree *node,t_shell_info *sh_info)
 		ex_cmd(node->token->next, node->token, node);
 	else if (node->token->token == CMD)
 		ex_cmd(node->token, NULL, node);
-	// // else if (node->token->token == AND)
-	// // 	ex_and(node);
-	// // else if (node->token->token == OR)
-	// // 	ex_or(node);
-	// // else if (node->token->token == PIPE)
-	// // 	ex_pipe(node);
-	// // else if (node->token->token == INP)
-	// // 	ex_inp(node);
-	// // else if (node->token->token == OUT)
-	// // 	ex_out(node);
-	// // else if (node->token->token == HDOC)
-	// // 	ex_hdoc(node);
-	// // else if (node->token->token == APP)
-	// // 	ex_app(node);
+	// else if (node->token->token == AND)
+	// 	ex_and(node);
+	// else if (node->token->token == OR)
+	// 	ex_or(node);
+	// else if (node->token->token == PIPE)
+	// 	ex_pipe(node);
 	else if (node->token->token == CL_S)
 		ex_cl_s(node);
 	(void)sh_info;
 }
 
+static void	ex_redirection(t_minitree *node, t_shell_info *sh_info)
+{
+	if (node->token->token == OUT)
+		ex_out(node, sh_info, 0);
+	//else if (node->token->token == INP)
+	// 	ex_inp(node, sh_info);
+	// else if (node->token->token == HDOC)
+	// 	ex_hdoc(node, sh_info);
+	// else if (node->token->token == APP)
+	// 	ex_app(node, sh_info);
+}
+
 static void	ex_all_node(t_minitree *node, t_minitree *node_h, t_shell_info *sh_info)
 {
+	// if (node != node_h)
+	if (2 == 1)
+		ex_redirection(node, sh_info);
 	if (node->next)
 		ex_all_node(node->next, node_h, sh_info);
 	if (node->subsh)
@@ -55,5 +62,5 @@ void	ft_executor(t_shell_info *sh_info)
 {
 	ex_all_node(sh_info->node, sh_info->node_h, sh_info);
 	// printf("GG\n");
-	print_tree(sh_info->node, sh_info->node_h);
+	// print_tree(sh_info->node, sh_info->node_h);
 }

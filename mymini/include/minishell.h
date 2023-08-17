@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 23:16:57 by afalconi          #+#    #+#             */
-/*   Updated: 2023/08/13 13:16:05 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/08/17 16:59:51 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void	ft_check_args(int argc, char **argv);
 void	ft_init_variables(char **env, t_shell_info *sh_info);
 void	ft_check_lexical_error(t_shell_info *sh_info);
 void	ft_init_var_newcmd(t_shell_info *sh_info);
+void	ping(void);
 
 /*	lexical	*/
 void	ft_lexical(t_shell_info *sh_info);
@@ -57,6 +58,8 @@ void	ft_executor(t_shell_info *sh_info);
 void 	ex_cmd(struct s_lx_list_token *cmd, struct s_lx_list_token *arg,  struct s_minitree *node);
 void	ex_cl_s(t_minitree *node);
 char	*ex_ck_cmd(struct s_lx_list_token *cmd,  struct s_minitree *node);
+void	ex_out(t_minitree *node, t_shell_info *sh_info, int flag);
+void	ex_real_esecution(char *path_cmd, char **arr_cmd_arg,  struct s_minitree *node);
 
 
 
