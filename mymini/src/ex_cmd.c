@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 07:43:55 by afalconi          #+#    #+#             */
-/*   Updated: 2023/08/18 16:06:26 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/08/19 15:26:51 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ static char	**ex_formated(struct s_lx_list_token *arg, char *cmd)
 	return(ret);
 }
 
-void ex_cmd(struct s_lx_list_token *cmd, struct s_lx_list_token *arg, struct s_minitree *node)
+void ex_cmd(struct s_lx_list_token *cmd, struct s_lx_list_token *arg, struct s_minitree *node, t_shell_info *sh_info)
 {
 	char	*path_cmd;
 	char	**arr_cmd_arg;
@@ -94,7 +94,7 @@ void ex_cmd(struct s_lx_list_token *cmd, struct s_lx_list_token *arg, struct s_m
 	if (path_cmd == NULL && node->exit_status == -1)
 		return ;
 	arr_cmd_arg = ex_formated(arg, cmd->str);
-	ex_real_esecution(path_cmd, arr_cmd_arg, node);
+	ex_real_esecution(path_cmd, arr_cmd_arg, node, sh_info);
 	while (arr_cmd_arg[++i])
 		free(arr_cmd_arg[i]);
 	free(arr_cmd_arg);

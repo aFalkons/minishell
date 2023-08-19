@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 13:09:57 by afalconi          #+#    #+#             */
-/*   Updated: 2023/08/17 20:38:34 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/08/19 19:48:57 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,13 @@ typedef struct s_lx_list_token
 	struct s_lx_list_token	*next;
 }	t_lx_list_token;
 
+typedef struct s_list_redirection
+{
+	char					*file;
+	char					*fd_input;
+	struct s_lx_list_token	*next;
+}	t_list_redirection;
+
 
 typedef struct s_minitree
 {
@@ -39,17 +46,20 @@ typedef struct s_minitree
 
 typedef struct s_shell_info
 {
-	char			**env;
-	char			*complite;
-	char			*input;
-	char			*pwd;
-	int				fd_stdin;
-	int				fd_stdout;
-	int				lx_error;
-	t_lx_list_token	*lx_ls_token;
-	t_lx_list_token	*lx_ls_token_h;
-	t_minitree		*node;
-	t_minitree		*node_h;
+	int					fd[2];
+	char				**env;
+	char				*complite;
+	char				*input;
+	char				*pwd;
+	int					fd_stdin;
+	int					fd_stdout;
+	int					lx_error;
+	t_list_redirection	*redire;
+	t_list_redirection	*redire_h;
+	t_lx_list_token		*lx_ls_token;
+	t_lx_list_token		*lx_ls_token_h;
+	t_minitree			*node;
+	t_minitree			*node_h;
 }	t_shell_info;
 
 #endif

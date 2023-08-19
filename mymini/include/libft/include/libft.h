@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 23:56:26 by afalconi          #+#    #+#             */
-/*   Updated: 2023/08/13 13:12:47 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/08/19 17:38:48 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,5 +33,6 @@ int		ft_contchar(char *str, char c);
 char	**ft_matrixdup(char **matrix);
 void	print_list(t_lx_list_token *list);
 void	print_tree(t_minitree *tree_node, t_minitree *tree_node_h);
+int		ft_isnumeric(char c);
 
 #endif

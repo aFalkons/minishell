@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 23:16:57 by afalconi          #+#    #+#             */
-/*   Updated: 2023/08/18 16:43:03 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/08/19 16:40:25 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +54,11 @@ void				ps_free_tree(t_shell_info *sh_info);
 
 /*	executor	*/
 void	ft_executor(t_shell_info *sh_info);
-void 	ex_cmd(struct s_lx_list_token *cmd, struct s_lx_list_token *arg,  struct s_minitree *node);
+void 	ex_cmd(struct s_lx_list_token *cmd, struct s_lx_list_token *arg,  struct s_minitree *node,  t_shell_info *sh_info);
 void	ex_cl_s(t_minitree *node);
 char	*ex_ck_cmd(struct s_lx_list_token *cmd,  struct s_minitree *node);
-void	ex_out(t_minitree *node, t_shell_info *sh_info, int flag);
-void	ex_real_esecution(char *path_cmd, char **arr_cmd_arg,  struct s_minitree *node);
+void	ex_out(t_minitree *node, t_shell_info *sh_info);
+void	ex_real_esecution(char *path_cmd, char **arr_cmd_arg,  struct s_minitree *node, t_shell_info *sh_info);
 
 
 

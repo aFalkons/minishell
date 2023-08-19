@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 16:54:47 by afalconi          #+#    #+#             */
-/*   Updated: 2023/08/17 16:05:33 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/08/19 17:54:10 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,11 @@ static void	lx_insert_out_app(t_shell_info *sh_info, int *i)
 
 	fi = *i + 1;
 	st = *i;
+	while(ft_isnumeric(sh_info->input[st - 1]))
+	{
+		// printf("GG\n");
+		st --;
+	}
 	if (sh_info->input[*i + 1] == '>')
 	{
 		*i = *i + 1;
@@ -84,6 +89,8 @@ static void	lx_insert_inp_hdoc(t_shell_info *sh_info, int *i)
 
 	fi = *i + 1;
 	st = *i;
+	while(ft_isnumeric(sh_info->input[st - 1]))
+		st --;
 	if (sh_info->input[*i + 1] == '<')
 	{
 		*i = *i + 1;

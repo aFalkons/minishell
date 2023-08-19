@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 03:16:57 by afalconi          #+#    #+#             */
-/*   Updated: 2023/08/18 16:00:14 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/08/19 15:21:41 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,17 @@ void	ck_tree_error(t_minitree *node)
 {
 	char	*str;
 
+	str = NULL;
 	if (node->next)
 		ck_tree_error(node->next);
+	if (node->subsh)
+		ck_tree_error(node->subsh);
 	if (node->exit_status == -1)
 	{
-		str = ft_strjoin("Error: comand esecution --", node->token->next->str);
+		if (node->token->token == ARG)
+			str = ft_strjoin("Error: comand esecution --", node->token->next->str);
+		else if (node->token->token == CMD)
+			str = ft_strjoin("Error: comand esecution --", node->token->str);
 		ft_print_message(str, 2);
 		free(str);
 	}

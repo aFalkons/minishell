@@ -1,27 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ex_real_cmd.c                                      :+:      :+:    :+:   */
+/*   ft_isnumeric.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/17 16:31:11 by afalconi          #+#    #+#             */
-/*   Updated: 2023/08/19 19:59:33 by afalconi         ###   ########.fr       */
+/*   Created: 2023/08/19 17:36:51 by afalconi          #+#    #+#             */
+/*   Updated: 2023/08/19 17:38:19 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../include/libft.h"
 
-void	ex_real_esecution(char *path_cmd, char **arr_cmd_arg,  struct s_minitree *node, t_shell_info *sh_info)
+int	ft_isnumeric(char c)
 {
-	pid_t	pid;
-
-	(void)sh_info;
-	pid = fork();
-	if (pid == 0)
-	{
-		// dup2(node->fd_output, STDOUT_FILENO);
-		execve(path_cmd, arr_cmd_arg, node->env);
-	}
-	waitpid(-1, 0, 0);
+	if (c - 1 == '0' ||c - 1 == '1' || c - 1 == '2' || c - 1 == '3' || c - 1 == '4' || c - 1 == '5' || c - 1 == '6' || c - 1 == '7' || c - 1 == '8' || c - 1 == '9')
+		return(1);
+	return(0);
 }
