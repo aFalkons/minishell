@@ -6,7 +6,7 @@
 #    By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/16 23:56:29 by afalconi          #+#    #+#              #
-#    Updated: 2023/08/13 13:19:42 by afalconi         ###   ########.fr        #
+#    Updated: 2023/08/18 15:31:19 by afalconi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,7 @@ $(NAME): $(OBJS)
 	@mv $(NAME) ./bin
 
 %.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
+	@$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
 	@rm -rf obj
