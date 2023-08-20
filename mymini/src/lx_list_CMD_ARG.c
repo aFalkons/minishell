@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 16:14:19 by afalconi          #+#    #+#             */
-/*   Updated: 2023/08/19 18:27:22 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/08/20 17:36:02 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ void	lx_insert_cmd_arg(t_shell_info *sh_info, int *i)
 	flag = 0;;
 	while (sh_info->input[finish] && sh_info->input[finish] != ' ' && sh_info->input[finish] != CL_S && sh_info->input[finish] != PIPE && sh_info->input[finish] != INP && sh_info->input[finish] != OUT && sh_info->input[finish] != '&')
 		finish ++;
-	printf("GG\n");
 	*i = finish;
 	if (sh_info->input[finish] == OUT || sh_info->input[finish] == INP)
 	{

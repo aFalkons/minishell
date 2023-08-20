@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 06:46:09 by afalconi          #+#    #+#             */
-/*   Updated: 2023/08/19 18:13:34 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/08/20 17:25:22 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,23 +30,9 @@ static void	ex_chose_token(t_minitree *node,t_shell_info *sh_info)
 	(void)sh_info;
 }
 
-static void	ex_redirection(t_minitree *node, t_shell_info *sh_info)
-{
-	if (node->token->token == OUT)
-		ex_out(node, sh_info);
-	//else if (node->token->token == INP)
-	// 	ex_inp(node, sh_info);
-	// else if (node->token->token == HDOC)
-	// 	ex_hdoc(node, sh_info);
-	// else if (node->token->token == APP)
-	// 	ex_app(node, sh_info);
-}
-
 static void	ex_all_node(t_minitree *node, t_minitree *node_h, t_shell_info *sh_info)
 {
 	// if (2 == 1)
-	if (node != node_h)
-		ex_redirection(node, sh_info);
 	if (node->next)
 		ex_all_node(node->next, node_h, sh_info);
 	if (node->subsh)

@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 19:29:04 by afalconi          #+#    #+#             */
-/*   Updated: 2023/08/17 15:16:54 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/08/20 19:47:46 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,6 @@ static int	lx_second_token_ck(char token, char *old_token)
 {
 	if (token == INP || token == HDOC || token == OUT || token == APP)
 	{
-		if (*old_token == INP || *old_token == HDOC
-			|| *old_token == OUT || *old_token == APP)
-		{
-			*old_token = token;
-			return (-1);
-		}
 		*old_token = token;
 		return (0);
 	}
