@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 12:07:42 by afalconi          #+#    #+#             */
-/*   Updated: 2023/08/13 14:34:43 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/08/21 12:17:06 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,13 @@ void	ft_init_variables(char **env, t_shell_info *sh_info)
 	sh_info->node = NULL;
 	sh_info->node_h = NULL;
 	sh_info->node = ft_calloc(sizeof(struct s_minitree), 1);
+	sh_info->node->env = NULL;
+	sh_info->node->exit_status = 0;
+	sh_info->node->token = NULL;
+	sh_info->node->subsh = NULL;
+	sh_info->node->next = NULL;
+	sh_info->node->fd_input = 0;
+	sh_info->node->fd_output = 0;
 	sh_info->node_h = sh_info->node;
 	sh_info->fd_stdin = dup(STDIN_FILENO);
 	sh_info->fd_stdout = dup(STDOUT_FILENO);

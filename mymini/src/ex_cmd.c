@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 07:43:55 by afalconi          #+#    #+#             */
-/*   Updated: 2023/08/19 15:26:51 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/08/21 12:56:46 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ void ex_cmd(struct s_lx_list_token *cmd, struct s_lx_list_token *arg, struct s_m
 	i = -1;
 	path_cmd = NULL;
 	path_cmd = ex_ck_cmd(cmd, node);
+	printf("GGG\n");
 	if (path_cmd == NULL && node->exit_status == -1)
 		return ;
 	arr_cmd_arg = ex_formated(arg, cmd->str);

@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/20 16:34:42 by afalconi          #+#    #+#             */
-/*   Updated: 2023/08/20 18:30:13 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/08/21 04:34:50 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,25 +15,26 @@
 static void	ps_setup_out_app(t_minitree *node)
 {
 	t_minitree *tmp;
+	int		*fd_tmp;
 	struct s_lx_list_token *redirection;
 
-	printf("%s\n", node->token->str);
 	tmp = NULL;
+	node->fd_file = ft_calloc(sizeof(int *), 1);
+	fd_tmp = node->fd_file;
 	redirection = node->token;
 	while(node)
 	{
-		if (node->next)
+		if (node->next == NULL || node->next->token->token == AND || node->next->token->token == OR || node->next->token->token == OP_S)
 		{
-			if (node->next->token->token == AND || node->next->token->token == OR || node->next->token->token == OP_S)
-			{
-				tmp = node->next;
-				node->next = NULL;
-				node->next = ps_create_or_insert();
-				node = node->next;
-				node->next = tmp;
-				node->token = redirection;
-				node->open_redirection = 1;
-			}
+			tmp = node->next;
+			node->next = NULL;
+			node->next = ps_create_or_insert();
+			node = node->next;
+			node->fd_file = fd_tmp;
+			node->next = tmp;
+			node->token = redirection;
+			node->open_redirection = 1;
+			break;
 		}
 		node = node->next;
 	}

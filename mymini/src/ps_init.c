@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 03:43:42 by afalconi          #+#    #+#             */
-/*   Updated: 2023/08/20 18:28:55 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/08/21 04:20:01 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ struct s_minitree	*ps_create_or_insert(void)
 	tree_node->exit_status = 0;
 	tree_node->fd_output = STDOUT_FILENO;
 	tree_node->fd_input = STDIN_FILENO;
+	tree_node->fd_file = NULL;
 	tree_node->open_redirection = 0;
 	return(tree_node);
 }
@@ -92,8 +93,8 @@ void	ft_parser(t_shell_info *sh_info, struct s_minitree *tree_node)
 	sh_info->lx_ls_token = sh_info->lx_ls_token_h;
 	ps_recursiv_tree(sh_info, tree_node);
 	sh_info->node = sh_info->node_h;
-	print_tree(sh_info->node, sh_info->node_h, 1);
+	print_tree(tree_node, tree_node, 1);
+	printf("GG\nGG\nGG\nGG\nGG\nGG\nGG\n");
 	ps_redirection_setup(sh_info->node, sh_info->node);
-	print_tree(sh_info->node, sh_info->node_h, 1);
-	printf("GGGGGGGGGG\n");
+	print_tree(tree_node, tree_node, 1);
 }

@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 06:46:09 by afalconi          #+#    #+#             */
-/*   Updated: 2023/08/20 17:25:22 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/08/21 12:54:14 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,28 @@
 
 static void	ex_chose_token(t_minitree *node,t_shell_info *sh_info)
 {
-	// printf("--%s\n", node->token->str);
+	printf("--%s\n", node->token->str);
 	if (node->token->token == ARG)
 		ex_cmd(node->token->next, node->token, node, sh_info);
 	else if (node->token->token == CMD)
 		ex_cmd(node->token, NULL, node, sh_info);
+	if (node->token->token == OUT)
+		ex_out(node, sh_info);
+	// else if (node->token->token == APP)
+	//	ex_out(node->token, NULL, node, sh_info);
 	// else if (node->token->token == AND)
 	// 	ex_and(node);
 	// else if (node->token->token == OR)
 	// 	ex_or(node);
 	// else if (node->token->token == PIPE)
 	// 	ex_pipe(node);
-	else if (node->token->token == CL_S)
-		ex_cl_s(node);
+	// else if (node->token->token == CL_S)
+	// 	ex_cl_s(node);
 	(void)sh_info;
 }
 
 static void	ex_all_node(t_minitree *node, t_minitree *node_h, t_shell_info *sh_info)
 {
-	// if (2 == 1)
 	if (node->next)
 		ex_all_node(node->next, node_h, sh_info);
 	if (node->subsh)

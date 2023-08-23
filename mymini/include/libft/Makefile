@@ -6,7 +6,7 @@
 #    By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/16 23:56:29 by afalconi          #+#    #+#              #
-#    Updated: 2023/08/19 17:38:37 by afalconi         ###   ########.fr        #
+#    Updated: 2023/08/21 04:43:33 by afalconi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ SRCS	=	src/ft_strlen.c src/ft_calloc.c src/ft_exit.c src/ft_strndup.c \
 			src/ft_strncmp.c src/ft_strdup.c src/ft_strjoin.c \
 			src/ft_count_char_split.c src/ft_split.c src/ft_substr.c \
 			src/ft_contchar.c src/ft_matrixdup.c src/ft_print_list.c \
-			src/ft_print_tree.c src/ft_isnumeric.c
+			src/ft_print_tree.c src/ft_isnumeric.c src/ft_atoi.c
 
 OBJS	=	$(SRCS:.c=.o)
 CC		=	gcc

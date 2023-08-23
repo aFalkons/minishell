@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 11:52:02 by afalconi          #+#    #+#             */
-/*   Updated: 2023/08/13 15:08:30 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/08/21 13:04:49 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ static char	*ex_create_path(char **env)
 	int	i;
 
 	i = -1;
+	printf("--%p\n", env[0][0]);
+	printf("GGGG\n");
 	while(env[++i])
 	{
 		if (env[i][0] == 'P' && env[i][1] == 'A' && env[i][2] == 'T' && env[i][3] == 'H')
