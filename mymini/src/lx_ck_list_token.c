@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 19:29:04 by afalconi          #+#    #+#             */
-/*   Updated: 2023/08/20 19:47:46 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/08/23 18:15:09 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static int	lx_second_token_ck(char token, char *old_token)
 	}
 	else if (token == OP_S)
 	{
-		if (*old_token == AND || *old_token == OR || *old_token == PIPE)
+		if (*old_token == AND || *old_token == OR || *old_token == PIPE || *old_token == INP || *old_token == OUT || *old_token == HDOC || *old_token == APP)
 		{
 			*old_token = token;
 			return (0);
@@ -100,7 +100,10 @@ void	lx_ck_list_token(t_shell_info *sh_info)
 	while (sh_info->lx_ls_token)
 	{
 		if (lx_all_token_ck(sh_info->lx_ls_token->token, 0) == -1 && exit != -1)
+		{
+			printf("----------------------------------%s\n", sh_info->lx_ls_token->str);
 			exit = -1;
+		}
 		tmp = sh_info->lx_ls_token;
 		sh_info->lx_ls_token = sh_info->lx_ls_token->next;
 	}

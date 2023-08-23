@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 06:46:09 by afalconi          #+#    #+#             */
-/*   Updated: 2023/08/21 12:54:14 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/08/23 17:23:13 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 static void	ex_chose_token(t_minitree *node,t_shell_info *sh_info)
 {
-	printf("--%s\n", node->token->str);
 	if (node->token->token == ARG)
 		ex_cmd(node->token->next, node->token, node, sh_info);
 	else if (node->token->token == CMD)

@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 23:16:57 by afalconi          #+#    #+#             */
-/*   Updated: 2023/08/20 18:29:32 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/08/23 16:49:56 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ void	lx_ck_list_token(t_shell_info *sh_info);
 void				ft_parser(t_shell_info *sh_info, struct s_minitree  *tree_node);
 void				ps_recursiv_tree(t_shell_info *sh_info, struct s_minitree *tree_node);
 void				ps_free_tree(t_shell_info *sh_info);
-struct s_minitree	*ps_create_or_insert(void);
-void				ps_redirection_setup(t_minitree *node, t_minitree *node_h);
+struct s_minitree	*ps_create_or_insert(t_shell_info *sh_info);
+void				ps_redirection_setup(t_minitree *node, t_minitree *node_h, t_shell_info *sh_info);
 
 
 /*	executor	*/

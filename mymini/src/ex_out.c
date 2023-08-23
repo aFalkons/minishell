@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 15:24:52 by afalconi          #+#    #+#             */
-/*   Updated: 2023/08/21 12:55:20 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/08/23 18:03:04 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,27 +47,31 @@ void 	ex_out(t_minitree *node, t_shell_info *sh_info)
 {
 	char	*file;
 	char	*fd_input;
+	static	int	fd_x;
 
 	file = ex_out_parser(node->token->str);
 	fd_input = ex_out_parser_fd(node->token->str);
 	if (node->open_redirection == 1)
 	{
-		*node->fd_file = open(file, O_CREAT | O_RDONLY, 0644);
-		printf("--%d\n", *node->fd_file);
+		*node->fd_file = open(file, O_CREAT | O_RDWR, 0644);
 		if (fd_input == NULL)
 		{
-			dup2(STDOUT_FILENO, *node->fd_file);
+			dup2(*node->fd_file, STDOUT_FILENO);
 		}
 		else
-			dup2(ft_atoi(fd_input), *node->fd_file);
+		{
+			fd_x = dup(ft_atoi(fd_input));
+			dup2(*node->fd_file, ft_atoi(fd_input));
+		}
+		close(*node->fd_file);
 	}
 	else
 	{
 		if (fd_input == NULL)
-			dup2(*node->fd_file, STDOUT_FILENO);
+			dup2(sh_info->fd_stdout, STDOUT_FILENO);
 		else
-			dup2(*node->fd_file, ft_atoi(fd_input));
-		printf("---%d\n", *node->fd_file);
+			dup2(fd_x, ft_atoi(fd_input));
+		fd_x = 0;
 		close(*node->fd_file);
 	}
 	free(file);
