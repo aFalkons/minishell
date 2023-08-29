@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 19:29:04 by afalconi          #+#    #+#             */
-/*   Updated: 2023/08/23 18:15:09 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/08/29 03:42:52 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,10 @@ static int	lx_all_token_ck(char token, int flag)
 	if (!old_token)
 	{
 		old_token = token;
-		if (token != CMD && token != OP_S && token
-			&& token != INP && token != OUT && token != HDOC && token != APP)
+		if (token != CMD && token != OP_S && token && token != INP && token != OUT && token != HDOC && token != APP)
+		{
 			return (-1);
+		}
 		return (0);
 	}
 	else if (token == CMD || token == ARG)
@@ -91,19 +92,16 @@ static int lx_ck_last_token(char token)
 
 void	lx_ck_list_token(t_shell_info *sh_info)
 {
-	int	i;
-	int	exit;
-	t_lx_list_token *tmp;
+	int				i;
+	int8_t			exit;
+	t_lx_list_token	*tmp;
 
 	i = -1;
 	exit = 0;
 	while (sh_info->lx_ls_token)
 	{
 		if (lx_all_token_ck(sh_info->lx_ls_token->token, 0) == -1 && exit != -1)
-		{
-			printf("----------------------------------%s\n", sh_info->lx_ls_token->str);
 			exit = -1;
-		}
 		tmp = sh_info->lx_ls_token;
 		sh_info->lx_ls_token = sh_info->lx_ls_token->next;
 	}

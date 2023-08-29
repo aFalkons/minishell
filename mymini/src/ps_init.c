@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 03:43:42 by afalconi          #+#    #+#             */
-/*   Updated: 2023/08/23 17:15:56 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/08/29 06:00:50 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,8 @@
 
 struct s_minitree	*ps_create_or_insert(t_shell_info *sh_info)
 {
-	struct s_minitree *tree_node;
-	int	i;
+	struct s_minitree	*tree_node;
 
-	i = -1;
 	tree_node = NULL;
 	tree_node = ft_calloc(sizeof(struct s_minitree), 1);
 	tree_node->subsh = NULL;
@@ -27,12 +25,13 @@ struct s_minitree	*ps_create_or_insert(t_shell_info *sh_info)
 	tree_node->fd_output = STDOUT_FILENO;
 	tree_node->fd_input = STDIN_FILENO;
 	tree_node->fd_file = NULL;
-	tree_node->open_redirection = 0;
+	tree_node->redire = NULL;
+	tree_node->close_redire = NULL;
 	tree_node->env = sh_info->env;
 	return(tree_node);
 }
 
-static void ps_create_node_sub(t_shell_info *sh_info, int flag, struct s_minitree *tree_node)
+static void ps_create_node_sub(t_shell_info *sh_info, int8_t flag, struct s_minitree *tree_node)
 {
 	if (flag == 0)
 	{
@@ -93,9 +92,9 @@ void	ft_parser(t_shell_info *sh_info, struct s_minitree *tree_node)
 	ps_swap_list(sh_info->lx_ls_token, NULL, sh_info);
 	sh_info->lx_ls_token = sh_info->lx_ls_token_h;
 	ps_recursiv_tree(sh_info, tree_node);
+	//print_tree(tree_node, tree_node, 1);
+	ps_redirection_setup(sh_info->node, sh_info->node_h, sh_info);
+	//printf("tu\nma\ndre\n");
+	print_tree(tree_node, tree_node, 1);
 	sh_info->node = sh_info->node_h;
-	print_tree(tree_node, tree_node, 1);
-	printf("--\n--\n--\n--\n--\n");
-	ps_redirection_setup(sh_info->node, sh_info->node, sh_info);
-	print_tree(tree_node, tree_node, 1);
 }

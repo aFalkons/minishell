@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 23:09:31 by afalconi          #+#    #+#             */
-/*   Updated: 2023/08/21 04:35:29 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/08/29 06:14:15 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	main(int argc, char **argv, char **env)
 		ft_lexical(&sh_info);
 		// print_list(sh_info.lx_ls_token_h);
 		ft_parser(&sh_info, sh_info.node);
-		// print_tree(sh_info.node, sh_info.node_h);
+		//print_tree(sh_info.node, sh_info.node_h, 1);
 		ft_executor(&sh_info);
 		// read(sh_info.fd[0], (void *)buf, 3);
 		// write(1, buf, 1);

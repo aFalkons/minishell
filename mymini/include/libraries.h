@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/28 15:18:16 by misidori          #+#    #+#             */
-/*   Updated: 2023/08/13 12:55:03 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/08/29 03:39:30 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,5 +28,6 @@
 # include <errno.h>
 # include <string.h>
 # include <stdbool.h>
+# include <stdint.h>
 
 #endif

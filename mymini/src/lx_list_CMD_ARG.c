@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 16:14:19 by afalconi          #+#    #+#             */
-/*   Updated: 2023/08/20 17:36:02 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/08/29 02:16:15 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,6 @@ void	lx_insert_cmd_arg(t_shell_info *sh_info, int *i)
 
 void	lx_skip_space(t_shell_info *sh_info, int *i)
 {
-	while (sh_info->input[*i] == ' ')
+	while (sh_info->input[*i] == ' ' && sh_info->input[*i])
 		*i = *i + 1;
 }

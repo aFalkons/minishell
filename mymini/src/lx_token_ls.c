@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 16:54:47 by afalconi          #+#    #+#             */
-/*   Updated: 2023/08/19 17:54:10 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/08/29 02:02:48 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,7 @@ void	lx_list_token(t_shell_info *sh_info)
 			lx_create_or_insert(sh_info, ft_strdup("("), OP_S);
 		else if (sh_info->input[i] == ')')
 			lx_create_or_insert(sh_info, ft_strdup(")"), CL_S);
-		else if (sh_info->input[i] != ' ')
+		else if (sh_info->input[i] != ' ' && sh_info->input[i] != '\0')
 			lx_insert_cmd_arg(sh_info, &i);
 	}
 	sh_info->lx_ls_token = sh_info->lx_ls_token_h;
