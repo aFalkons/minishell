@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/20 16:34:42 by afalconi          #+#    #+#             */
-/*   Updated: 2023/08/29 02:25:56 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/08/30 20:57:27 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,10 @@ static int ps_file_befor_token(char *str)
 	int		ret;
 
 	finish = 0;
-	if (str[finish] == OUT || str[finish] == INP)
+	if (str[finish] == OUT)
 		return(1);
+	if (str[finish] == INP)
+		return(0);
 	while (str[finish] != OUT && str[finish] != INP)
 		finish ++;
 	tmp = ft_strndup(str, 0, finish);
@@ -69,10 +71,12 @@ t_list_redirection *insert_redire_list(t_minitree *node)
 static void	ps_setup_redire(t_minitree *node)
 {
 	t_list_redirection *redire_list;
+	t_list_redirection *redire_list_h;
 	t_minitree *last;
 	t_minitree *first;
 
 	redire_list = NULL;
+	redire_list_h = NULL;
 	first = node;
 	last = NULL;
 	while(node)
@@ -83,20 +87,26 @@ static void	ps_setup_redire(t_minitree *node)
 			break ;
 		if (node->token->token == AND || node->token->token == OR)
 		{
-			node->redire = redire_list;
-			first->close_redire = redire_list;
+			node->redire = redire_list_h;
+			first->close_redire = redire_list_h;
 			return ;
 		}
 		if (node->token->token == OUT || node->token->token == INP || node->token->token == HDOC || node->token->token == APP)
 		{
 			if (redire_list == NULL)
+			{
 				redire_list = insert_redire_list(node);
+				redire_list_h = redire_list;
+			}
 			else
+			{
 				redire_list->next = insert_redire_list(node);
+				redire_list = redire_list->next;
+			}
 		}
 	}
-	first->close_redire = redire_list;
-	last->redire = redire_list;
+	first->close_redire = redire_list_h;
+	last->redire = redire_list_h;
 }
 
 void	ps_redirection_setup(t_minitree *node, t_minitree *node_h, t_shell_info *sh_info)

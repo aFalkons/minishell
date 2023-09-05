@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 12:49:08 by afalconi          #+#    #+#             */
-/*   Updated: 2023/08/29 00:49:44 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/08/30 19:42:35 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	print_tree(t_minitree *tree_node, t_minitree *tree_node_h, int i)
 {
 	t_list_redirection *tmp;
 
-	tmp = NULL;
+	tmp = 0;
 	if (tree_node->next)
 		print_tree(tree_node->next, tree_node_h, i);
 	if (tree_node->subsh)

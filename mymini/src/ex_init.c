@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 06:46:09 by afalconi          #+#    #+#             */
-/*   Updated: 2023/08/29 03:11:37 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/08/30 20:37:20 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ static void	ex_chose_token(t_minitree *node,t_shell_info *sh_info, t_minitree *n
 {
 	if (node == node_h)
 		(void)sh_info;
-		//ex_ck_redirection(node);
 	else if (node->token->token == ARG)
 		ex_cmd(node->token->next, node->token, node, sh_info);
 	else if (node->token->token == CMD)
@@ -33,13 +32,12 @@ static void	ex_chose_token(t_minitree *node,t_shell_info *sh_info, t_minitree *n
 
 static void	ex_all_node(t_minitree *node, t_minitree *node_h, t_shell_info *sh_info)
 {
+	if (node == NULL)
+		return ;
 	if (node->next)
 		ex_all_node(node->next, node_h, sh_info);
 	if (node->subsh)
 		ex_all_node(node->subsh, node_h, sh_info);
-	if (node == NULL)
-		return ;
-	// if (node->next == NULL && node->subsh == NULL)
 	if (node->close_redire || node->redire)
 		ex_ck_redirection(node);
 	ex_chose_token(node, sh_info, node_h);
@@ -48,6 +46,4 @@ static void	ex_all_node(t_minitree *node, t_minitree *node_h, t_shell_info *sh_i
 void	ft_executor(t_shell_info *sh_info)
 {
 	ex_all_node(sh_info->node, sh_info->node_h, sh_info);
-	// printf("GG\n");
-	// print_tree(sh_info->node, sh_info->node_h);
 }

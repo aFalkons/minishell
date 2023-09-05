@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 16:54:47 by afalconi          #+#    #+#             */
-/*   Updated: 2023/08/29 02:02:48 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/09/03 16:38:55 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static void	lx_insert_and(t_shell_info *sh_info, int *i)
 
 // con questa vado a inserire un nodo
 // differenzaiando se e output ">" o append ">>"
-static void	lx_insert_out_app(t_shell_info *sh_info, int *i)
+void	lx_insert_out_app(t_shell_info *sh_info, int *i)
 {
 	int		fi;
 	int		st;
@@ -53,17 +53,16 @@ static void	lx_insert_out_app(t_shell_info *sh_info, int *i)
 	fi = *i + 1;
 	st = *i;
 	while(ft_isnumeric(sh_info->input[st - 1]))
-	{
-		// printf("GG\n");
 		st --;
-	}
 	if (sh_info->input[*i + 1] == '>')
 	{
 		*i = *i + 1;
+		fi = *i;
 		token = APP;
 	}
 	else
 		token = OUT;
+	fi ++;
 	while (sh_info->input[fi] == ' ')
 		fi ++;
 	while (sh_info->input[fi] != ' ')
@@ -81,7 +80,7 @@ static void	lx_insert_out_app(t_shell_info *sh_info, int *i)
 
 // con questa vado a inserire un nodo
 //  differenzaiando se e input "<" o heredoc "<<"
-static void	lx_insert_inp_hdoc(t_shell_info *sh_info, int *i)
+void	lx_insert_inp_hdoc(t_shell_info *sh_info, int *i)
 {
 	int		fi;
 	int		st;
@@ -94,10 +93,12 @@ static void	lx_insert_inp_hdoc(t_shell_info *sh_info, int *i)
 	if (sh_info->input[*i + 1] == '<')
 	{
 		*i = *i + 1;
+		fi = *i;
 		token = HDOC;
 	}
 	else
 		token = INP;
+	fi ++;
 	while (sh_info->input[fi] == ' ')
 		fi ++;
 	while (sh_info->input[fi] != ' ')
@@ -112,9 +113,6 @@ static void	lx_insert_inp_hdoc(t_shell_info *sh_info, int *i)
 	fi --;
 	*i = fi;
 }
-
-// con questa funzione mi vado a creare una
-//  lista per sapere se il coomando iserito e concettualmente giusto
 
 void	lx_list_token(t_shell_info *sh_info)
 {
@@ -140,5 +138,6 @@ void	lx_list_token(t_shell_info *sh_info)
 			lx_insert_cmd_arg(sh_info, &i);
 	}
 	sh_info->lx_ls_token = sh_info->lx_ls_token_h;
+	lx_remove_usleschar(sh_info->lx_ls_token);
 	lx_ck_list_token(sh_info);
 }

@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 13:09:57 by afalconi          #+#    #+#             */
-/*   Updated: 2023/08/29 06:07:22 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/08/31 16:09:50 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ typedef struct s_shell_info
 	int					fd_stdin;
 	int					fd_stdout;
 	int8_t				lx_error;
+	int8_t				is_emty;
 	t_list_redirection	*redire;
 	t_list_redirection	*redire_h;
 	t_lx_list_token		*lx_ls_token;

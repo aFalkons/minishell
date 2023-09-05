@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 23:16:57 by afalconi          #+#    #+#             */
-/*   Updated: 2023/08/29 03:20:56 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/09/03 16:39:22 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,10 @@ void	lx_check_quotes(t_shell_info *sh_info, int *i);
 void	lx_free_ls(t_shell_info *sh_info);
 void	lx_skip_space(t_shell_info *sh_info, int *i);
 void	lx_ck_list_token(t_shell_info *sh_info);
+void	lx_remove_usleschar(t_lx_list_token *token);
+void	lx_insert_inp_hdoc(t_shell_info *sh_info, int *i);
+void	lx_insert_out_app(t_shell_info *sh_info, int *i);
+
 
 /*	parser	*/
 void				ft_parser(t_shell_info *sh_info, struct s_minitree  *tree_node);
@@ -63,13 +67,15 @@ char	*ex_ck_cmd(struct s_lx_list_token *cmd,  struct s_minitree *node);
 void 	ex_out(struct s_list_redirection *redire, int flag);
 void	ex_real_esecution(char *path_cmd, char **arr_cmd_arg,  struct s_minitree *node, t_shell_info *sh_info);
 void	ex_ck_redirection(t_minitree *node);
+void	ex_app(struct s_list_redirection *redire, int flag);
+void	ex_inp(struct s_list_redirection *redire, int flag);
 
 
 
 /*	bultins.c	*/
-int		ft_pwd(t_shell_info *sh_info, t_builtins *builtins, int j, int argc);
-void	ft_cd(t_shell_info *sh_info, t_builtins *builtins);
-int		ft_builtins_cmd(t_shell_info *sh_info, t_builtins *builtins);
+//int		ft_pwd(t_shell_info *sh_info, t_builtins *builtins, int j, int argc);
+//void	ft_cd(t_shell_info *sh_info, t_builtins *builtins);
+//int		ft_builtins_cmd(t_shell_info *sh_info, t_builtins *builtins);
 
 
 
