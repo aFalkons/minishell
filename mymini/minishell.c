@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 23:09:31 by afalconi          #+#    #+#             */
-/*   Updated: 2023/09/05 18:16:06 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/09/06 04:27:14 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ int	main(int argc, char **argv, char **env)
 
 	ft_check_args(argc, argv);
 	ft_init_variables(env, &sh_info);
-	add_history("echo 0 && (echo 1 > file1 && (echo 2 && echo 3 > file2)) > file3");
 	ping();
 	while (1)
 	{

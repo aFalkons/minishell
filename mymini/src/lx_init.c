@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 13:17:04 by afalconi          #+#    #+#             */
-/*   Updated: 2023/09/02 19:49:56 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/09/06 09:19:49 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,9 +107,6 @@ void	lx_check_quotes(t_shell_info *sh_info, int *i)
 
 void	lx_check_subsh(t_shell_info *sh_info, int i)
 {
-	char	sing_doub_q;
-
-	sing_doub_q = 0;
 	if (sh_info->input[i] == '(')
 	{
 		while (sh_info->input[i] != ')')

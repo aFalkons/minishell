@@ -6,11 +6,25 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 16:14:19 by afalconi          #+#    #+#             */
-/*   Updated: 2023/09/05 19:39:45 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/09/06 09:20:31 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static void	lx_skip_quot(char	*str, int	*i)
+{
+	char	quot;
+
+	quot = 0;
+	if (str[*i] == 39 || str[*i] == 34)
+	{
+		quot = str[*i];
+		*i = *i + 1;
+		while(str[*i] != quot)
+			*i = *i + 1;
+	}
+}
 
 static void	 lx_insert_arg(t_shell_info *sh_info, int *i)
 {
@@ -22,10 +36,11 @@ static void	 lx_insert_arg(t_shell_info *sh_info, int *i)
 
 	st = *i;
 	fi = *i;
+	str = 0;
+	str2 = 0;
 	while(sh_info->input[fi] != OR && sh_info->input[fi] != PIPE && sh_info->input[fi] != '&' && sh_info->input[fi] != OP_S && sh_info->input[fi] != CL_S && sh_info->input[fi] != '\0')
 	{
-		printf("");
-		lx_check_quotes(sh_info, &fi);
+		lx_skip_quot(sh_info->input , &fi);
 		if (sh_info->input[fi] == OUT || sh_info->input[fi] == INP)
 		{
 			test = fi - 1;
@@ -53,13 +68,11 @@ static void	 lx_insert_arg(t_shell_info *sh_info, int *i)
 		}
 		fi++;
 	}
-	if (st - fi > 1)
-	{
-		str2 = ft_strndup(sh_info->input, st, test);
-		str = ft_strjoin(str, str2);
-		free(str2);
-	}
- 	lx_create_or_insert(sh_info, str, ARG);
+	str2 = ft_strndup(sh_info->input, st, fi);
+	str = ft_strjoin(str, str2);
+	free(str2);
+	lx_create_or_insert(sh_info, str, ARG);
+	*i = fi;
 }
 
 // static void	 lx_insert_arg(t_shell_info *sh_info, int *i)

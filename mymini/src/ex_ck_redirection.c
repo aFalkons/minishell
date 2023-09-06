@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 02:20:42 by afalconi          #+#    #+#             */
-/*   Updated: 2023/09/01 18:17:11 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/09/06 04:21:54 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static void	ex_redire_to_do(struct s_list_redirection *open)
 	open = open->next;
 	while (open)
 	{
-		if (number == open->fd_input && (open->token != INP || open->token != HDOC))
+		if (number == open->fd_input)
 			open->dont_say_that = -1;
 		open = open->next;
 	}
@@ -70,9 +70,6 @@ static void	ex_open_redirection(struct s_list_redirection *open)
 
 static void	ex_close_redirection(struct s_list_redirection *close)
 {
-	struct s_list_redirection	*head;
-
-	head = close;
 	while(close)
 	{
 		if (close->token == OUT && close->dont_say_that == 1)

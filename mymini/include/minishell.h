@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 23:16:57 by afalconi          #+#    #+#             */
-/*   Updated: 2023/09/03 16:39:22 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/09/06 05:59:32 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ void	lx_ck_list_token(t_shell_info *sh_info);
 void	lx_remove_usleschar(t_lx_list_token *token);
 void	lx_insert_inp_hdoc(t_shell_info *sh_info, int *i);
 void	lx_insert_out_app(t_shell_info *sh_info, int *i);
+void	lx_set_redirection(struct s_lx_list_token *token_list);
 
 
 /*	parser	*/

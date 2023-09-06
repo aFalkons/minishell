@@ -6,7 +6,7 @@
 #    By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/16 23:56:29 by afalconi          #+#    #+#              #
-#    Updated: 2023/08/21 04:43:33 by afalconi         ###   ########.fr        #
+#    Updated: 2023/09/06 05:13:12 by afalconi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ SRCS	=	src/ft_strlen.c src/ft_calloc.c src/ft_exit.c src/ft_strndup.c \
 
 OBJS	=	$(SRCS:.c=.o)
 CC		=	gcc
-CFLAGS	=	-Wall -Wextra -Werror
+CFLAGS	=	-Wall -Wextra -Werror -g
 
 all: $(NAME)
 

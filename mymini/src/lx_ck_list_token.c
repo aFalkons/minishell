@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 19:29:04 by afalconi          #+#    #+#             */
-/*   Updated: 2023/08/30 19:24:50 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/09/06 04:19:22 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,11 +92,9 @@ static int lx_ck_last_token(char token)
 
 void	lx_ck_list_token(t_shell_info *sh_info)
 {
-	int				i;
 	int8_t			exit;
 	t_lx_list_token	*tmp;
 
-	i = -1;
 	exit = 0;
 	while (sh_info->lx_ls_token)
 	{
