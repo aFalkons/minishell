@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 18:26:39 by afalconi          #+#    #+#             */
-/*   Updated: 2023/09/06 09:25:59 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/09/07 20:26:30 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,16 +23,14 @@ static int	lx_cont_size_quotes(t_lx_list_token *token)
 	ret = 0;
 	while(token->str[++i])
 	{
-		if (token->str[i] == '\\' || token->str[i] == '\"' || token->str[i] == '\'')
+		if (token->str[i] == '\"' || token->str[i] == '\'')
 		{
-			if (i == 0)
-				ret ++;
-			else if ((token->str[i] == '\"' || token->str[i] == '\'') && token->str[i - 1] != '\\')
+			if ( i == 0 || ((token->str[i] == '\"' || token->str[i] == '\'') && token->str[i - 1] != '\\'))
 			{
 				ret = ret + 2;
 				quotes = token->str[i];
 				i ++;
-				while(token->str[i] != quotes && token->str[i] && token->str[i - 1] != '\\')
+				while(token->str[i] && token->str[i] != quotes && token->str[i - 1] != '\\')
 					i++;
 			}
 		}
@@ -45,29 +43,18 @@ static void	lx_real_remove(t_lx_list_token *token)
 	char	*str;
 	int		i;
 	int		j;
-	char	q;
 
 	i = -1;
 	j = 0;
-	q = 0;
 	str = ft_calloc(lx_cont_size_quotes(token), 1);
 	while(token->str[++i])
 	{
-		if ((token->str[i] == '\"' || token->str[i] == '\'') && token->str[i - 1] != '\\')
+		if (token->str[i] != 39 && token->str[i] != 34)
 		{
-			q = token->str[i];
-			i ++;
-			while(token->str[i] != q && token->str[i - 1] != '\\')
-			{
-				if (token->str[i] == '\\' && token->str[i - 1] =='\\')
-				{
-					str[j] = token->str[i];
-					j ++;
-					i ++;
-				}
-			}
+			str[j] = token->str[i];
+			j ++;
 		}
-		else
+		else if (token->str[i - 1] == '\\')
 		{
 			str[j] = token->str[i];
 			j ++;

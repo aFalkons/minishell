@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/20 16:34:42 by afalconi          #+#    #+#             */
-/*   Updated: 2023/08/30 20:57:27 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/09/07 22:42:56 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ t_list_redirection *insert_redire_list(t_minitree *node)
 	tmp->token = node->token->token;
 	tmp->next = NULL;
 	tmp->dont_say_that = 0;
+	tmp->exit_inp = 0;
 	return(tmp);
 }
 

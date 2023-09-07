@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 15:24:52 by afalconi          #+#    #+#             */
-/*   Updated: 2023/08/31 15:06:54 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/09/07 22:16:30 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	ex_out(struct s_list_redirection *redire, int flag)
 		return ;
 	}
 	dup2(redire->fd_copy, redire->fd_input);
-	close(redire->fd_copy); // to verify
+	close(redire->fd_copy);
 	close(redire->fd_of_file);
 }
 
@@ -42,7 +42,6 @@ void	ex_app(struct s_list_redirection *redire, int flag)
 	}
 	if (flag == 0)
 	{
-		printf("GG\n");
 		redire->fd_of_file = open(redire->file, O_CREAT | O_RDWR | O_APPEND, 0644);
 		redire->fd_copy = dup(redire->fd_input);
 		dup2(redire->fd_of_file, redire->fd_input);

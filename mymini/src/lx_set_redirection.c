@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 05:57:49 by afalconi          #+#    #+#             */
-/*   Updated: 2023/09/06 06:51:09 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/09/07 20:22:02 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ void	lx_set_redirection(struct s_lx_list_token *token_list)
 				token_list = token_list->next;
 			if (token_list->next != NULL && tmp->next != token_list && token_list->next->token == ARG)
 			{
-				printf("GG\n");
 				tmp2 = token_list->next;
 				token_list->next = token_list->next->next;
 				tmp2->next = tmp->next;

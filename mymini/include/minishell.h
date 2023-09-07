@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 23:16:57 by afalconi          #+#    #+#             */
-/*   Updated: 2023/09/06 05:59:32 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/09/07 22:01:45 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void 	ex_out(struct s_list_redirection *redire, int flag);
 void	ex_real_esecution(char *path_cmd, char **arr_cmd_arg,  struct s_minitree *node, t_shell_info *sh_info);
 void	ex_ck_redirection(t_minitree *node);
 void	ex_app(struct s_list_redirection *redire, int flag);
-void	ex_inp(struct s_list_redirection *redire, int flag);
+int		ex_inp(struct s_list_redirection *redire, int flag);
 
 
 
