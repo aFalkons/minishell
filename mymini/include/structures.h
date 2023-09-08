@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 13:09:57 by afalconi          #+#    #+#             */
-/*   Updated: 2023/09/07 22:40:55 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/09/08 03:09:26 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,8 @@ typedef struct s_minitree
 {
 	struct s_lx_list_token		*token;
 	int8_t						exit_status;
+	int8_t						dont_say_that;
 	int							*fd_file;
-	int							fd_output;
-	int							fd_input;
 	struct s_list_redirection	*redire;
 	struct s_list_redirection	*close_redire;
 	char						**env;

@@ -6,11 +6,21 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/20 16:34:42 by afalconi          #+#    #+#             */
-/*   Updated: 2023/09/07 22:42:56 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/09/08 05:57:37 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static void ps_set_struct_pipe(t_minitree *node, t_minitree *first, t_list_redirection *redire_list_h)
+{
+	if (node->token->token == PIPE)
+	{
+		
+	}
+	node->redire = redire_list_h;
+	first->close_redire = redire_list_h;
+}
 
 static int ps_file_befor_token(char *str)
 {
@@ -86,12 +96,8 @@ static void	ps_setup_redire(t_minitree *node)
 		node = node->next;
 		if (node == NULL)
 			break ;
-		if (node->token->token == AND || node->token->token == OR)
-		{
-			node->redire = redire_list_h;
-			first->close_redire = redire_list_h;
-			return ;
-		}
+		if (node->token->token == AND || node->token->token == OR || node->token->token == PIPE)
+			return(ps_set_struct_pipe(node, first, redire_list_h)) ;
 		if (node->token->token == OUT || node->token->token == INP || node->token->token == HDOC || node->token->token == APP)
 		{
 			if (redire_list == NULL)
@@ -116,7 +122,7 @@ void	ps_redirection_setup(t_minitree *node, t_minitree *node_h, t_shell_info *sh
 		ps_setup_redire(node);
 	if (node != node_h)
 	{
-		if (node->token->token == AND || node->token->token == OR || node->token->token == CL_S)
+		if (node->token->token == AND || node->token->token == OR || node->token->token == CL_S || node->token->token == PIPE)
 			ps_setup_redire(node);
 	}
 	if (node->subsh)

@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 16:54:47 by afalconi          #+#    #+#             */
-/*   Updated: 2023/09/07 20:08:32 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/09/08 02:34:43 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,21 +50,18 @@ void	lx_insert_out_app(t_shell_info *sh_info, int *i)
 	int		st;
 	char	token;
 
-	fi = *i + 1;
 	st = *i;
 	while(ft_isnumeric(sh_info->input[st - 1]))
 		st --;
 	if (sh_info->input[*i + 1] == '>')
 	{
 		*i = *i + 1;
-		fi = *i;
 		token = APP;
 	}
 	else
 		token = OUT;
-	fi ++;
-	while (sh_info->input[fi] == ' ')
-		fi ++;
+	fi = *i + 1;
+	lx_skip_space(sh_info, &fi);
 	while (sh_info->input[fi] != ' ')
 	{
 		if (sh_info->input[fi] == PIPE || sh_info->input[fi] == INP
@@ -74,8 +71,7 @@ void	lx_insert_out_app(t_shell_info *sh_info, int *i)
 		fi++;
 	}
 	lx_create_or_insert(sh_info, ft_strndup(sh_info->input, st, fi), token);
-	fi --;
-	*i = fi;
+	*i = fi - 1;
 }
 
 // con questa vado a inserire un nodo
@@ -86,21 +82,18 @@ void	lx_insert_inp_hdoc(t_shell_info *sh_info, int *i)
 	int		st;
 	char	token;
 
-	fi = *i + 1;
 	st = *i;
 	while(ft_isnumeric(sh_info->input[st - 1]))
 		st --;
 	if (sh_info->input[*i + 1] == '<')
 	{
 		*i = *i + 1;
-		fi = *i;
 		token = HDOC;
 	}
 	else
 		token = INP;
-	fi ++;
-	while (sh_info->input[fi] == ' ')
-		fi ++;
+	fi = *i + 1;
+	lx_skip_space(sh_info, &fi);
 	while (sh_info->input[fi] != ' ')
 	{
 		if (sh_info->input[fi] == PIPE || sh_info->input[fi] == INP
@@ -110,8 +103,7 @@ void	lx_insert_inp_hdoc(t_shell_info *sh_info, int *i)
 		fi++;
 	}
 	lx_create_or_insert(sh_info, ft_strndup(sh_info->input, st, fi), token);
-	fi --;
-	*i = fi;
+	*i = fi - 1;
 }
 
 void	lx_list_token(t_shell_info *sh_info)

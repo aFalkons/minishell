@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 07:43:55 by afalconi          #+#    #+#             */
-/*   Updated: 2023/08/23 16:50:30 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/09/08 03:02:27 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,7 @@ static char	**ex_formated(struct s_lx_list_token *arg, char *cmd)
 
 	i = -1;
 	j = 0;
-	x = 1;
-	ret = NULL;
+	x = 0;
 	ret = ft_calloc(ex_cont_formated_arg(arg) * 8 , 1);
 	ret[0] = ft_strdup(cmd);
 	if (arg == NULL)
@@ -64,7 +63,6 @@ static char	**ex_formated(struct s_lx_list_token *arg, char *cmd)
 		ret[1] = NULL;
 		return (ret);
 	}
-	// printf("%s\n", arg->str);
 	while(arg->str[++i])
 	{
 		j = i;
@@ -73,16 +71,13 @@ static char	**ex_formated(struct s_lx_list_token *arg, char *cmd)
 		i --;
 		while(arg->str[++i] != ' ' && arg->str[i])
 			ex_check_quotes(arg->str, &i);
-		ret[x] = ft_strndup(arg->str, j, i);
-		// printf("%s\n", ret[x]);
-		x++;
+		ret[++x] = ft_strndup(arg->str, j, i);
 	}
-	ret[x] = NULL;
-	i = -1;
+	ret[++x] = NULL;
 	return(ret);
 }
 
-void ex_cmd(struct s_lx_list_token *cmd, struct s_lx_list_token *arg, struct s_minitree *node, t_shell_info *sh_info)
+int ex_cmd(struct s_lx_list_token *cmd, struct s_lx_list_token *arg, struct s_minitree *node, t_shell_info *sh_info)
 {
 	char	*path_cmd;
 	char	**arr_cmd_arg;
@@ -92,11 +87,12 @@ void ex_cmd(struct s_lx_list_token *cmd, struct s_lx_list_token *arg, struct s_m
 	path_cmd = NULL;
 	path_cmd = ex_ck_cmd(cmd, node);
 	if (path_cmd == NULL && node->exit_status == -1)
-		return ;
+		return(-1) ;
 	arr_cmd_arg = ex_formated(arg, cmd->str);
 	ex_real_esecution(path_cmd, arr_cmd_arg, node, sh_info);
 	while (arr_cmd_arg[++i])
 		free(arr_cmd_arg[i]);
 	free(arr_cmd_arg);
 	free(path_cmd);
+	return(1);
 }

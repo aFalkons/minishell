@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 23:16:57 by afalconi          #+#    #+#             */
-/*   Updated: 2023/09/07 22:01:45 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/09/08 03:03:29 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,14 +62,14 @@ void				ps_redirection_setup(t_minitree *node, t_minitree *node_h, t_shell_info 
 
 /*	executor	*/
 void	ft_executor(t_shell_info *sh_info);
-void 	ex_cmd(struct s_lx_list_token *cmd, struct s_lx_list_token *arg,  struct s_minitree *node,  t_shell_info *sh_info);
+int		ex_cmd(struct s_lx_list_token *cmd, struct s_lx_list_token *arg,  struct s_minitree *node,  t_shell_info *sh_info);
 void	ex_cl_s(t_minitree *node);
 char	*ex_ck_cmd(struct s_lx_list_token *cmd,  struct s_minitree *node);
 void 	ex_out(struct s_list_redirection *redire, int flag);
 void	ex_real_esecution(char *path_cmd, char **arr_cmd_arg,  struct s_minitree *node, t_shell_info *sh_info);
 void	ex_ck_redirection(t_minitree *node);
 void	ex_app(struct s_list_redirection *redire, int flag);
-int		ex_inp(struct s_list_redirection *redire, int flag);
+void	ex_inp(struct s_list_redirection *redire, int flag);
 
 
 
