@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 23:09:31 by afalconi          #+#    #+#             */
-/*   Updated: 2023/09/08 05:01:31 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/09/08 13:27:17 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	main(int argc, char **argv, char **env)
 		else if (sh_info.is_emty == 0 && sh_info.lx_error != 1)
 		{
 			ft_parser(&sh_info, sh_info.node);
-			//print_tree(sh_info.node, sh_info.node_h, 1);
+			print_tree(sh_info.node, sh_info.node_h, 1);
 			ft_executor(&sh_info);
 			ft_check_lexical_error(&sh_info);
 			ps_free_tree(&sh_info);

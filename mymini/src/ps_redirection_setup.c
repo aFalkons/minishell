@@ -6,17 +6,59 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/20 16:34:42 by afalconi          #+#    #+#             */
-/*   Updated: 2023/09/08 05:57:37 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/09/08 13:39:28 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+
 static void ps_set_struct_pipe(t_minitree *node, t_minitree *first, t_list_redirection *redire_list_h)
 {
-	if (node->token->token == PIPE)
+	t_list_redirection *pip;
+	t_list_redirection *tmp;
+	static	int *fd_for_pipe;
+	int	*fd;
+
+	pip = NULL;
+	tmp = NULL;
+	fd = NULL;
+	printf("GG\n");
+	if (first->token != NULL && node->token != NULL)
 	{
-		
+		if (node->token->token == PIPE || first->token->token == PIPE)
+		{
+			if (fd_for_pipe == 0)
+			{
+				fd = ft_calloc(8 ,1);
+				*fd = 0;
+				pip = ft_calloc(sizeof(t_list_redirection *), 1);
+				pip->fd_of_file = fd[0];
+				pip->fd_input = 0;
+				fd_for_pipe = fd;
+				pip->for_pipe = fd;
+			}
+			else
+			{
+				pip->for_pipe = fd_for_pipe;
+				pip->fd_of_file = fd_for_pipe[1];
+				pip->fd_input = 1;
+				fd_for_pipe = NULL;
+			}
+			pip->token = PIPE;
+			pip->dont_say_that = 1;
+			pip->fd_copy = 0;
+			pip->file = NULL;
+			pip->exit_inp = 0;
+			if (redire_list_h == NULL)
+				redire_list_h = pip;
+			else
+			{
+				while(tmp->next)
+					tmp = tmp->next;
+				tmp->next = pip;
+			}
+		}
 	}
 	node->redire = redire_list_h;
 	first->close_redire = redire_list_h;
@@ -76,6 +118,7 @@ t_list_redirection *insert_redire_list(t_minitree *node)
 	tmp->next = NULL;
 	tmp->dont_say_that = 0;
 	tmp->exit_inp = 0;
+	tmp->for_pipe = NULL;
 	return(tmp);
 }
 
@@ -97,7 +140,11 @@ static void	ps_setup_redire(t_minitree *node)
 		if (node == NULL)
 			break ;
 		if (node->token->token == AND || node->token->token == OR || node->token->token == PIPE)
-			return(ps_set_struct_pipe(node, first, redire_list_h)) ;
+		{
+			first->close_redire = redire_list_h;
+			node->redire = redire_list_h;
+			return (ps_set_struct_pipe(node, first, redire_list_h));
+		}
 		if (node->token->token == OUT || node->token->token == INP || node->token->token == HDOC || node->token->token == APP)
 		{
 			if (redire_list == NULL)
@@ -112,6 +159,8 @@ static void	ps_setup_redire(t_minitree *node)
 			}
 		}
 	}
+	ps_set_struct_pipe(last, first, redire_list_h);
+
 	first->close_redire = redire_list_h;
 	last->redire = redire_list_h;
 }

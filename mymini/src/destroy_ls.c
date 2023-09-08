@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/05 00:42:57 by afalconi          #+#    #+#             */
-/*   Updated: 2023/09/06 05:54:02 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/09/08 09:16:27 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,29 @@ void	lx_free_ls(t_shell_info *sh_info)
 	sh_info->lx_ls_token = NULL;
 }
 
+static void	ps_free_redire(struct s_list_redirection *redire)
+{
+	struct s_list_redirection *tmp;
+
+	tmp = NULL;
+	while(redire)
+	{
+		if (redire->file != NULL)
+			free(redire->file);
+		tmp = redire->next;
+		free(redire);
+		redire = tmp;
+	}
+}
+
 static void	ps_free_tree_recursiv(struct s_minitree *tree_node)
 {
 	if (tree_node->subsh)
 		ps_free_tree_recursiv(tree_node->subsh);
 	if (tree_node->next)
 		ps_free_tree_recursiv(tree_node->next);
+	if (tree_node->redire)
+		ps_free_redire(tree_node->redire);
 	free(tree_node);
 }
 

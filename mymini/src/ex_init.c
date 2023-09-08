@@ -6,23 +6,11 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 06:46:09 by afalconi          #+#    #+#             */
-/*   Updated: 2023/09/08 05:21:59 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/09/08 08:27:55 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-//static void	ex_error_setup(t_minitree *node)
-//{
-//	node->exit_status = -1;
-//	while(node)
-//	{
-//		if (node->token->token == OR)
-//			break;
-//		node->exit_status = -1;
-//		node = node->next;
-//	}
-//}
 
 static int	ex_chose_token(t_minitree *node,t_shell_info *sh_info, t_minitree *node_h, int last_exit)
 {
@@ -37,7 +25,7 @@ static int	ex_chose_token(t_minitree *node,t_shell_info *sh_info, t_minitree *no
 	// 	ex_pipe(node);
 	// else if (node->token->token == CL_S)
 	// 	ex_cl_s(node);
-	return(0);
+	return(last_exit);
 }
 
 static void	ex_all_node(t_minitree *node, t_minitree *node_h, t_shell_info *sh_info, int *exit)
@@ -48,8 +36,6 @@ static void	ex_all_node(t_minitree *node, t_minitree *node_h, t_shell_info *sh_i
 		ex_all_node(node->subsh, node_h, sh_info, exit);
 	if (node->close_redire || node->redire)
 		ex_ck_redirection(node);
-//	if (node->redire->exit_inp == 1)
-//		ex_error_setup(node);
 	if (node != node_h && node->token->token == AND )
 		*exit = 1;
 	else if (node != node_h && *exit == 1 && node->token->token == OR)

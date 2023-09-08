@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 15:24:52 by afalconi          #+#    #+#             */
-/*   Updated: 2023/09/07 22:16:30 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/09/08 10:46:19 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,6 @@ void	ex_app(struct s_list_redirection *redire, int flag)
 		return ;
 	}
 	dup2(redire->fd_copy, redire->fd_input);
-	close(redire->fd_copy); // to verify
+	close(redire->fd_copy);
 	close(redire->fd_of_file);
 }
