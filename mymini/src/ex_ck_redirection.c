@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 02:20:42 by afalconi          #+#    #+#             */
-/*   Updated: 2023/09/08 10:54:30 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/09/09 20:08:13 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ static void	ex_redire_to_do(struct s_list_redirection *open)
 	open = open->next;
 	while (open)
 	{
-		if ((token == OUT || token == APP) && open->token == PIPE && number == 1)
-			*(open->for_pipe) = 1;
+		//if ((token == OUT || token == APP) && open->token == PIPE && number == 1)
+		//	*(open->for_pipe) = 1;
 		if ((token == OUT && (open->token == OUT || open->token == APP)) && number == open->fd_input)
 			open->dont_say_that = -1;
 		if ((token == APP && (open->token == OUT || open->token == APP)) && number == open->fd_input)
@@ -62,8 +62,8 @@ static void	ex_open_redirection(struct s_list_redirection *open)
 			ex_app(open, 0);
 		else if (open->token == INP)
 			ex_inp(open, 0);
-		else if (open->token == PIPE)
-			ex_pipe(open, 0);
+		//else if (open->token == PIPE)
+		//	ex_pipe(open, 0);
 		open = open->next;
 	}
 }
