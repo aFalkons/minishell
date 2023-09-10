@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 13:09:57 by afalconi          #+#    #+#             */
-/*   Updated: 2023/09/09 19:13:54 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/09/10 19:30:44 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ typedef struct s_lx_list_token
 
 typedef struct s_list_redirection
 {
-	int						*for_pipe;
 	char					*file;
 	int						fd_input;
 	char					token;
@@ -40,6 +39,7 @@ typedef struct s_list_redirection
 
 typedef struct s_minitree
 {
+	int							flag_pipe;
 	struct s_lx_list_token		*token;
 	int8_t						exit_status;
 	int8_t						dont_say_that;
@@ -53,10 +53,14 @@ typedef struct s_minitree
 
 typedef struct s_shell_info
 {
+	int					fd[2];
+	int					pid_flag;
 	char				**env;
 	char				*complite;
 	char				*input;
 	char				*pwd;
+	int					stdin_flag;
+	int					stdout_flag;
 	int					fd_stdin;
 	int					fd_stdout;
 	int8_t				lx_error;

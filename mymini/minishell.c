@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 23:09:31 by afalconi          #+#    #+#             */
-/*   Updated: 2023/09/09 20:09:15 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/09/10 18:01:55 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,13 @@ int	main(int argc, char **argv, char **env)
 		ft_init_var_newcmd(&sh_info);
 		sh_info.input = readline("\033[32mminishell> \033[0m");
 		ft_lexical(&sh_info);
-		print_list(sh_info.lx_ls_token);
+		// print_list(sh_info.lx_ls_token);
 		if (sh_info.lx_error == 1)
 			ft_print_message("Error: lexical error", 2);
 		else if (sh_info.is_emty == 0 && sh_info.lx_error != 1)
 		{
 			ft_parser(&sh_info, sh_info.node);
-			printf("dioane\n");
 			print_tree(sh_info.node, sh_info.node_h, 1);
-			exit(1);
 			ft_executor(&sh_info);
 			ft_check_lexical_error(&sh_info);
 			ps_free_tree(&sh_info);

@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 12:49:08 by afalconi          #+#    #+#             */
-/*   Updated: 2023/09/09 19:52:07 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/09/10 17:16:43 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,16 +23,14 @@ void	print_tree(t_minitree *tree_node, t_minitree *tree_node_h, int i)
 		print_tree(tree_node->subsh, tree_node_h, i + 1);
 	if (tree_node == tree_node_h)
 	{
+		printf("testa\n");
+		printf("||%d\n", tree_node->flag_pipe);
 		if (tree_node->close_redire)
 		{
-			printf("testa\n");
 			tmp = tree_node->close_redire;
 			while(tmp)
 			{
-				if (tmp->token == '|')
-					printf("%p\n", tmp->for_pipe);
-				else
-					printf("<>%s\n", tmp->file);
+				printf("<>%s\n", tmp->file);
 				printf("<>%d\n", tmp->fd_input);
 				printf("<>%c\n", tmp->token);
 				tmp = tmp->next;
@@ -43,6 +41,7 @@ void	print_tree(t_minitree *tree_node, t_minitree *tree_node_h, int i)
 	{
 		printf("%d", i);
 		printf("!!---!!        %s\n", tree_node->token->str);
+		printf("||-----%d\n", tree_node->flag_pipe);
 		if (tree_node->redire)
 		{
 			printf("open\n");
@@ -50,10 +49,7 @@ void	print_tree(t_minitree *tree_node, t_minitree *tree_node_h, int i)
 			while(tmp)
 			{
 				printf("><%d\n", tmp->fd_input);
-				if (tmp->token == '|')
-					printf("%p\n", tmp->for_pipe);
-				else
-					printf("<>%s\n", tmp->file);
+				printf("<>%s\n", tmp->file);
 				printf("><%c\n", tmp->token);
 				tmp = tmp->next;
 			}
@@ -65,10 +61,7 @@ void	print_tree(t_minitree *tree_node, t_minitree *tree_node_h, int i)
 			while(tmp)
 			{
 				printf("<>%d\n", tmp->fd_input);
-				if (tmp->token == '|')
-					printf("%p\n", tmp->for_pipe);
-				else
-					printf("<>%s\n", tmp->file);
+				printf("<>%s\n", tmp->file);
 				printf("<>%c\n", tmp->token);
 				tmp = tmp->next;
 			}

@@ -6,66 +6,22 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/20 16:34:42 by afalconi          #+#    #+#             */
-/*   Updated: 2023/09/09 20:05:24 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/09/10 18:01:06 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static t_list_redirection	*ps_set_node_for_pipe(int flag)
-{
-	t_list_redirection	*pip;
-	static	int			*fd_for_pipe;
-	int					*fd;
-
-	pip = NULL;
-	pip = ft_calloc(sizeof(t_list_redirection *), 1);
-	if (flag == 0)
-	{
-		fd = ft_calloc(8, 1);
-		fd_for_pipe = fd;
-		pip->for_pipe = fd_for_pipe;
-		pip->fd_of_file = pip->for_pipe[1];
-		pip->fd_input = 0;
-		*(pip->for_pipe) = 0;
-	}
-	else
-	{
-		pip->for_pipe = fd_for_pipe;
-		pip->fd_of_file = fd_for_pipe[0];
-		pip->fd_input = 1;
-	}
-	pip->token = PIPE;
-	pip->dont_say_that = 1;
-	pip->fd_copy = 0;
-	pip->file = NULL;
-	pip->exit_inp = 0;
-	return(pip);
-}
-
 static void ps_set_struct_pipe(t_minitree *node, t_minitree *first, t_list_redirection *redire_list_h)
 {
-	t_list_redirection	*pip;
-	t_list_redirection	*tmp;
-	static	int			flag;
-
-	pip = NULL;
-	tmp = NULL;
-	if (node->token->token == PIPE || (first->token != NULL && first->token->token == PIPE))
+	if (first->token != NULL && first->token->token == PIPE)
 	{
-		pip = ps_set_node_for_pipe(flag);
-		if (flag == 0)
-			flag = 1;
-		else
-			flag = 0;
-		if (redire_list_h == NULL)
-			redire_list_h = pip;
-		else
-		{
-			while(tmp->next)
-				tmp = tmp->next;
-			tmp->next = pip;
-		}
+		node->flag_pipe = 1;
+	}
+	if (node->token->token == PIPE)
+	{
+		node->flag_pipe = 2;
+		first->flag_pipe = 3;
 	}
 	node->redire = redire_list_h;
 	first->close_redire = redire_list_h;
@@ -125,7 +81,6 @@ t_list_redirection *insert_redire_list(t_minitree *node)
 	tmp->next = NULL;
 	tmp->dont_say_that = 0;
 	tmp->exit_inp = 0;
-	tmp->for_pipe = NULL;
 	return(tmp);
 }
 

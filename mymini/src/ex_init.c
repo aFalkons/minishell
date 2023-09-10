@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 06:46:09 by afalconi          #+#    #+#             */
-/*   Updated: 2023/09/08 08:27:55 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/09/10 19:46:34 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,22 @@ static void	ex_all_node(t_minitree *node, t_minitree *node_h, t_shell_info *sh_i
 	if (node->subsh)
 		ex_all_node(node->subsh, node_h, sh_info, exit);
 	if (node->close_redire || node->redire)
-		ex_ck_redirection(node);
-	if (node != node_h && node->token->token == AND )
+		ex_ck_redirection(node, sh_info);
+	if (node->flag_pipe != 0)
+		ex_pipe(node, sh_info);
+	if (node != node_h && node->token->token == AND)
+	{
 		*exit = 1;
+		sh_info->stdin_flag= 0;
+		sh_info->stdout_flag = 0;
+	}
 	else if (node != node_h && *exit == 1 && node->token->token == OR)
+	{
 		*exit = -1;
-	else if (node != node_h && *exit == 1)
+		sh_info->stdin_flag= 0;
+		sh_info->stdout_flag = 0;
+	}
+	else if ((node != node_h && *exit == 1) && sh_info->pid_flag == 1)
 		*exit = ex_chose_token(node, sh_info, node_h, *exit);
 }
 
