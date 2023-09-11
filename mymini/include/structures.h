@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 13:09:57 by afalconi          #+#    #+#             */
-/*   Updated: 2023/09/10 19:30:44 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/09/11 15:29:54 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ typedef struct s_minitree
 typedef struct s_shell_info
 {
 	int					fd[2];
+	pid_t				pid;
 	int					pid_flag;
 	char				**env;
 	char				*complite;
