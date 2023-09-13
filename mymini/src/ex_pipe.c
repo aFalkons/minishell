@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 09:23:15 by afalconi          #+#    #+#             */
-/*   Updated: 2023/09/12 16:01:13 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/09/13 21:33:50 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,11 @@ static void	ex_create_pipe(t_minitree *node, t_shell_info *sh_info)
 		node->exit_status = -1;
 	if (sh_info->stdout_flag != 1)
 	{
-		sh_info->fd_stdout = dup(1);
-		sh_info->fd_stdin = dup(0);
 		sh_info->pid_flag = 0;
 		sh_info->pid = fork();
 		if (sh_info->pid == 0)
 		{
+			sh_info->pipe_flag = 1;
 			sh_info->pid_flag = 1;
 			close(sh_info->fd[0]);
 			dup2(sh_info->fd[1], 1);
@@ -50,6 +49,7 @@ static void	ex_close_pipe(t_minitree *node, t_shell_info *sh_info)
 {
 	(void)node;
 	// (void)sh_info;
+	dup2(sh_info->fd_stdout , 1);
 	dup2(sh_info->fd_stdin , 0);
 	close(sh_info->fd[0]);
 }
@@ -69,6 +69,7 @@ static void ex_multi_pipe(t_minitree *node, t_shell_info *sh_info)
 	sh_info->pid = fork();
 	if (sh_info->pid == 0)
 	{
+		sh_info->pipe_flag = 1;
 		sh_info->pid_flag = 1;
 		close(sh_info->fd[0]);
 		dup2(sh_info->fd[1], 1);

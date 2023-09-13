@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 06:46:09 by afalconi          #+#    #+#             */
-/*   Updated: 2023/09/12 16:13:07 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/09/13 19:39:44 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,43 +21,57 @@ static int	ex_chose_token(t_minitree *node,t_shell_info *sh_info, t_minitree *no
 		return(ex_cmd(node->token->next, node->token, node, sh_info));
 	else if (node->token->token == CMD)
 		return(ex_cmd(node->token, NULL, node, sh_info));
-	// else if (node->token->token == CL_S)
-	// 	ex_cl_s(node);
+	else if (node->token->token == CL_S)
+		ex_cl_s(node);
 	return(last_exit);
 }
 
-static void	ex_all_node(t_minitree *node, t_minitree *node_h, t_shell_info *sh_info, int *exit)
+static void	ex_all_node(t_minitree *node, t_minitree *node_h, t_shell_info *sh_info, int *exit_stat)
 {
 	if (node->next)
-		ex_all_node(node->next, node_h, sh_info, exit);
+		ex_all_node(node->next, node_h, sh_info, exit_stat);
 	if (node->subsh)
-		ex_all_node(node->subsh, node_h, sh_info, exit);
+	{
+		sh_info->pid = fork();
+		if (sh_info->pid == 0)
+		{
+			sh_info->sub_level ++;
+			ex_all_node(node->subsh, node_h, sh_info, exit_stat);
+		}
+		waitpid(-1 , 0, 0);
+		if (sh_info->pid == 0)
+			exit(1);
+	}
 	if ((node->close_redire || node->redire) && sh_info->pid != 0)
-		ex_ck_redirection(node, sh_info);
-	char test = sh_info->stdout_flag + 48;
-	write(1, &test, 1);
-	write(1, "\n", 1);
+		ex_ck_redirection(node, sh_info);\
 	ex_pipe(node, sh_info);
 	if (node != node_h && node->token->token == AND)
 	{
-		*exit = 1;
+		if (*exit_stat == 2)
+			*exit_stat = 1;
 		sh_info->stdin_flag= 0;
 		sh_info->stdout_flag = 0;
 	}
-	else if (node != node_h && *exit == 1 && node->token->token == OR)
+	else if (node != node_h && *exit_stat == 1 && node->token->token == OR)
 	{
-		*exit = -1;
+		*exit_stat = 2;
 		sh_info->stdin_flag= 0;
 		sh_info->stdout_flag = 0;
 	}
-	else if ((node != node_h && *exit == 1) && sh_info->pid_flag == 1)
-		*exit = ex_chose_token(node, sh_info, node_h, *exit);
+	else if (node != node_h && *exit_stat == -1 && node->token->token == OR)
+	{
+		*exit_stat = 1;
+		sh_info->stdin_flag= 0;
+		sh_info->stdout_flag = 0;
+	}
+	else if ((node != node_h && *exit_stat == 1) && sh_info->pid_flag == 1)
+		*exit_stat = ex_chose_token(node, sh_info, node_h, *exit_stat);
 }
 
 void	ft_executor(t_shell_info *sh_info)
 {
-	int	exit;
+	int	exit_stat;
 
-	exit = 1;
-	ex_all_node(sh_info->node, sh_info->node_h, sh_info, &exit);
+	exit_stat = 1;
+	ex_all_node(sh_info->node, sh_info->node_h, sh_info, &exit_stat);
 }

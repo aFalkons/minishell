@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 16:14:19 by afalconi          #+#    #+#             */
-/*   Updated: 2023/09/08 02:20:13 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/09/13 21:05:49 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,23 @@ static void	 lx_insert_arg(t_shell_info *sh_info, int *i)
 	fi = *i;
 	str = 0;
 	str2 = 0;
+	lx_skip_space(sh_info, &st);
+	if (sh_info->input[st] == OR || sh_info->input[st] == PIPE || sh_info->input[st] == '&' || sh_info->input[st] == OP_S || sh_info->input[st] == CL_S || sh_info->input[st] == '\0' || sh_info->input[st] == INP || sh_info->input[st] == OUT)
+	{
+		*i = st - 1;
+		return ;
+	}
+	if (sh_info->input[st + 1] == ' ' && sh_info->input[st] == ' ')
+	{
+		st ++;
+		lx_skip_space(sh_info, &st);
+	}
+	if (sh_info->input[st] == OR && sh_info->input[st] != PIPE && sh_info->input[st] != '&' && sh_info->input[st] != OP_S && sh_info->input[st] != CL_S && sh_info->input[st] != '\0' && sh_info->input[st] != INP && sh_info->input[st] != OUT )
+	{
+		*i = st - 1;
+		return ;
+	}
+	fi = st;
 	while(sh_info->input[fi] != OR && sh_info->input[fi] != PIPE && sh_info->input[fi] != '&' && sh_info->input[fi] != OP_S && sh_info->input[fi] != CL_S && sh_info->input[fi] != '\0')
 	{
 		lx_skip_quot(sh_info->input , &fi);
@@ -72,10 +89,13 @@ static void	 lx_insert_arg(t_shell_info *sh_info, int *i)
 			lx_add_redi_arg(sh_info, &str, &str2, &fi, &st);
 		fi++;
 	}
-	str2 = ft_strndup(sh_info->input, st, fi);
-	str = ft_strjoin(str, str2);
-	free(str2);
-	lx_create_or_insert(sh_info, str, ARG);
+	if (st < fi)
+	{
+		str2 = ft_strndup(sh_info->input, st, fi);
+		str = ft_strjoin(str, str2);
+		free(str2);
+		lx_create_or_insert(sh_info, str, ARG);
+	}
 	*i = fi - 1;
 }
 
@@ -96,7 +116,6 @@ void	lx_insert_cmd_arg(t_shell_info *sh_info, int *i)
 			finish --;
 	}
 	lx_create_or_insert(sh_info, ft_strndup(sh_info->input, start, finish), CMD);
-	lx_skip_space(sh_info, i);
 	lx_insert_arg(sh_info, i);
 }
 

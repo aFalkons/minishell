@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 12:07:42 by afalconi          #+#    #+#             */
-/*   Updated: 2023/09/12 16:01:33 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/09/13 21:27:35 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,15 @@ void	ft_init_variables(char **env, t_shell_info *sh_info)
 	sh_info->stdout_flag = 0;
 	sh_info->pid_flag = 1;
 	sh_info->pid = 2;
+	sh_info->fd_stdout = dup(1);
+	sh_info->fd_stdin = dup(0);
+	sh_info->sub_level = 1;
+	sh_info->pipe_flag = 0;
 }
 
 void	ft_init_var_newcmd(t_shell_info *sh_info)
 {
+	sh_info->pipe_flag = 0;
 	sh_info->stdin_flag= 0;
 	sh_info->stdout_flag = 0;
 	sh_info->pid = 2;
