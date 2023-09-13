@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/20 16:34:42 by afalconi          #+#    #+#             */
-/*   Updated: 2023/09/10 18:01:06 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/09/12 15:17:20 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,18 @@
 
 static void ps_set_struct_pipe(t_minitree *node, t_minitree *first, t_list_redirection *redire_list_h)
 {
-	if (first->token != NULL && first->token->token == PIPE)
+	if (first->token != NULL && first->token->token == PIPE && node->token->token != PIPE)
 	{
 		node->flag_pipe = 1;
 	}
-	if (node->token->token == PIPE)
+	if (node->token->token == PIPE && ((first->token != NULL && first->token->token != PIPE) || first->token == NULL))
 	{
 		node->flag_pipe = 2;
 		first->flag_pipe = 3;
+	}
+	if (node->token->token == PIPE && node->flag_pipe != 2)
+	{
+		node->flag_pipe = 4;
 	}
 	node->redire = redire_list_h;
 	first->close_redire = redire_list_h;

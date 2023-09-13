@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 02:20:42 by afalconi          #+#    #+#             */
-/*   Updated: 2023/09/10 17:56:33 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/09/12 15:56:41 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ static void	ex_open_redirection(struct s_list_redirection *open, t_shell_info *s
 	}
 }
 
-static void	ex_close_redirection(struct s_list_redirection *close)
+static void	ex_close_redirection(struct s_list_redirection *close, t_shell_info *sh_info)
 {
 	while(close)
 	{
@@ -82,13 +82,15 @@ static void	ex_close_redirection(struct s_list_redirection *close)
 			ex_app(close , 1);
 		close = close->next;
 	}
+	sh_info->stdout_flag = 0;
+	sh_info->stdin_flag = 0;
 }
 
 
 void	ex_ck_redirection(t_minitree *node, t_shell_info *sh_info)
 {
 	if (node->close_redire)
-		ex_close_redirection(node->close_redire);
+		ex_close_redirection(node->close_redire, sh_info);
 	if (node->redire)
 		ex_open_redirection(node->redire, sh_info);
 }
