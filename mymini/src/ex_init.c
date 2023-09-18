@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 06:46:09 by afalconi          #+#    #+#             */
-/*   Updated: 2023/09/15 16:14:04 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/09/18 21:32:20 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ static void	ex_all_node(t_minitree *node, t_minitree *node_h, t_shell_info *sh_i
 		if (sh_info->pid == 0)
 		{
 			sh_info->sub_level ++;
+			ps_redirection_setup(node->subsh, node->subsh);
 			ex_all_node(node->subsh, node_h, sh_info, exit_stat);
 		}
 		waitpid(-1 , 0, 0);

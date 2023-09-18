@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/20 16:34:42 by afalconi          #+#    #+#             */
-/*   Updated: 2023/09/15 16:25:55 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/09/18 21:34:17 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,19 +131,17 @@ static void	ps_setup_redire(t_minitree *node)
 	last->redire = redire_list_h;
 }
 
-void	ps_redirection_setup(t_minitree *node, t_minitree *node_h, t_shell_info *sh_info)
+void	ps_redirection_setup(t_minitree *node, t_minitree *node_h)
 {
-	if (node == node_h && node->subsh == NULL)
+	if (node == node_h)
 		ps_setup_redire(node);
 	if (node != node_h)
 	{
-		if (node->token->token == AND || node->token->token == OR || /*node->token->token == CL_S || */ node->token->token == PIPE)
+		if (node->token->token == AND || node->token->token == OR || node->token->token == PIPE)
 			ps_setup_redire(node);
 	}
-	if (node->subsh)
-		ps_redirection_setup(node->subsh, node_h, sh_info);
 	if (node->next)
-		ps_redirection_setup(node->next, node_h, sh_info);
+		ps_redirection_setup(node->next, node_h);
 	if (node == NULL)
 		return ;
 }

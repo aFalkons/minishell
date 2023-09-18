@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 23:09:31 by afalconi          #+#    #+#             */
-/*   Updated: 2023/09/15 13:32:27 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/09/18 21:38:27 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int	main(int argc, char **argv, char **env)
 			ft_print_message("Error: lexical error", 2);
 		else if (sh_info.is_emty == 0 && sh_info.lx_error != 1)
 		{
+			write(2, "tumadre\n", 10);
 			ft_parser(&sh_info, sh_info.node);
 			print_tree(sh_info.node, sh_info.node_h, 1);
 			ft_executor(&sh_info);
