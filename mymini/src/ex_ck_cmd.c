@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 11:52:02 by afalconi          #+#    #+#             */
-/*   Updated: 2023/08/23 16:50:50 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/09/15 08:33:45 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ char	*ex_ck_cmd(struct s_lx_list_token *cmd,  struct s_minitree *node)
 	char	**paths_cmd;
 	int		pos;
 	int		i;
+	char	*ret;
 
 	path = NULL;
 	i = -1;
@@ -88,8 +89,9 @@ char	*ex_ck_cmd(struct s_lx_list_token *cmd,  struct s_minitree *node)
 		free(paths_cmd);
 		return(NULL);
 	}
-	while(paths_cmd[++i] && paths_cmd[i] != paths_cmd[pos])
+	ret = ft_strdup(paths_cmd[pos]);
+	while(paths_cmd[++i])
 		free(paths_cmd[i]);
 	free(paths_cmd);
-	return(paths_cmd[pos]);
+	return(ret);
 }

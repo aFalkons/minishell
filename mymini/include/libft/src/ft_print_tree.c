@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 12:49:08 by afalconi          #+#    #+#             */
-/*   Updated: 2023/09/10 17:16:43 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/09/15 15:53:15 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	print_tree(t_minitree *tree_node, t_minitree *tree_node_h, int i)
 			while(tmp)
 			{
 				printf("><%d\n", tmp->fd_input);
-				printf("<>%s\n", tmp->file);
+				printf("><%s\n", tmp->file);
 				printf("><%c\n", tmp->token);
 				tmp = tmp->next;
 			}

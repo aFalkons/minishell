@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 06:46:09 by afalconi          #+#    #+#             */
-/*   Updated: 2023/09/14 19:26:30 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/09/15 16:14:04 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static void	ex_all_node(t_minitree *node, t_minitree *node_h, t_shell_info *sh_i
 		if (sh_info->pid == 0)
 			exit(1);
 	}
-	if ((node->close_redire || node->redire) && sh_info->pid != 0)
+	if ((node->close_redire || node->redire) && sh_info->pipe_flag != 1)
 		ex_ck_redirection(node, sh_info);
 	ex_pipe(node, sh_info);
 	if (node != node_h && node->token->token == AND)
@@ -62,7 +62,9 @@ static void	ex_all_node(t_minitree *node, t_minitree *node_h, t_shell_info *sh_i
 		sh_info->stdout_flag = 0;
 	}
 	else if ((node != node_h && *exit_stat == 1) && sh_info->pid_flag == 1)
+	{
 		*exit_stat = ex_chose_token(node, sh_info, *exit_stat);
+	}
 }
 
 void	ft_executor(t_shell_info *sh_info)

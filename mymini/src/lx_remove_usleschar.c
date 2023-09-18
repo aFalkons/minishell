@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 18:26:39 by afalconi          #+#    #+#             */
-/*   Updated: 2023/09/07 20:26:30 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/09/15 08:39:39 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,15 +46,10 @@ static void	lx_real_remove(t_lx_list_token *token)
 
 	i = -1;
 	j = 0;
-	str = ft_calloc(lx_cont_size_quotes(token), 1);
+	str = ft_calloc(lx_cont_size_quotes(token) + 1, 1);
 	while(token->str[++i])
 	{
 		if (token->str[i] != 39 && token->str[i] != 34)
-		{
-			str[j] = token->str[i];
-			j ++;
-		}
-		else if (token->str[i - 1] == '\\')
 		{
 			str[j] = token->str[i];
 			j ++;

@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/20 16:34:42 by afalconi          #+#    #+#             */
-/*   Updated: 2023/09/12 15:17:20 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/09/15 16:25:55 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,11 +133,11 @@ static void	ps_setup_redire(t_minitree *node)
 
 void	ps_redirection_setup(t_minitree *node, t_minitree *node_h, t_shell_info *sh_info)
 {
-	if (node == node_h)
+	if (node == node_h && node->subsh == NULL)
 		ps_setup_redire(node);
 	if (node != node_h)
 	{
-		if (node->token->token == AND || node->token->token == OR || node->token->token == CL_S || node->token->token == PIPE)
+		if (node->token->token == AND || node->token->token == OR || /*node->token->token == CL_S || */ node->token->token == PIPE)
 			ps_setup_redire(node);
 	}
 	if (node->subsh)

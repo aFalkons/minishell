@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 18:11:11 by afalconi          #+#    #+#             */
-/*   Updated: 2023/09/06 05:08:48 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/09/15 08:27:37 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,6 @@ char	*ft_strndup(char *str, int start, int finish)
 		i ++ ;
 		start ++;
 	}
-	ret[i + 1] = 0;
+	ret[i] = 0;
 	return(ret);
 }

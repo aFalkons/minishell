@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 16:14:19 by afalconi          #+#    #+#             */
-/*   Updated: 2023/09/13 21:05:49 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/09/15 08:46:48 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,8 @@ static void	 lx_insert_arg(t_shell_info *sh_info, int *i)
 		lx_skip_quot(sh_info->input , &fi);
 		if (sh_info->input[fi] == OUT || sh_info->input[fi] == INP)
 			lx_add_redi_arg(sh_info, &str, &str2, &fi, &st);
-		fi++;
+		else
+			fi++;
 	}
 	if (st < fi)
 	{

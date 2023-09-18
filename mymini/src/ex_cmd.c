@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 07:43:55 by afalconi          #+#    #+#             */
-/*   Updated: 2023/09/14 20:03:00 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/09/15 13:05:36 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,13 @@ static int	ex_cont_formated_arg(struct s_lx_list_token *arg)
 	int		i;
 	int		x;
 
-	i = -1;
+	i = 0;
 	x = 0;
 	if (arg == NULL)
 		return(2);
 //	write(2, arg->str, ft_strlen(arg->str))
-	while(arg->str[++i])
+	while(arg->str[i])
 	{
-		write(2, "tumadre\n", 8);
 		while(arg->str[i] == ' ')
 			i ++;
 		while(arg->str[i] && arg->str[i] != ' ')
@@ -57,12 +56,8 @@ static char	**ex_formated(struct s_lx_list_token *arg, char *cmd)
 	int		x;
 	char	**ret;
 
-	i = -1;
+	i = 0;
 	j = 0;
-	x = ex_cont_formated_arg(arg) + 48;
-	write(2, "----", 4);
-	write(2, &x, 1);
-	write(2, "\n", 1);
 	x = 0;
 	ret = ft_calloc(ex_cont_formated_arg(arg) * 8 , 1);
 	ret[0] = ft_strdup(cmd);
@@ -71,11 +66,11 @@ static char	**ex_formated(struct s_lx_list_token *arg, char *cmd)
 		ret[1] = NULL;
 		return (ret);
 	}
-	while(arg->str[++i])
+	while(arg->str[i])
 	{
-		j = i;
 		while(arg->str[i] == ' ')
 			i ++;
+		j = i;
 		i --;
 		while(arg->str[++i] != ' ' && arg->str[i])
 			ex_check_quotes(arg->str, &i);
@@ -100,10 +95,8 @@ int ex_cmd(struct s_lx_list_token *cmd, struct s_lx_list_token *arg, struct s_mi
 	ex_real_esecution(path_cmd, arr_cmd_arg, node, sh_info);
 	while (arr_cmd_arg[++i])
 	{
-		write(2, "---", 3);
-		write(2, arr_cmd_arg[i], ft_strlen(arr_cmd_arg[i]));
-		write(2, "---", 3);
-		write(2, "\n", 1);
+		// write(2, arr_cmd_arg[i], ft_strlen(arr_cmd_arg[i]));
+		// write(2, "\n", 1);
 		free(arr_cmd_arg[i]);
 	}
 	free(arr_cmd_arg);
