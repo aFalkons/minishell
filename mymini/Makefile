@@ -6,7 +6,7 @@
 #    By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/16 23:09:28 by afalconi          #+#    #+#              #
-#    Updated: 2023/09/08 09:23:09 by afalconi         ###   ########.fr        #
+#    Updated: 2023/09/23 12:22:38 by afalconi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,8 @@ SRCS =	minishell.c src/check_errors.c src/setup.c src/lx_init.c \
 		src/ex_ck_cmd.c src/ex_out_app.c src/ex_real_cmd.c src/ping.c\
 		src/ps_redirection_setup.c src/ex_ck_redirection.c src/ex_inp_hdoc.c \
 		src/lx_remove_usleschar.c src/lx_set_redirection.c src/ex_or.c src/ex_pipe.c \
-		
+		src/ps_handler_HDOC.c
+
 OBJS = $(SRCS:.c=.o)
 CC = gcc -g
 CFLAGS = -Wall -Wextra -Werror -Iinclude

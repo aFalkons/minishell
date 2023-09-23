@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 23:16:57 by afalconi          #+#    #+#             */
-/*   Updated: 2023/09/18 21:30:50 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/09/23 12:24:27 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void				ps_recursiv_tree(t_shell_info *sh_info, struct s_minitree *tree_node);
 void				ps_free_tree(t_shell_info *sh_info);
 struct s_minitree	*ps_create_or_insert(t_shell_info *sh_info);
 void				ps_redirection_setup(t_minitree *node, t_minitree *node_h);
-
+void				ps_handler_HDOC(char *delimi);
 
 
 /*	executor	*/

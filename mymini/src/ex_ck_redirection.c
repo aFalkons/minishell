@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 02:20:42 by afalconi          #+#    #+#             */
-/*   Updated: 2023/09/15 16:14:19 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/09/23 14:26:14 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ static void	ex_open_redirection(struct s_list_redirection *open, t_shell_info *s
 	struct s_list_redirection	*head;
 
 	head = open;
-	//write(2, "GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG\n", ft_strlen("GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG\n"));
 	while (open)
 	{
 		ex_redire_to_do(open, sh_info);
@@ -63,8 +62,6 @@ static void	ex_open_redirection(struct s_list_redirection *open, t_shell_info *s
 			ex_app(open, 0);
 		else if (open->token == INP)
 			ex_inp(open, 0);
-		//else if (open->token == PIPE)
-		//	ex_pipe(open, 0);
 		open = open->next;
 	}
 }

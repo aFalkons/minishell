@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 06:46:09 by afalconi          #+#    #+#             */
-/*   Updated: 2023/09/18 21:32:20 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/09/23 10:44:57 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@ static int	ex_chose_token(t_minitree *node,t_shell_info *sh_info, int last_exit)
 		return(ex_cmd(node->token->next, node->token, node, sh_info));
 	else if (node->token->token == CMD)
 		return(ex_cmd(node->token, NULL, node, sh_info));
-	// else if (node->token->token == CL_S)
-	// 	ex_cl_s(node);
 	return(last_exit);
 }
 

@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/20 16:34:42 by afalconi          #+#    #+#             */
-/*   Updated: 2023/09/18 21:34:17 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/09/23 15:26:43 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,9 +79,12 @@ t_list_redirection *insert_redire_list(t_minitree *node)
 	t_list_redirection *tmp;
 
 	tmp = ft_calloc(sizeof(struct s_list_redirection), 1);
-	tmp->fd_input = ps_file_befor_token(node->token->str);
-	tmp->file = ps_file_after_token(node->token->str);
 	tmp->token = node->token->token;
+	//if (tmp->token == HDOC)
+	//	ps_handler_HDOC(ps_file_after_token(node->token->str));
+	//else
+	tmp->file = ps_file_after_token(node->token->str);
+	tmp->fd_input = ps_file_befor_token(node->token->str);
 	tmp->next = NULL;
 	tmp->dont_say_that = 0;
 	tmp->exit_inp = 0;
@@ -106,11 +109,7 @@ static void	ps_setup_redire(t_minitree *node)
 		if (node == NULL)
 			break ;
 		if (node->token->token == AND || node->token->token == OR || node->token->token == PIPE)
-		{
-			first->close_redire = redire_list_h;
-			node->redire = redire_list_h;
 			return (ps_set_struct_pipe(node, first, redire_list_h));
-		}
 		if (node->token->token == OUT || node->token->token == INP || node->token->token == HDOC || node->token->token == APP)
 		{
 			if (redire_list == NULL)
@@ -126,14 +125,11 @@ static void	ps_setup_redire(t_minitree *node)
 		}
 	}
 	ps_set_struct_pipe(last, first, redire_list_h);
-
-	first->close_redire = redire_list_h;
-	last->redire = redire_list_h;
 }
 
 void	ps_redirection_setup(t_minitree *node, t_minitree *node_h)
 {
-	if (node == node_h)
+	if (node == node_h && node->subsh == NULL)
 		ps_setup_redire(node);
 	if (node != node_h)
 	{
