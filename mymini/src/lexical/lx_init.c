@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 13:17:04 by afalconi          #+#    #+#             */
-/*   Updated: 2023/09/23 14:07:33 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/10/01 15:36:11 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,28 +31,6 @@ static void	lx_redirections(t_shell_info *sh_info, int i)
 				return ;
 		}
 		sh_info->lx_error = 1;
-	}
-}
-
-// controllo se ci sono due token uno dopo l'altro per la
-//  maggior parte dei token non si puo fare come per | && ||
-static void	lx_double_tokens(t_shell_info *sh_info, int i)
-{
-	static int	flag;
-
-	if (sh_info->input[i] == '|' || sh_info->input[i] == '&')
-	{
-		if (sh_info->input[i + 1] == '|' && sh_info->input[i] == '|')
-			return ;
-		if (sh_info->input[i + 1] == '&' && sh_info->input[i] == '&')
-			return ;
-		if (flag == 1)
-			sh_info->lx_error = 1;
-		flag = 1;
-	}
-	else if (sh_info->input[i] != ' ')
-	{
-		flag = 0;
 	}
 }
 
@@ -120,28 +98,24 @@ void	lx_check_subsh(t_shell_info *sh_info, int i)
 void	ft_lexical(t_shell_info *sh_info)
 {
 	int	i;
-	static int	flag;
+	int	flag;
 
 	i = -1;
+	flag = 1;
 	while (sh_info->input[++i])
 	{
 		lx_check_quotes(sh_info, &i);
 		lx_check_subsh(sh_info, i);
-		lx_double_tokens(sh_info, i);
 		lx_redirections(sh_info, i);
 	}
 	i = -1;
 	while(sh_info->input[++i])
 	{
 		if (sh_info->input[i] != ' ')
-			flag = 1;
+			flag = 0;
 	}
-	if (flag == 1)
-		add_history(sh_info->input);
-	else
-	{
-		sh_info->is_emty = 1;
+	sh_info->is_emty = flag;
+	if (sh_info->is_emty == 1)
 		return;
-	}
 	lx_list_token(sh_info);
 }

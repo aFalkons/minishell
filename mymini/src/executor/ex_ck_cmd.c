@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 11:52:02 by afalconi          #+#    #+#             */
-/*   Updated: 2023/09/15 08:33:45 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/10/03 03:38:39 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ char	*ex_ck_cmd(struct s_lx_list_token *cmd,  struct s_minitree *node)
 	pos = ex_ck_exist_cmd(paths_cmd);
 	if (pos == -1)
 	{
-		node->exit_status = -1;
+		node->exit_status = 127;
 		while(paths_cmd[++i])
 			free(paths_cmd[i]);
 		free(paths_cmd);

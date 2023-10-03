@@ -6,17 +6,16 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 15:04:23 by afalconi          #+#    #+#             */
-/*   Updated: 2023/09/23 14:36:10 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/10/03 12:53:23 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ex_inp(struct s_list_redirection *redire, int flag)
+void	ex_inp(struct s_list_redirection *redire, int flag, char *str)
 {
-	char	*str;
-
-	str = NULL;
+	if (redire->dont_say_that == -1)
+		return ;
 	if (flag == 0)
 	{
 		if (access(redire->file, R_OK) == -1)
@@ -36,10 +35,22 @@ void	ex_inp(struct s_list_redirection *redire, int flag)
 		dup2(redire->fd_of_file, redire->fd_input);
 		return ;
 	}
-	if (redire->dont_say_that == -1)
-		return ;
 	dup2(redire->fd_copy, redire->fd_input);
 	close(redire->fd_copy);
 	close(redire->fd_of_file);
 	return;
+}
+
+void	ex_hdoc(struct s_list_redirection *redire, int flag)
+{
+	if (flag == 0)
+	{
+		redire->dont_say_that = 1;
+		redire->fd_copy = dup(redire->fd_input);
+		dup2(redire->fd_of_file, redire->fd_input);
+		return ;
+	}
+	dup2(redire->fd_copy, redire->fd_input);
+	close(redire->fd_copy);
+	close(redire->fd_of_file);
 }

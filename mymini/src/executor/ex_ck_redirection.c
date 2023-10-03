@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 02:20:42 by afalconi          #+#    #+#             */
-/*   Updated: 2023/09/23 14:26:14 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/10/03 12:54:59 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ static void	ex_redire_to_do(struct s_list_redirection *open, t_shell_info *sh_in
 	int		number;
 	char	token;
 
-	number = 0;
 	if (open->dont_say_that == -1)
 		return ;
 	number = open->fd_input;
@@ -36,8 +35,8 @@ static void	ex_redire_to_do(struct s_list_redirection *open, t_shell_info *sh_in
 			open->dont_say_that = -1;
 		if ((token == INP && (open->token == INP || open->token == HDOC)) && number == open->fd_input)
 			open->dont_say_that = -1;
-		// if ((token == HDOC && (open->token == INP || open->token == HDOC)) && number == open->fd_input)
-		// 	open->dont_say_that = -1;
+		 if ((token == HDOC && (open->token == INP || open->token == HDOC)) && number == open->fd_input)
+		 	open->dont_say_that = -1;
 		open = open->next;
 	}
 }
@@ -61,7 +60,9 @@ static void	ex_open_redirection(struct s_list_redirection *open, t_shell_info *s
 		else if (open->token == APP)
 			ex_app(open, 0);
 		else if (open->token == INP)
-			ex_inp(open, 0);
+			ex_inp(open, 0, NULL);
+		else if (open->token == HDOC)
+			ex_hdoc(open, 0);
 		open = open->next;
 	}
 }
@@ -73,9 +74,9 @@ static void	ex_close_redirection(struct s_list_redirection *close, t_shell_info 
 		if (close->token == OUT && close->dont_say_that == 1)
 			ex_out(close, 1);
 		else if (close->token == INP && close->dont_say_that == 1)
-			ex_inp(close, 1);
-		// else if (close->token == HDOC && close->dont_say_that == 1)
-		// 	ex_hdoc(close);
+			ex_inp(close, 1, NULL);
+		else if (close->token == HDOC && close->dont_say_that == 1)
+			ex_hdoc(close, 1);
 		else if (close->token == APP && close->dont_say_that == 1)
 			ex_app(close , 1);
 		close = close->next;

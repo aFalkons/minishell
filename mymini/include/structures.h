@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 13:09:57 by afalconi          #+#    #+#             */
-/*   Updated: 2023/09/22 11:26:02 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/10/03 03:22:54 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ typedef struct s_minitree
 
 typedef struct s_shell_info
 {
+	int					exit_stat;
 	int					fd[2];
 	pid_t				pid;
 	int					sub_level;
@@ -67,7 +68,7 @@ typedef struct s_shell_info
 	int					fd_stdin;
 	int					fd_stdout;
 	int8_t				lx_error;
-	int8_t				is_emty;
+	int					is_emty;
 	t_list_redirection	*redire;
 	t_list_redirection	*redire_h;
 	t_lx_list_token		*lx_ls_token;

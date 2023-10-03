@@ -5,13 +5,25 @@
 	"version": "0.2.0",
 	"configurations": [
 		{
+			"name": "(lldb) Launch",
+			"type": "cppdbg",
+			"request": "launch",
+			"program": "/Users/afalconi/Desktop/42/Progetti/minishell/mymini/bin/minishell",
+			"args": [],
+			"stopAtEntry": true,
+			"cwd": "/Users/afalconi/Desktop/42/Progetti/minishell/mymini",
+			"environment": [],
+			"externalConsole": true,
+			"MIMode": "lldb"
+		},
+		{
 			"name": "(gdb) Launch",
 			"type": "cppdbg",
 			"request": "launch",
-			"program": "/nfs/homes/afalconi/Desktop/42/minishell/mymini/bin/minishell",
+			"program": "/Users/afalconi/Desktop/42/Progetti/minishell/mymini/bin/minishell",
 			"args": [],
 			"stopAtEntry": true,
-			"cwd": "/nfs/homes/afalconi/Desktop/42/minishell/mymini",
+			"cwd": "/Users/afalconi/Desktop/42/Progetti/minishell/mymini",
 			"environment": [],
 			"externalConsole": true,
 			"MIMode": "gdb",

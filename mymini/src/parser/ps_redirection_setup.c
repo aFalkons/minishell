@@ -6,30 +6,11 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/20 16:34:42 by afalconi          #+#    #+#             */
-/*   Updated: 2023/09/23 15:26:43 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/10/03 02:07:42 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static void ps_set_struct_pipe(t_minitree *node, t_minitree *first, t_list_redirection *redire_list_h)
-{
-	if (first->token != NULL && first->token->token == PIPE && node->token->token != PIPE)
-	{
-		node->flag_pipe = 1;
-	}
-	if (node->token->token == PIPE && ((first->token != NULL && first->token->token != PIPE) || first->token == NULL))
-	{
-		node->flag_pipe = 2;
-		first->flag_pipe = 3;
-	}
-	if (node->token->token == PIPE && node->flag_pipe != 2)
-	{
-		node->flag_pipe = 4;
-	}
-	node->redire = redire_list_h;
-	first->close_redire = redire_list_h;
-}
 
 static int ps_file_befor_token(char *str)
 {
@@ -74,24 +55,24 @@ static char	*ps_file_after_token(char *str)
 	return(ft_strndup(str, start, finish));
 }
 
-t_list_redirection *insert_redire_list(t_minitree *node)
+t_list_redirection *insert_redire_list(t_minitree *node, t_shell_info *sh_info)
 {
 	t_list_redirection *tmp;
 
 	tmp = ft_calloc(sizeof(struct s_list_redirection), 1);
 	tmp->token = node->token->token;
-	//if (tmp->token == HDOC)
-	//	ps_handler_HDOC(ps_file_after_token(node->token->str));
-	//else
 	tmp->file = ps_file_after_token(node->token->str);
 	tmp->fd_input = ps_file_befor_token(node->token->str);
 	tmp->next = NULL;
 	tmp->dont_say_that = 0;
 	tmp->exit_inp = 0;
+	tmp->fd_of_file = 0;
+	if (tmp->token == HDOC)
+		ps_handler_HDOC(tmp, sh_info);
 	return(tmp);
 }
 
-static void	ps_setup_redire(t_minitree *node)
+static void	ps_setup_redire(t_minitree *node, t_shell_info *sh_info, t_minitree *node_h)
 {
 	t_list_redirection *redire_list;
 	t_list_redirection *redire_list_h;
@@ -109,35 +90,37 @@ static void	ps_setup_redire(t_minitree *node)
 		if (node == NULL)
 			break ;
 		if (node->token->token == AND || node->token->token == OR || node->token->token == PIPE)
-			return (ps_set_struct_pipe(node, first, redire_list_h));
+			return (ps_set_struct_pipe(node, first, redire_list_h, node_h));
 		if (node->token->token == OUT || node->token->token == INP || node->token->token == HDOC || node->token->token == APP)
 		{
 			if (redire_list == NULL)
 			{
-				redire_list = insert_redire_list(node);
+				redire_list = insert_redire_list(node, sh_info);
 				redire_list_h = redire_list;
 			}
 			else
 			{
-				redire_list->next = insert_redire_list(node);
+				redire_list->next = insert_redire_list(node, sh_info);
 				redire_list = redire_list->next;
 			}
 		}
 	}
-	ps_set_struct_pipe(last, first, redire_list_h);
+	ps_set_struct_pipe(last, first, redire_list_h, node_h);
 }
 
-void	ps_redirection_setup(t_minitree *node, t_minitree *node_h)
+void	ps_redirection_setup(t_minitree *node, t_minitree *node_h, t_shell_info *sh_info)
 {
-	if (node == node_h && node->subsh == NULL)
-		ps_setup_redire(node);
+	if (node == node_h)
+		ps_setup_redire(node, sh_info, node_h);
 	if (node != node_h)
 	{
 		if (node->token->token == AND || node->token->token == OR || node->token->token == PIPE)
-			ps_setup_redire(node);
+			ps_setup_redire(node, sh_info, node_h);
 	}
 	if (node->next)
-		ps_redirection_setup(node->next, node_h);
+		ps_redirection_setup(node->next, node_h, sh_info);
+	if (node->subsh)
+		ps_redirection_setup(node->subsh, node->subsh, sh_info);
 	if (node == NULL)
 		return ;
 }

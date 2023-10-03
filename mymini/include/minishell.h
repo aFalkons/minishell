@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 23:16:57 by afalconi          #+#    #+#             */
-/*   Updated: 2023/09/23 12:24:27 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/10/03 03:42:40 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void	ft_init_variables(char **env, t_shell_info *sh_info);
 void	ft_check_lexical_error(t_shell_info *sh_info);
 void	ft_init_var_newcmd(t_shell_info *sh_info);
 void	ping(void);
+void	ck_tree_error(t_minitree *node);
 
 /*	lexical	*/
 void	ft_lexical(t_shell_info *sh_info);
@@ -56,8 +57,9 @@ void				ft_parser(t_shell_info *sh_info, struct s_minitree  *tree_node);
 void				ps_recursiv_tree(t_shell_info *sh_info, struct s_minitree *tree_node);
 void				ps_free_tree(t_shell_info *sh_info);
 struct s_minitree	*ps_create_or_insert(t_shell_info *sh_info);
-void				ps_redirection_setup(t_minitree *node, t_minitree *node_h);
-void				ps_handler_HDOC(char *delimi);
+void				ps_redirection_setup(t_minitree *node, t_minitree *node_h, t_shell_info *sh_info);
+int					ps_handler_HDOC(t_list_redirection *hdoc, t_shell_info *sh_info);
+void				ps_set_struct_pipe(t_minitree *last, t_minitree *first, t_list_redirection *redire_list_h, t_minitree *node_h);
 
 
 /*	executor	*/
@@ -69,9 +71,9 @@ void 	ex_out(struct s_list_redirection *redire, int flag);
 void	ex_real_esecution(char *path_cmd, char **arr_cmd_arg,  struct s_minitree *node, t_shell_info *sh_info);
 void	ex_ck_redirection(t_minitree *node, t_shell_info *sh_info);
 void	ex_app(struct s_list_redirection *redire, int flag);
-void	ex_inp(struct s_list_redirection *redire, int flag);
+void	ex_inp(struct s_list_redirection *redire, int flag, char *str);
 void	ex_pipe(t_minitree *node, t_shell_info *sh_info);
-
+void	ex_hdoc(struct s_list_redirection *redire, int flag);
 
 
 /*	bultins.c	*/

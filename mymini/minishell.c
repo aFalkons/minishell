@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 23:09:31 by afalconi          #+#    #+#             */
-/*   Updated: 2023/09/23 15:36:34 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/10/03 03:31:54 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,24 +22,21 @@ int	main(int argc, char **argv, char **env)
 	while (1)
 	{
 		ft_init_var_newcmd(&sh_info);
-		ft_for_debug("pupamelo\n");
-		ft_for_debug(sh_info.input);
-		sh_info.input = readline("\033[32mminishell> \033[0m");
+		sh_info.input = ft_strdup(readline("\033[32mminishell> \033[0m"));
 		ft_lexical(&sh_info);
 		if (sh_info.lx_error == 1)
 			ft_print_message("Error: lexical error", 2);
 		else if (sh_info.is_emty == 0 && sh_info.lx_error != 1)
 		{
 			ft_parser(&sh_info, sh_info.node);
-			//print_tree( sh_info.node,  sh_info.node, 1);
+			//print_tree(sh_info.node, sh_info.node, 1);
 			ft_executor(&sh_info);
 			ft_check_lexical_error(&sh_info);
 			ps_free_tree(&sh_info);
 		}
 		if (sh_info.is_emty == 0)
-		{
 			lx_free_ls(&sh_info);
-		}
+		free(sh_info.input);
 	}
 	return (0);
 }
