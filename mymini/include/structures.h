@@ -6,17 +6,12 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 13:09:57 by afalconi          #+#    #+#             */
-/*   Updated: 2023/10/03 03:22:54 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/10/07 14:52:03 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef STRUCTURES_H
 # define STRUCTURES_H
-
-typedef struct s_builtins
-{
-	char	current_directory[4096];
-}	t_builtins;
 
 typedef struct s_lx_list_token
 {
@@ -27,13 +22,13 @@ typedef struct s_lx_list_token
 
 typedef struct s_list_redirection
 {
+	int						inp_error;
 	char					*file;
 	int						fd_input;
 	char					token;
 	int8_t					dont_say_that;
 	int						fd_copy;
 	int						fd_of_file;
-	int8_t					exit_inp;
 	struct s_list_redirection	*next;
 }	t_list_redirection;
 

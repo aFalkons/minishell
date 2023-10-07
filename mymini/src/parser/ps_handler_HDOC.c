@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 12:22:15 by afalconi          #+#    #+#             */
-/*   Updated: 2023/10/03 00:27:36 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/10/03 13:13:39 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,6 @@ int	ps_handler_HDOC(t_list_redirection *hdoc, t_shell_info *sh_info)
 	waitpid(pid, 0, 0);
 	if (pid == 0)
 		exit(1);
-
 	hdoc->fd_of_file = dup(fd[0]);
 	close(fd[1]);
 	close(fd[0]);

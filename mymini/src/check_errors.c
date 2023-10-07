@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 03:16:57 by afalconi          #+#    #+#             */
-/*   Updated: 2023/10/03 03:42:21 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/10/03 16:11:45 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,31 @@
 void	ck_tree_error(t_minitree *node)
 {
 	char	*str;
+	pid_t	pid;
 
 	str = NULL;
-	if (node->exit_status == 127)
+	pid = fork();
+	if (pid == 0)
 	{
-		if (node->token->token == ARG)
-			str = ft_strjoin("Error: comand not found --", node->token->next->str);
-		else if (node->token->token == CMD)
-			str = ft_strjoin("Error: comand not found --", node->token->str);
-		ft_print_message(str, 2);
-		free(str);
+		if (node->exit_status == 127)
+		{
+			if (node->token->token == ARG)
+				str = ft_strjoin("Error: comand not found --", node->token->next->str);
+			else if (node->token->token == CMD)
+				str = ft_strjoin("Error: comand not found --", node->token->str);
+			ft_print_message(str, 2);
+			free(str);
+			exit(node->exit_status);
+		}
+		if (node->token->token == INP && node->exit_status == 1)
+		{
+			str = ft_strjoin("Error:  No such file or directory --", node->redire->file);
+			ft_print_message(str, 2);
+			free(str);
+			exit(node->exit_status);
+		}
 	}
+	waitpid(pid, 0, 0);
 }
 
 void	ft_check_args(int argc, char **argv)

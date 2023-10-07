@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 23:09:31 by afalconi          #+#    #+#             */
-/*   Updated: 2023/10/03 03:31:54 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/10/04 17:07:44 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ int	main(int argc, char **argv, char **env)
 	t_shell_info		sh_info;
 
 	ft_check_args(argc, argv);
-	ft_init_variables(env, &sh_info);
 	ping();
+	ft_init_variables(env, &sh_info);
 	while (1)
 	{
 		ft_init_var_newcmd(&sh_info);
@@ -29,7 +29,6 @@ int	main(int argc, char **argv, char **env)
 		else if (sh_info.is_emty == 0 && sh_info.lx_error != 1)
 		{
 			ft_parser(&sh_info, sh_info.node);
-			//print_tree(sh_info.node, sh_info.node, 1);
 			ft_executor(&sh_info);
 			ft_check_lexical_error(&sh_info);
 			ps_free_tree(&sh_info);

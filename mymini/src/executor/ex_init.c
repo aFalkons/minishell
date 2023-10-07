@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 06:46:09 by afalconi          #+#    #+#             */
-/*   Updated: 2023/10/03 12:54:15 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/10/03 14:04:23 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ static void	ex_all_node(t_minitree *node, t_minitree *node_h, t_shell_info *sh_i
 			exit(1);
 	}
 	if ((node->close_redire || node->redire) && sh_info->pipe_flag != 1)
-		ex_ck_redirection(node, sh_info);
+		ex_ck_redirection(node, sh_info, exit_stat);
 	ex_pipe(node, sh_info);
 	ex_handler_and_or(node, node_h, sh_info, exit_stat);
 	if (*exit_stat == -1)

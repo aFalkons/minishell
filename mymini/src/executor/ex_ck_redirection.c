@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 02:20:42 by afalconi          #+#    #+#             */
-/*   Updated: 2023/10/03 12:54:59 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/10/03 16:16:07 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static void	ex_redire_to_do(struct s_list_redirection *open, t_shell_info *sh_in
 }
 
 
-static void	ex_open_redirection(struct s_list_redirection *open, t_shell_info *sh_info)
+static void	ex_open_redirection(struct s_list_redirection *open, t_shell_info *sh_info, int *exit_stat, t_minitree *node)
 {
 	struct s_list_redirection	*head;
 
@@ -60,7 +60,7 @@ static void	ex_open_redirection(struct s_list_redirection *open, t_shell_info *s
 		else if (open->token == APP)
 			ex_app(open, 0);
 		else if (open->token == INP)
-			ex_inp(open, 0, NULL);
+			node->exit_status = ex_inp(open, 0, exit_stat);
 		else if (open->token == HDOC)
 			ex_hdoc(open, 0);
 		open = open->next;
@@ -86,10 +86,10 @@ static void	ex_close_redirection(struct s_list_redirection *close, t_shell_info 
 }
 
 
-void	ex_ck_redirection(t_minitree *node, t_shell_info *sh_info)
+void	ex_ck_redirection(t_minitree *node, t_shell_info *sh_info, int *exit_stat)
 {
 	if (node->close_redire)
 		ex_close_redirection(node->close_redire, sh_info);
 	if (node->redire)
-		ex_open_redirection(node->redire, sh_info);
+		ex_open_redirection(node->redire, sh_info, exit_stat, node);
 }

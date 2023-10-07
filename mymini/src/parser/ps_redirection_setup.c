@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/20 16:34:42 by afalconi          #+#    #+#             */
-/*   Updated: 2023/10/03 02:07:42 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/10/03 15:59:22 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,10 +65,12 @@ t_list_redirection *insert_redire_list(t_minitree *node, t_shell_info *sh_info)
 	tmp->fd_input = ps_file_befor_token(node->token->str);
 	tmp->next = NULL;
 	tmp->dont_say_that = 0;
-	tmp->exit_inp = 0;
 	tmp->fd_of_file = 0;
+	tmp->inp_error = 0;
 	if (tmp->token == HDOC)
 		ps_handler_HDOC(tmp, sh_info);
+	if (tmp->token == INP && access(tmp->file, R_OK) == -1)
+		tmp->inp_error = 1;
 	return(tmp);
 }
 

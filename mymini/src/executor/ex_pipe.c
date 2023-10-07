@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 09:23:15 by afalconi          #+#    #+#             */
-/*   Updated: 2023/09/28 17:50:03 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/10/03 13:40:37 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,13 +75,9 @@ static void ex_multi_pipe(t_minitree *node, t_shell_info *sh_info)
 void	ex_pipe(t_minitree *node, t_shell_info *sh_info)
 {
 	if (node->flag_pipe == 1)
-	{
 		ex_create_pipe(node, sh_info);
-	}
 	else if (node->flag_pipe == 2)
-	{
 		ex_real_pipe(node, sh_info);
-	}
 	else if (node->flag_pipe == 3 || node->flag_pipe == 5)
 	{
 		dup2(sh_info->fd_stdout , 1);
@@ -95,7 +91,5 @@ void	ex_pipe(t_minitree *node, t_shell_info *sh_info)
 			ex_create_pipe(node, sh_info);
 	}
 	else if (node->flag_pipe == 4)
-	{
 		ex_multi_pipe(node, sh_info);
-	}
 }
