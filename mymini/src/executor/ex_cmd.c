@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 07:43:55 by afalconi          #+#    #+#             */
-/*   Updated: 2023/10/07 15:02:42 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/10/08 15:26:52 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,18 +34,21 @@ static int	ex_cont_formated_arg(struct s_lx_list_token *arg)
 	x = 0;
 	if (arg == NULL)
 		return(2);
+	while(arg->str[i] == ' ')
+		i ++;
 	while(arg->str[i])
 	{
-		while(arg->str[i] == ' ')
-			i ++;
+		x++;
 		while(arg->str[i] && arg->str[i] != ' ')
 		{
 			ex_check_quotes(arg->str, &i);
 			i++;
 		}
-		x++;
+		while(arg->str[i] == ' ')
+			i ++;
 	}
-	return(x + 2);
+	x += 2;
+	return(x);
 }
 
 static char	**ex_formated(struct s_lx_list_token *arg, char *cmd)
@@ -63,15 +66,17 @@ static char	**ex_formated(struct s_lx_list_token *arg, char *cmd)
 	ret[1] = NULL;
 	if (arg == NULL)
 		return (ret);
+	while(arg->str[i] == ' ')
+		i ++;
 	while(arg->str[i])
 	{
-		while(arg->str[i] == ' ')
-			i ++;
 		j = i;
 		i --;
 		while(arg->str[++i] != ' ' && arg->str[i])
 			ex_check_quotes(arg->str, &i);
 		ret[++x] = ft_strndup(arg->str, j, i);
+		while(arg->str[i] == ' ')
+			i ++;
 	}
 	ret[++x] = NULL;
 	return(ret);

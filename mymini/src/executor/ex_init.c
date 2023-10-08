@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 06:46:09 by afalconi          #+#    #+#             */
-/*   Updated: 2023/10/03 14:04:23 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/10/08 14:44:14 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,26 +23,28 @@ static int	ex_chose_token(t_minitree *node,t_shell_info *sh_info, int last_exit)
 
 static void ex_handler_and_or(t_minitree *node, t_minitree *node_h, t_shell_info *sh_info, int *exit_stat)
 {
-	if (node != node_h && node->token->token == AND)
+	if (node == node_h)
+		return ;
+	else if (node->token->token == AND)
 	{
 		if (*exit_stat == 2)
 			*exit_stat = 1;
 		sh_info->stdin_flag= 0;
 		sh_info->stdout_flag = 0;
 	}
-	else if (node != node_h && *exit_stat == 1 && node->token->token == OR)
+	else if (*exit_stat == 1 && node->token->token == OR)
 	{
 		*exit_stat = 2;
 		sh_info->stdin_flag= 0;
 		sh_info->stdout_flag = 0;
 	}
-	else if (node != node_h && *exit_stat == -1 && node->token->token == OR)
+	else if (*exit_stat == -1 && node->token->token == OR)
 	{
 		*exit_stat = 1;
 		sh_info->stdin_flag= 0;
 		sh_info->stdout_flag = 0;
 	}
-	else if ((node != node_h && *exit_stat == 1) && sh_info->pid_flag == 1)
+	else if (*exit_stat == 1 && sh_info->pid_flag == 1)
 	{
 		*exit_stat = ex_chose_token(node, sh_info, *exit_stat);
 	}
@@ -60,7 +62,7 @@ static void	ex_all_node(t_minitree *node, t_minitree *node_h, t_shell_info *sh_i
 			sh_info->sub_level ++;
 			ex_all_node(node->subsh, node_h, sh_info, exit_stat);
 		}
-		waitpid(-1 , 0, 0);
+		waitpid(sh_info->pid , 0, 0);
 		if (sh_info->pid == 0)
 			exit(1);
 	}
