@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 23:09:31 by afalconi          #+#    #+#             */
-/*   Updated: 2023/10/11 14:10:01 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/10/11 16:42:28 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	main(int argc, char **argv, char **env)
 	ft_init_variables(env, &sh_info);
 	while (1)
 	{
-		ft_init_var_newcmd(&sh_info);
+		ft_init_var_newcmd(&sh_info, env);
 		sh_info.input = ft_strdup(readline("\033[32mminishell> \033[0m"));
 		ft_lexical(&sh_info);
 		//print_list(sh_info.lx_ls_token_h);

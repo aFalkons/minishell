@@ -1,23 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_exit.c                                          :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: matteo <matteo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/19 08:59:09 by afalconi          #+#    #+#             */
-/*   Updated: 2023/10/11 16:18:56 by afalconi         ###   ########.fr       */
+/*   Created: 2023/08/06 17:59:10 by matteo            #+#    #+#             */
+/*   Updated: 2023/08/06 18:00:04 by matteo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/libft.h"
 
-void	ft_exit(int fd, char *str, int num_error)
+int	ft_strcmp(const char *str1, const char *str2)
 {
-	if (str)
+	while (*str1 && (*str1 == *str2))
 	{
-		write(fd, str, ft_strlen(str));
-		write(fd, "\n", 1);
+		str1++;
+		str2++;
 	}
-	exit(num_error);
+	return (*str1 - *str2);
 }

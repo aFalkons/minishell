@@ -1,23 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_exit.c                                          :+:      :+:    :+:   */
+/*   ft_isalnum_char.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: matteo <matteo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/19 08:59:09 by afalconi          #+#    #+#             */
-/*   Updated: 2023/10/11 16:18:56 by afalconi         ###   ########.fr       */
+/*   Created: 2023/01/16 17:19:39 by misidori          #+#    #+#             */
+/*   Updated: 2023/09/08 17:22:06 by matteo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/libft.h"
 
-void	ft_exit(int fd, char *str, int num_error)
+bool	ft_isalnum_char(int num)
 {
-	if (str)
-	{
-		write(fd, str, ft_strlen(str));
-		write(fd, "\n", 1);
-	}
-	exit(num_error);
+	if ((num >= 48 && num <= 57) || (num >= 65 && num <= 90)
+		|| (num >= 97 && num <= 122))
+		return (true);
+	else
+		return (false);
 }

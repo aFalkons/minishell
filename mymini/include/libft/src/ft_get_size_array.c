@@ -1,23 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_exit.c                                          :+:      :+:    :+:   */
+/*   ft_get_size_array.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: matteo <matteo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/19 08:59:09 by afalconi          #+#    #+#             */
-/*   Updated: 2023/10/11 16:18:56 by afalconi         ###   ########.fr       */
+/*   Created: 2023/10/05 10:10:52 by matteo            #+#    #+#             */
+/*   Updated: 2023/10/05 10:11:22 by matteo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/libft.h"
 
-void	ft_exit(int fd, char *str, int num_error)
+int	ft_get_size_array(char **array)
 {
-	if (str)
-	{
-		write(fd, str, ft_strlen(str));
-		write(fd, "\n", 1);
-	}
-	exit(num_error);
+	int	i;
+
+	i = 0;
+	while (array[i])
+		i++;
+	return (i);
 }

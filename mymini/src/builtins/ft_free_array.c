@@ -1,23 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_exit.c                                          :+:      :+:    :+:   */
+/*   ft_free_array.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: misidori <misidori@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/19 08:59:09 by afalconi          #+#    #+#             */
-/*   Updated: 2023/10/11 16:18:56 by afalconi         ###   ########.fr       */
+/*   Created: 2023/09/29 01:34:41 by matteo            #+#    #+#             */
+/*   Updated: 2023/10/07 22:44:02 by misidori         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/libft.h"
+#include "../include/minishell.h"
 
-void	ft_exit(int fd, char *str, int num_error)
+void	ft_free_array(char **array)
 {
-	if (str)
+	int	i;
+	char	*tmp;
+
+	if (array == NULL)
+		return ;
+	i = 0;
+	while (array[i])
 	{
-		write(fd, str, ft_strlen(str));
-		write(fd, "\n", 1);
+		tmp = array[i];
+		array[i] = NULL;
+		free(tmp);
+		i++;
 	}
-	exit(num_error);
+	free(array);
 }
+

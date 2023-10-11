@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 13:17:04 by afalconi          #+#    #+#             */
-/*   Updated: 2023/10/04 17:27:50 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/10/11 16:46:58 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static int	complete_quotes(t_shell_info *sh_info, char quotes, int i)
 
 	str = NULL;
 	complite = NULL;
-	while (ft_contchar(str, quotes) % 2 == 0 || ft_contchar(str, quotes) == 0)
+	while (ft_count_char(str, quotes) % 2 == 0 || ft_count_char(str, quotes) == 0)
 	{
 		complite = ft_strjoin(complite, "\n");
 		str = readline("quote> ");

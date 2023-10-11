@@ -6,12 +6,34 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 13:09:57 by afalconi          #+#    #+#             */
-/*   Updated: 2023/10/11 14:29:53 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/10/11 18:13:57 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef STRUCTURES_H
 # define STRUCTURES_H
+
+typedef struct s_program
+{
+	struct dirent	*dir_entry;
+	DIR				*dir;
+}	t_program;
+
+typedef struct s_node
+{
+	char			*full_info;
+	char			*name;
+	char			*value;
+	struct s_node	*next;
+	struct s_node	*prev;
+}	t_node;
+
+typedef struct s_list_var_env
+{
+	t_node	*node;
+	t_node	*head;
+	t_node	*tail;
+}	t_list_var_env;
 
 typedef struct s_lx_list_token
 {
@@ -70,6 +92,7 @@ typedef struct s_shell_info
 	t_lx_list_token		*lx_ls_token_h;
 	t_minitree			*node;
 	t_minitree			*node_h;
+	t_list_var_env		*var;
 }	t_shell_info;
 
 #endif

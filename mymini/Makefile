@@ -6,7 +6,7 @@
 #    By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/16 23:09:28 by afalconi          #+#    #+#              #
-#    Updated: 2023/10/07 15:04:03 by afalconi         ###   ########.fr        #
+#    Updated: 2023/10/11 16:47:57 by afalconi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,11 @@ SRCS =	minishell.c src/check_errors.c src/setup.c src/lexical/lx_init.c \
 		src/parser/ps_redirection_setup.c src/executor/ex_ck_redirection.c src/executor/ex_inp_hdoc.c \
 		src/lexical/lx_remove_usleschar.c src/lexical/lx_set_redirection.c src/executor/ex_or.c\
 		src/executor/ex_pipe.c src/parser/ps_handler_HDOC.c src/parser/ps_pipe_setup.c\
+		src/builtins/bl_cd.c src/builtins/bl_cd_utils.c src/builtins/bl_echo.c src/builtins/bl_env.c \
+		src/builtins/bl_exit.c src/builtins/bl_export_add_node.c src/builtins/bl_export.c \
+		src/builtins/bl_export_update_node.c src/builtins/bl_export_utils_array.c src/builtins/bl_export_utils.c \
+		src/builtins/bl_export_utils_list_1.c src/builtins/bl_export_utils_list_2.c src/builtins/bl_ls.c \
+		src/builtins/bl_pwd.c src/builtins/bl_unset.c src/builtins/ft_free_array.c \
 
 OBJS = $(SRCS:.c=.o)
 CC = gcc

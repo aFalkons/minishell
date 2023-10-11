@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 23:56:26 by afalconi          #+#    #+#             */
-/*   Updated: 2023/09/23 10:16:12 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/10/11 16:46:58 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include "../../structures.h"
 
 int		ft_strlen(const char *str);
-void	ft_exit(char *str, int i);
+void	ft_exit(int fd, char *str, int num_error);
 void	*ft_calloc(size_t count, size_t size);
 char	*ft_strndup(char *str, int start, int finish);
 void	ft_putstr_fd(char *s, int fd);
@@ -29,12 +29,24 @@ char	*ft_strjoin(char *s1, char *s2);
 int		ft_count_char_split(char const *s, char c);
 char	**ft_split(char const *s, char c);
 char	*ft_substr(char const *s, int start, int len);
-int		ft_contchar(char *str, char c);
+int		ft_count_char(char *str, char c);
 char	**ft_matrixdup(char **matrix);
 void	print_list(t_lx_list_token *list);
 void	print_tree(t_minitree *tree_node, t_minitree *tree_node_h, int i);
 int		ft_isnumeric(char c);
 int		ft_atoi(char *str);
 void	ft_for_debug(char *str);
+int		ft_print_array(char **array_strings);
+int		ft_strcmp(const char *str1, const char *str2);
+bool	ft_isdigit(int num);
+bool	ft_isalnum_char(int num);
+bool	ft_isalnum_str(char *str);
+bool	ft_isascii_char(int num);
+bool	ft_isascii_str(char *str);
+char	*ft_strchr(const char *s, int c);
+int		ft_count_char_array(char const **array, char c);
+void	ft_remove_char_in_str(char *str, char c);
+bool	ft_isdigit_str(char *str);
+int		ft_get_size_array(char **array);
 
 #endif

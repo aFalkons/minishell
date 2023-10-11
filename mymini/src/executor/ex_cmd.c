@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 07:43:55 by afalconi          #+#    #+#             */
-/*   Updated: 2023/10/08 15:26:52 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/10/11 18:21:53 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,10 +93,10 @@ int	ex_cmd(struct s_lx_list_token *cmd, struct s_lx_list_token *arg, struct s_mi
 	exit = 1;
 	path_cmd = NULL;
 	path_cmd = ex_ck_cmd(cmd, node);
-	if (path_cmd == NULL)
+	if (path_cmd == NULL && bl_is_builtins(cmd->str) == 0)
 		return(-1) ;
 	arr_cmd_arg = ex_formated(arg, cmd->str);
-	//if (bl_ck_builtins(&exit, arr_cmd_arg, node->env, sh_info) == 0)
+	if (bl_ck_builtins(&exit, arr_cmd_arg, node->env, sh_info) == 0)
 		ex_real_esecution(path_cmd, arr_cmd_arg, node, sh_info);
 	while (arr_cmd_arg[++i])
 		free(arr_cmd_arg[i]);

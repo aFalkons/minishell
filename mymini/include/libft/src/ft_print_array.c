@@ -1,23 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_exit.c                                          :+:      :+:    :+:   */
+/*   ft_print_array.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: misidori <misidori@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/19 08:59:09 by afalconi          #+#    #+#             */
-/*   Updated: 2023/10/11 16:18:56 by afalconi         ###   ########.fr       */
+/*   Created: 2023/08/03 18:04:02 by misidori          #+#    #+#             */
+/*   Updated: 2023/08/12 18:03:24 by misidori         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/libft.h"
 
-void	ft_exit(int fd, char *str, int num_error)
+int	ft_print_array(char **array_strings)
 {
-	if (str)
+	int	i;
+
+	i = 0;
+	if (!array_strings)
+		return (-1);
+	while (array_strings[i])
 	{
-		write(fd, str, ft_strlen(str));
-		write(fd, "\n", 1);
+		printf("%s\n", array_strings[i]);
+		i++;
 	}
-	exit(num_error);
+	return (1);
 }

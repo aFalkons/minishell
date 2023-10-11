@@ -6,11 +6,30 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 11:52:02 by afalconi          #+#    #+#             */
-/*   Updated: 2023/10/03 03:38:39 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/10/11 18:19:25 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	bl_is_builtins(char *cmd)
+{
+	if (ft_strncmp(cmd, "export", 6) == 0 && ft_strlen(cmd) == 6)
+		return(1);
+	else if (ft_strncmp(cmd, "unset", 5) == 0 && ft_strlen(cmd) == 5)
+		return(1);
+	else if (ft_strncmp(cmd, "echo", 4) == 0 && ft_strlen(cmd) == 4)
+		return(1);
+	if (ft_strncmp(cmd, "env", 3) == 0 && ft_strlen(cmd) == 3)
+		return(1);
+	if (ft_strncmp(cmd, "exit", 4) == 0 && ft_strlen(cmd) == 4)
+		return(1);
+	if(ft_strncmp(cmd, "pwd", 3) == 0 && ft_strlen(cmd) == 3)
+		return(1);
+	else if (ft_strncmp(cmd, "cd", 2) == 0 && ft_strlen(cmd) == 2)
+		return(1);
+	return(0);
+}
 
 static char	*ex_create_path(char **env)
 {
@@ -19,7 +38,7 @@ static char	*ex_create_path(char **env)
 	i = -1;
 	while(env[++i])
 	{
-		if (env[i][0] == 'P' && env[i][1] == 'A' && env[i][2] == 'T' && env[i][3] == 'H')
+		if (env[i][0] == 'P' && env[i][1] == 'A' && env[i][2] == 'T' && env[i][3] == 'H' && env[i][4] == '=')
 			return(ft_strdup(env[i]));
 	}
 	return(NULL);

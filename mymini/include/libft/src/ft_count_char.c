@@ -1,23 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_exit.c                                          :+:      :+:    :+:   */
+/*   ft_count_char.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/19 08:59:09 by afalconi          #+#    #+#             */
-/*   Updated: 2023/10/11 16:18:56 by afalconi         ###   ########.fr       */
+/*   Created: 2023/08/08 06:35:11 by afalconi          #+#    #+#             */
+/*   Updated: 2023/08/08 06:55:00 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/libft.h"
 
-void	ft_exit(int fd, char *str, int num_error)
+int	ft_count_char(char *str, char c)
 {
-	if (str)
+	int	i;
+	int	ret;
+
+	i = -1;
+	ret = 0;
+	if (str == 0)
+		return (0);
+	while(str[++i])
 	{
-		write(fd, str, ft_strlen(str));
-		write(fd, "\n", 1);
+		if (str[i] == c)
+			ret ++;
 	}
-	exit(num_error);
+	return(ret);
 }

@@ -1,23 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_exit.c                                          :+:      :+:    :+:   */
+/*   ft_remove_char_in_str.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: misidori <misidori@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/19 08:59:09 by afalconi          #+#    #+#             */
-/*   Updated: 2023/10/11 16:18:56 by afalconi         ###   ########.fr       */
+/*   Created: 2023/10/04 16:43:22 by misidori          #+#    #+#             */
+/*   Updated: 2023/10/04 16:43:55 by misidori         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/libft.h"
 
-void	ft_exit(int fd, char *str, int num_error)
+void	ft_remove_char_in_str(char *str, char c)
 {
-	if (str)
+	int	len;
+	int	i;
+	int	j;
+
+	len = strlen(str);
+	i = 0;
+	j = 0;
+	while (i < len)
 	{
-		write(fd, str, ft_strlen(str));
-		write(fd, "\n", 1);
+		if (str[i] != c)
+		{
+			str[j] = str[i];
+			j++;
+		}
+		i++;
 	}
-	exit(num_error);
+	str[j] = '\0';
 }

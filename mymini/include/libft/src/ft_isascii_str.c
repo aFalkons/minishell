@@ -1,23 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_exit.c                                          :+:      :+:    :+:   */
+/*   ft_isascii_str.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: misidori <misidori@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/19 08:59:09 by afalconi          #+#    #+#             */
-/*   Updated: 2023/10/11 16:18:56 by afalconi         ###   ########.fr       */
+/*   Created: 2023/01/16 17:33:36 by misidori          #+#    #+#             */
+/*   Updated: 2023/09/01 15:58:30 by misidori         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/libft.h"
 
-void	ft_exit(int fd, char *str, int num_error)
+bool ft_isascii_str(char *str)
 {
-	if (str)
-	{
-		write(fd, str, ft_strlen(str));
-		write(fd, "\n", 1);
-	}
-	exit(num_error);
+    int i = 0;
+
+    while (str[i])
+    {
+        if ((unsigned char)str[i] <= 127)
+        {
+            i++;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    return true;
 }
+

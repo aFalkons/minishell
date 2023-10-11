@@ -1,23 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_exit.c                                          :+:      :+:    :+:   */
+/*   ft_count_char_array.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: matteo <matteo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/19 08:59:09 by afalconi          #+#    #+#             */
-/*   Updated: 2023/10/11 16:18:56 by afalconi         ###   ########.fr       */
+/*   Created: 2023/08/01 16:18:44 by matteo            #+#    #+#             */
+/*   Updated: 2023/09/04 16:46:09 by matteo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/libft.h"
 
-void	ft_exit(int fd, char *str, int num_error)
+int	ft_count_char_array(char const **array, char c)
 {
-	if (str)
+	int	i;
+	int	j;
+	int	counter;
+
+	i = 0;
+	counter = 0;
+	if (!array || !c)
+		return (0);
+	while (array[i])
 	{
-		write(fd, str, ft_strlen(str));
-		write(fd, "\n", 1);
+		j = 0;
+		while (array[i][j])
+		{
+			if (array[i][j] == c)
+				counter++;
+		}
+		i++;
 	}
-	exit(num_error);
+	return (counter);
 }

@@ -1,23 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_exit.c                                          :+:      :+:    :+:   */
+/*   bl_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/19 08:59:09 by afalconi          #+#    #+#             */
-/*   Updated: 2023/10/11 16:18:56 by afalconi         ###   ########.fr       */
+/*   Created: 2023/08/06 17:43:15 by matteo            #+#    #+#             */
+/*   Updated: 2023/10/11 16:38:00 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/libft.h"
+#include "minishell.h"
 
-void	ft_exit(int fd, char *str, int num_error)
+int	bl_env(char **env, int argc, char **split)
 {
-	if (str)
+	if (argc == 1)
 	{
-		write(fd, str, ft_strlen(str));
-		write(fd, "\n", 1);
+		ft_print_array(env);
+		return (1);
 	}
-	exit(num_error);
+	else
+	{
+		printf("env: %s: No such file or directory\n", split[1]);
+		return (-1);
+	}
 }

@@ -6,11 +6,33 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 12:07:42 by afalconi          #+#    #+#             */
-/*   Updated: 2023/10/11 14:29:49 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/10/11 19:20:12 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static t_list_var_env	*ft_fill_the_list_with_env(char **env, t_shell_info *sh_info)
+{
+	int		i;
+	int		index_egual_sign;
+	char	*name;
+	char	*value;
+
+	i = 0;
+	sh_info->var->node = NULL;
+	while (env[i])
+	{
+		index_egual_sign = ft_find_char_index_str(env[i], '=');
+		name = ft_substr(env[i], 0, index_egual_sign);
+		value = ft_substr(env[i], index_egual_sign + 1, ft_strlen(env[i]));
+		ft_add_node_in_list(&sh_info->var->node, name, value);
+		free(name);
+		free(value);
+		i++;
+	}
+	return (sh_info->var);
+}
 
 //inizializzazione delle variabili d'ambiente
 void	ft_init_variables(char **env, t_shell_info *sh_info)
@@ -35,13 +57,11 @@ void	ft_init_variables(char **env, t_shell_info *sh_info)
 	sh_info->fd_stdin = dup(0);
 }
 
-void	ft_init_var_newcmd(t_shell_info *sh_info)
+void	ft_init_var_newcmd(t_shell_info *sh_info, char **env)
 {
 	sh_info->lx_error = 0;
 	sh_info->input = NULL;
 	sh_info->pwd = 0;
-	sh_info->lx_ls_token = NULL;
-	sh_info->lx_ls_token_h = NULL;
 	sh_info->complite = NULL;
 	sh_info->node = NULL;
 	sh_info->node_h = NULL;
@@ -60,4 +80,8 @@ void	ft_init_var_newcmd(t_shell_info *sh_info)
 	sh_info->sub_level = 1;
 	sh_info->pipe_flag = 0;
 	sh_info->exit_stat = 0;
+	sh_info->var = (t_list_var_env *) malloc(sizeof(t_list_var_env));
+	sh_info->var = ft_fill_the_list_with_env(env, sh_info);
+	sh_info->var->head = ft_get_list_head(sh_info->var);
+	sh_info->var->tail = ft_get_list_tail(sh_info->var);
 }

@@ -6,11 +6,18 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/05 00:42:57 by afalconi          #+#    #+#             */
-/*   Updated: 2023/09/08 09:16:27 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/10/11 19:25:49 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static void	bl_free_list_var(t_node *node)
+{
+	if (node->next)
+		bl_free_list_var(node->next);
+	ft_free_node(node);
+}
 
 static void	ls_free_ls_recursiv(struct s_lx_list_token	*tmp)
 {
@@ -25,6 +32,8 @@ void	lx_free_ls(t_shell_info *sh_info)
 	ls_free_ls_recursiv(sh_info->lx_ls_token_h);
 	sh_info->lx_ls_token_h = NULL;
 	sh_info->lx_ls_token = NULL;
+	bl_free_list_var(sh_info->var->node);
+	free(sh_info->var);
 }
 
 static void	ps_free_redire(struct s_list_redirection *redire)
