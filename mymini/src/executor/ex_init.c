@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 06:46:09 by afalconi          #+#    #+#             */
-/*   Updated: 2023/10/11 19:47:57 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/10/13 12:04:40 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,6 @@ static void ex_handler_and_or(t_minitree *node, t_minitree *node_h, t_shell_info
 
 static void	ex_all_node(t_minitree *node, t_minitree *node_h, t_shell_info *sh_info, int *exit_stat)
 {
-	//if (node == node_h)
-	//	aggiornisubshlevel;
 	if (node->next)
 		ex_all_node(node->next, node_h, sh_info, exit_stat);
 	if (node->subsh)
@@ -82,4 +80,5 @@ void	ft_executor(t_shell_info *sh_info)
 
 	exit_stat = 1;
 	ex_all_node(sh_info->node, sh_info->node_h, sh_info, &exit_stat);
+	while (waitpid(-1, NULL, 0) != -1){}
 }

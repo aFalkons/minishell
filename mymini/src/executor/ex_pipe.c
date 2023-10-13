@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 09:23:15 by afalconi          #+#    #+#             */
-/*   Updated: 2023/10/11 15:54:29 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/10/13 11:16:05 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,16 +47,13 @@ static void	ex_real_pipe(t_minitree *node, t_shell_info *sh_info)
 
 static void ex_multi_pipe(t_minitree *node, t_shell_info *sh_info)
 {
-	int	fd_tmp;
-
-	fd_tmp = 0;
+	dup2(sh_info->fd_stdout, 1);
+	dup2(sh_info->fd_stdin, 0);
 	close(sh_info->fd[1]);
-	fd_tmp = dup(sh_info->fd[0]);
+	if (sh_info->pid == 0 && sh_info->stdout_flag != 1 && node->exit_status != -1)
+		dup2(sh_info->fd[0], 0);
 	close(sh_info->fd[0]);
 	ex_create_pipe(node, sh_info);
-	if (sh_info->pid == 0 && sh_info->stdout_flag != 1 && node->exit_status != -1)
-		dup2(fd_tmp, 0);
-	close(fd_tmp);
 }
 
 void	ex_pipe(t_minitree *node, t_shell_info *sh_info)
@@ -70,11 +67,7 @@ void	ex_pipe(t_minitree *node, t_shell_info *sh_info)
 		dup2(sh_info->fd_stdout , 1);
 		dup2(sh_info->fd_stdin , 0);
 		close(sh_info->fd[0]);
-		close(sh_info->fd_stdout);
-		close(sh_info->fd_stdin);
-		sh_info->fd_stdout = dup(1);
-		sh_info->fd_stdin = dup(0);
-		waitpid(sh_info->pid, 0, 0);
+		while (waitpid(-1, NULL, 0) != -1){}
 		if (node->flag_pipe == 5)
 			ex_create_pipe(node, sh_info);
 	}
