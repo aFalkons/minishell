@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 23:09:31 by afalconi          #+#    #+#             */
-/*   Updated: 2023/10/25 15:23:14 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/10/25 17:32:48 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,13 @@ int	main(int argc, char **argv, char **env)
 				ft_parser(&sh_info, sh_info.node);
 				//print_tree(sh_info.node_h, sh_info.node_h, 1);
 				ft_executor(&sh_info);
-				ft_check_lexical_error(&sh_info);
 				ps_free_tree(&sh_info);
 			}
 			if (sh_info.is_emty == 0)
 				lx_free_ls(&sh_info);
 		}
 		else
-			write(1, "\n", 1);
+			ft_exit(1, "exit", 1);
 		free(sh_info.input);
 	}
 	return (0);

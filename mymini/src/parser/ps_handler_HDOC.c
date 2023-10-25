@@ -6,20 +6,17 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 12:22:15 by afalconi          #+#    #+#             */
-/*   Updated: 2023/10/22 15:23:48 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/10/25 17:34:06 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void test2()
-{
-	ft_for_debug("bo fra non so che scrivere\n");
-}
 
-//void ps_hdoc_handler_signal()
-//{
-//}
+void ps_hdoc_handler_signal(int sig)
+{
+	exit(1);
+}
 
 static void ps_hdoc_insert(t_list_redirection *hdoc, int *fd)
 {
@@ -78,15 +75,17 @@ int	ps_handler_HDOC(t_list_redirection *hdoc, t_shell_info *sh_info)
 	int			fd[2];
 
 	(void)sh_info;
+	sh_info->flag_hdoc_sig = 0;
 	if (pipe(fd) == -1)
 		return(-1);
 	pid = fork();
 	if (pid == 0)
 	{
-		//signal(SIGINT, &test2);
+		signal(SIGINT, &ps_hdoc_handler_signal);
 		//ps_hdoc_handler_signal();
 		close(fd[0]);
 		ps_hdoc_insert(hdoc, fd);
+		sh_info->flag_hdoc_sig = 1;
 	}
 	waitpid(pid, 0, 0);
 	if (pid == 0)
@@ -94,5 +93,10 @@ int	ps_handler_HDOC(t_list_redirection *hdoc, t_shell_info *sh_info)
 	hdoc->fd_of_file = dup(fd[0]);
 	close(fd[1]);
 	close(fd[0]);
+	if (sh_info->flag_hdoc_sig == 0)
+	{
+		close(hdoc->fd_of_file);
+		return(-1);
+	}
 	return(1);
 }

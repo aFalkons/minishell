@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/20 16:34:42 by afalconi          #+#    #+#             */
-/*   Updated: 2023/10/03 15:59:22 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/10/25 17:36:15 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,8 @@ static char	*ps_file_after_token(char *str)
 
 t_list_redirection *insert_redire_list(t_minitree *node, t_shell_info *sh_info)
 {
-	t_list_redirection *tmp;
+	t_list_redirection	*tmp;
+	int					stat;
 
 	tmp = ft_calloc(sizeof(struct s_list_redirection), 1);
 	tmp->token = node->token->token;
@@ -68,9 +69,11 @@ t_list_redirection *insert_redire_list(t_minitree *node, t_shell_info *sh_info)
 	tmp->fd_of_file = 0;
 	tmp->inp_error = 0;
 	if (tmp->token == HDOC)
-		ps_handler_HDOC(tmp, sh_info);
+		stat = ps_handler_HDOC(tmp, sh_info);
 	if (tmp->token == INP && access(tmp->file, R_OK) == -1)
 		tmp->inp_error = 1;
+	if (stat == -1)
+		return (NULL);
 	return(tmp);
 }
 

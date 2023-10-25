@@ -6,26 +6,18 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 12:07:42 by afalconi          #+#    #+#             */
-/*   Updated: 2023/10/25 15:26:53 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/10/25 17:29:03 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void test(int sig)
+void handler_sig(int sig)
 {
-	struct termios old_in;
-	struct termios new_in;
-
-	tcgetattr(STDIN_FILENO, &old_in);
-	new_in = old_in;
-	new_in.c_lflag &= ~(ECHOCTL);
-	tcsetattr(1, TCSANOW, &new_in);
-	printf("%d\n", sig);
 	if (sig == SIGINT)
 	{
 		write(1, "\n", 1);
-		//rl_replace_line("", 0);
+		rl_replace_line("", 0);
 		rl_on_new_line();
 		rl_redisplay();
 	}
@@ -34,8 +26,8 @@ void test(int sig)
 static void set_segnal(t_shell_info *sh_info)
 {
 	(void)sh_info;
-	signal(SIGQUIT, &test);
-	signal(SIGINT, &test);
+	signal(SIGQUIT, &handler_sig);
+	signal(SIGINT, &handler_sig);
 }
 
 static t_list_var_env	*ft_fill_the_list_with_env(char **env, t_shell_info *sh_info)
@@ -63,6 +55,8 @@ static t_list_var_env	*ft_fill_the_list_with_env(char **env, t_shell_info *sh_in
 //inizializzazione delle variabili d'ambiente
 void	ft_init_variables(char **env, t_shell_info *sh_info)
 {
+	sh_info->flag_hdoc_sig = 0;
+	sh_info->complete_quote = 0;
 	sh_info->lx_error = 0;
 	sh_info->env = env;
 	sh_info->input = NULL;
@@ -86,6 +80,8 @@ void	ft_init_variables(char **env, t_shell_info *sh_info)
 
 void	ft_init_var_newcmd(t_shell_info *sh_info, char **env)
 {
+	sh_info->flag_hdoc_sig = 0;
+	sh_info->complete_quote = 0;
 	sh_info->lx_error = 0;
 	sh_info->input = NULL;
 	sh_info->pwd = 0;
