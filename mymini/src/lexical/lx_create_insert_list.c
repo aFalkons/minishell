@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 17:16:43 by afalconi          #+#    #+#             */
-/*   Updated: 2023/08/13 13:12:25 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/10/13 15:19:47 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ static void	lx_insert_list(t_shell_info *sh_info, char *str, char token)
 {
 	t_lx_list_token	*tmp;
 
+	tmp = NULL;
 	tmp = ft_calloc(sizeof(struct s_lx_list_token), 1);
 	tmp->next = NULL;
 	tmp->str = str;

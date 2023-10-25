@@ -6,10 +6,9 @@
 #    By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/16 23:09:28 by afalconi          #+#    #+#              #
-#    Updated: 2023/10/11 16:47:57 by afalconi         ###   ########.fr        #
+#    Updated: 2023/10/23 14:59:53 by afalconi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
-
 
 NAME = minishell
 LIBFT = ./include/libft
@@ -39,7 +38,7 @@ $(NAME): $(OBJS)
 	@mkdir -p obj
 	@mkdir -p bin
 	@make -s -C $(LIBFT)
-	@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(LIBS) -lncurses -lreadline
+	@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(LIBS) -lncurses -lreadline -L /Users/$(USER)/.brew/opt/readline/lib -I /Users/$(USER)/.brew/opt/readline/include
 	@mv $(OBJS) ./obj
 	@mv $(NAME) ./bin
 

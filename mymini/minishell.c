@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 23:09:31 by afalconi          #+#    #+#             */
-/*   Updated: 2023/10/13 10:37:08 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/10/25 15:23:14 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,20 +23,25 @@ int	main(int argc, char **argv, char **env)
 	{
 		ft_init_var_newcmd(&sh_info, env);
 		sh_info.input = ft_strdup(readline("\033[32mminishell> \033[0m"));
-		ft_lexical(&sh_info);
-		//print_list(sh_info.lx_ls_token_h);
-		if (sh_info.lx_error == 1)
-			ft_print_message("Error: lexical error", 2);
-		else if (sh_info.is_emty == 0 && sh_info.lx_error != 1)
+		if (sh_info.input)
 		{
-			ft_parser(&sh_info, sh_info.node);
-			print_tree(sh_info.node_h, sh_info.node_h, 1);
-			ft_executor(&sh_info);
-			ft_check_lexical_error(&sh_info);
-			ps_free_tree(&sh_info);
+			ft_lexical(&sh_info);
+			//print_list(sh_info.lx_ls_token_h);
+			if (sh_info.lx_error == 1)
+				ft_print_message("Error: lexical error", 2);
+			else if (sh_info.is_emty == 0 && sh_info.lx_error != 1)
+			{
+				ft_parser(&sh_info, sh_info.node);
+				//print_tree(sh_info.node_h, sh_info.node_h, 1);
+				ft_executor(&sh_info);
+				ft_check_lexical_error(&sh_info);
+				ps_free_tree(&sh_info);
+			}
+			if (sh_info.is_emty == 0)
+				lx_free_ls(&sh_info);
 		}
-		if (sh_info.is_emty == 0)
-			lx_free_ls(&sh_info);
+		else
+			write(1, "\n", 1);
 		free(sh_info.input);
 	}
 	return (0);

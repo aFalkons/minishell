@@ -6,11 +6,20 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 12:22:15 by afalconi          #+#    #+#             */
-/*   Updated: 2023/10/03 13:13:39 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/10/22 15:23:48 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void test2()
+{
+	ft_for_debug("bo fra non so che scrivere\n");
+}
+
+//void ps_hdoc_handler_signal()
+//{
+//}
 
 static void ps_hdoc_insert(t_list_redirection *hdoc, int *fd)
 {
@@ -74,6 +83,8 @@ int	ps_handler_HDOC(t_list_redirection *hdoc, t_shell_info *sh_info)
 	pid = fork();
 	if (pid == 0)
 	{
+		//signal(SIGINT, &test2);
+		//ps_hdoc_handler_signal();
 		close(fd[0]);
 		ps_hdoc_insert(hdoc, fd);
 	}
