@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 11:52:02 by afalconi          #+#    #+#             */
-/*   Updated: 2023/10/11 18:19:25 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/10/26 17:43:33 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@ int	bl_is_builtins(char *cmd)
 		return(1);
 	else if (ft_strncmp(cmd, "echo", 4) == 0 && ft_strlen(cmd) == 4)
 		return(1);
-	if (ft_strncmp(cmd, "env", 3) == 0 && ft_strlen(cmd) == 3)
+	else if (ft_strncmp(cmd, "env", 3) == 0 && ft_strlen(cmd) == 3)
 		return(1);
-	if (ft_strncmp(cmd, "exit", 4) == 0 && ft_strlen(cmd) == 4)
+	else if (ft_strncmp(cmd, "exit", 4) == 0 && ft_strlen(cmd) == 4)
 		return(1);
-	if(ft_strncmp(cmd, "pwd", 3) == 0 && ft_strlen(cmd) == 3)
+	else if(ft_strncmp(cmd, "pwd", 3) == 0 && ft_strlen(cmd) == 3)
 		return(1);
 	else if (ft_strncmp(cmd, "cd", 2) == 0 && ft_strlen(cmd) == 2)
 		return(1);

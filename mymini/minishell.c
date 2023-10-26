@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 23:09:31 by afalconi          #+#    #+#             */
-/*   Updated: 2023/10/25 17:32:48 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/10/26 18:18:55 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,12 @@ int	main(int argc, char **argv, char **env)
 		{
 			ft_lexical(&sh_info);
 			//print_list(sh_info.lx_ls_token_h);
+			if (sh_info.lx_error != 0)
+				add_history(sh_info.input);
 			if (sh_info.lx_error == 1)
 				ft_print_message("Error: lexical error", 2);
+			else if (sh_info.lx_error == 2)
+				ft_print_message("\nError: unexpected EOF", 2);
 			else if (sh_info.is_emty == 0 && sh_info.lx_error != 1)
 			{
 				ft_parser(&sh_info, sh_info.node);
@@ -36,7 +40,7 @@ int	main(int argc, char **argv, char **env)
 				ft_executor(&sh_info);
 				ps_free_tree(&sh_info);
 			}
-			if (sh_info.is_emty == 0)
+			if (sh_info.is_emty == 0 && sh_info.lx_error != 2)
 				lx_free_ls(&sh_info);
 		}
 		else

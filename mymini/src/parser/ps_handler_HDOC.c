@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 12:22:15 by afalconi          #+#    #+#             */
-/*   Updated: 2023/10/25 17:34:06 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/10/26 19:00:59 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 void ps_hdoc_handler_signal(int sig)
 {
+	(void)sig;
 	exit(1);
 }
 
@@ -26,10 +27,18 @@ static void ps_hdoc_insert(t_list_redirection *hdoc, int *fd)
 	while(1)
 	{
 		str = readline(">");
-		if (ft_strncmp(str, hdoc->file, ft_strlen(hdoc->file)) == 0)
+		if (!str || ft_strncmp(str, hdoc->file, ft_strlen(hdoc->file)) == 0)
 			break;
 		write(fd[1], str, ft_strlen(str));
 		write(fd[1], "\n", 1);
+	}
+	if (!str)
+	{
+		ft_putstr_fd("\033[93m", 1);
+		ft_putstr_fd(" minishell : warning: here-document delimited by end-of-file (wanted '", 1);
+		ft_putstr_fd(hdoc->file, 1);
+		ft_putstr_fd("')", 1);
+		ft_putstr_fd("\n\e[0m", 1);
 	}
 }
 
@@ -88,7 +97,7 @@ int	ps_handler_HDOC(t_list_redirection *hdoc, t_shell_info *sh_info)
 		sh_info->flag_hdoc_sig = 1;
 	}
 	waitpid(pid, 0, 0);
-	if (pid == 0)
+	if (pid == 0 && sh_info->flag_hdoc_sig == 1)
 		exit(1);
 	hdoc->fd_of_file = dup(fd[0]);
 	close(fd[1]);

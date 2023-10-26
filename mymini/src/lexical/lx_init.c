@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 13:17:04 by afalconi          #+#    #+#             */
-/*   Updated: 2023/10/25 16:58:26 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/10/26 18:12:05 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,17 @@ static int	complete_quotes(t_shell_info *sh_info, char quotes, int i)
 	{
 		complite = ft_strjoin(complite, "\n");
 		str = readline("quote> ");
+		if (!str)
+		{
+			sh_info->lx_error = 2;
+			break ;
+		}
 		complite = ft_strjoin(complite, str);
 	}
 	sh_info->complete_quote = 0;
 	sh_info->input = ft_strjoin(sh_info->input, complite);
+	if (sh_info->lx_error == 2)
+		return(-1);
 	while (sh_info->input[i] != quotes)
 		i ++;
 	return (i);
@@ -107,6 +114,8 @@ void	ft_lexical(t_shell_info *sh_info)
 	while (sh_info->input[++i])
 	{
 		lx_check_quotes(sh_info, &i);
+		if (sh_info->lx_error == 2)
+			return;
 		lx_check_subsh(sh_info, i);
 		lx_redirections(sh_info, i);
 	}
