@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 16:31:11 by afalconi          #+#    #+#             */
-/*   Updated: 2023/10/26 17:42:56 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/11/08 22:01:09 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,7 @@ static int	bl_ck_builtins2(int *exit, char **arr_cmd_arg, char **env, int n_ac)
 			*exit = -1;
 		return(1);
 	}
-	else if (ft_strncmp(arr_cmd_arg[0], "exit", 4) == 0 && ft_strlen(arr_cmd_arg[0]) == 4)
-		bl_exit(arr_cmd_arg, n_ac);
-	if(ft_strncmp(arr_cmd_arg[0], "pwd", 3) == 0 && ft_strlen(arr_cmd_arg[0]) == 3)
+	else if(ft_strncmp(arr_cmd_arg[0], "pwd", 3) == 0 && ft_strlen(arr_cmd_arg[0]) == 3)
 	{
 		if (bl_pwd() != 1)
 			*exit = -1;
@@ -62,6 +60,8 @@ int	bl_ck_builtins(int *exit, char **arr_cmd_arg, char **env, t_shell_info *sh_i
 		*exit = 1;
 		return(1);
 	}
+	else if (ft_strncmp(arr_cmd_arg[0], "exit", 4) == 0 && ft_strlen(arr_cmd_arg[0]) == 4)
+		bl_exit(arr_cmd_arg, n_ac, sh_info->last_exit);
 	return(bl_ck_builtins2(exit, arr_cmd_arg, env, n_ac));
 }
 

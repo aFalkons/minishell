@@ -6,31 +6,36 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 12:07:42 by afalconi          #+#    #+#             */
-/*   Updated: 2023/10/25 17:29:03 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/11/09 18:49:52 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void handler_sig(int sig)
+void	handler_sig(int sig)
 {
 	if (sig == SIGINT)
 	{
-		write(1, "\n", 1);
-		rl_replace_line("", 0);
-		rl_on_new_line();
-		rl_redisplay();
+		if (for_sig == 0)
+		{
+			write(1, "\n", 1);
+			rl_replace_line("", 0);
+			rl_on_new_line();
+			rl_redisplay();
+		}
+		else if (for_sig == 1)
+		{
+			write(1, "\n", 1);
+			rl_replace_line("", 0);
+			rl_on_new_line();
+			rl_redisplay();
+			for_sig = 3;
+		}
 	}
 }
 
-static void set_segnal(t_shell_info *sh_info)
-{
-	(void)sh_info;
-	signal(SIGQUIT, &handler_sig);
-	signal(SIGINT, &handler_sig);
-}
-
-static t_list_var_env	*ft_fill_the_list_with_env(char **env, t_shell_info *sh_info)
+static t_list_var_env	*ft_fill_the_list_with_env(char **env,
+				t_shell_info *sh_info)
 {
 	int		i;
 	int		index_egual_sign;
@@ -55,6 +60,8 @@ static t_list_var_env	*ft_fill_the_list_with_env(char **env, t_shell_info *sh_in
 //inizializzazione delle variabili d'ambiente
 void	ft_init_variables(char **env, t_shell_info *sh_info)
 {
+	sh_info->last_exit = 0;
+	for_sig = 0;
 	sh_info->flag_hdoc_sig = 0;
 	sh_info->complete_quote = 0;
 	sh_info->lx_error = 0;
@@ -67,7 +74,7 @@ void	ft_init_variables(char **env, t_shell_info *sh_info)
 	sh_info->node = NULL;
 	sh_info->node_h = NULL;
 	sh_info->is_emty = 0;
-	sh_info->stdin_flag= 0;
+	sh_info->stdin_flag = 0;
 	sh_info->stdout_flag = 0;
 	sh_info->pid_flag = 1;
 	sh_info->pid = 2;
@@ -75,11 +82,28 @@ void	ft_init_variables(char **env, t_shell_info *sh_info)
 	sh_info->pipe_flag = 0;
 	sh_info->fd_stdout = dup(1);
 	sh_info->fd_stdin = dup(0);
-	set_segnal(sh_info);
+	signal(SIGQUIT, &handler_sig);
+	signal(SIGINT, &handler_sig);
+}
+
+static void	ft_init_var_newcmd2(t_shell_info *sh_info)
+{
+	sh_info->node->token = NULL;
+	sh_info->node->subsh = NULL;
+	sh_info->node->next = NULL;
+	sh_info->node_h = sh_info->node;
+	sh_info->stdin_flag = 0;
+	sh_info->stdout_flag = 0;
+	sh_info->pid_flag = 1;
+	sh_info->pid = 2;
+	sh_info->sub_level = 1;
+	sh_info->pipe_flag = 0;
+	sh_info->exit_stat = 0;
 }
 
 void	ft_init_var_newcmd(t_shell_info *sh_info, char **env)
 {
+	for_sig = 0;
 	sh_info->flag_hdoc_sig = 0;
 	sh_info->complete_quote = 0;
 	sh_info->lx_error = 0;
@@ -92,17 +116,7 @@ void	ft_init_var_newcmd(t_shell_info *sh_info, char **env)
 	sh_info->node = ft_calloc(sizeof(struct s_minitree), 1);
 	sh_info->node->env = NULL;
 	sh_info->node->exit_status = 0;
-	sh_info->node->token = NULL;
-	sh_info->node->subsh = NULL;
-	sh_info->node->next = NULL;
-	sh_info->node_h = sh_info->node;
-	sh_info->stdin_flag= 0;
-	sh_info->stdout_flag = 0;
-	sh_info->pid_flag = 1;
-	sh_info->pid = 2;
-	sh_info->sub_level = 1;
-	sh_info->pipe_flag = 0;
-	sh_info->exit_stat = 0;
+	ft_init_var_newcmd2(sh_info);
 	sh_info->var = (t_list_var_env *) malloc(sizeof(t_list_var_env));
 	sh_info->var = ft_fill_the_list_with_env(env, sh_info);
 	sh_info->var->head = ft_get_list_head(sh_info->var);

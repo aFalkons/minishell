@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 18:11:11 by afalconi          #+#    #+#             */
-/*   Updated: 2023/09/15 08:27:37 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/11/09 18:14:46 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,17 @@
 
 char	*ft_strndup(char *str, int start, int finish)
 {
-	int	i;
-	char *ret;
+	int		i;
+	char	*ret;
 
 	i = 0;
 	ret = ft_calloc((finish - start) + 1, 1);
-	while(start < finish)
+	while (start < finish)
 	{
 		ret[i] = str[start];
 		i ++ ;
 		start ++;
 	}
 	ret[i] = 0;
-	return(ret);
+	return (ret);
 }

@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 08:01:08 by afalconi          #+#    #+#             */
-/*   Updated: 2023/08/12 08:06:34 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/11/09 18:08:54 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,5 @@ char	**ft_matrixdup(char **matrix)
 	while (matrix[++i])
 		ret[i] = ft_strdup(matrix[i]);
 	ret[i] = NULL;
-	return(ret);
+	return (ret);
 }

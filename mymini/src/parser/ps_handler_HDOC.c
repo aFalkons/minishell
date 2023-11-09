@@ -6,41 +6,33 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 12:22:15 by afalconi          #+#    #+#             */
-/*   Updated: 2023/10/27 18:50:19 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/11/09 20:29:45 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 
-//void ps_hdoc_handler_signal(int sig)
-//{
-//	(void)sig;
-//	exit(1);
-//}
+void ps_hdoc_handler_signal(int sig)
+{
+	if (sig == SIGINT)
+	{
+		write(1, "\n", 1);
+		rl_redisplay();
+		exit(130);
+	}
+}
 
-static char *ps_hdoc_insert(t_list_redirection *hdoc, int *fd)
+static void	ps_hdoc_insert(t_list_redirection *hdoc, int *fd)
 {
 	char	*str;
-	char	*fin;
-	char	*tmp;
 
-	fin = NULL;
 	str = NULL;
 	while(1)
 	{
-		str = readline(">");
+		str = readline("> ");
 		if (!str || ft_strncmp(str, hdoc->file, ft_strlen(hdoc->file)) == 0)
 			break;
-		if (!fin)
-			fin = ft_strdup(str);
-		else
-		{
-			tmp = ft_strdup(fin);
-			free(fin);
-			fin = ft_strjoin(tmp, str);
-			free(tmp);
-		}
 		write(fd[1], str, ft_strlen(str));
 		write(fd[1], "\n", 1);
 	}
@@ -51,40 +43,56 @@ static char *ps_hdoc_insert(t_list_redirection *hdoc, int *fd)
 		ft_putstr_fd(hdoc->file, 1);
 		ft_putstr_fd("')", 1);
 		ft_putstr_fd("\n\e[0m", 1);
+		for_sig = 5;
 	}
-	return(fin);
 }
 
-//static void ps_join_and_free(char **intput, char *c)
+//static char	*ps_join_char(char *str, char c)
 //{
-//	char	*tmp;
-//	tmp = NULL;
-//	tmp = ft_strdup(*intput);
-//	free(*intput);
-//	*intput = ft_strjoin(tmp, *(&c));
-//	free(tmp);
+//	char	*ret;
+//	int		i;
+//
+//	i = -1;
+//	ret = NULL;
+//	ret = ft_calloc(ft_strlen(str) + 2, 1);
+//	while(++i < ft_strlen(str))
+//		ret[i] = str[i];
+//	ret[i] = c;
+//	ret[i + 1] = 0;
+//	return(ret);
 //}
+//
 //
 //static void	ps_update_input(t_list_redirection *hdoc, t_shell_info *sh_info)
 //{
 //	int		to_add;
-//	char	read_buff;
-//	char	*tmp_input;
-//	int		condition;
+//	char	str;
+//	int		len;
+//	char	*tmp;
 //
-//	condition = 1;
+//	tmp = NULL;
+//	len = 1;
 //	to_add = dup(hdoc->fd_of_file);
-//	read_buff = 1;
-//	tmp_input = ft_strdup("\n");
-//	while(condition)
+//	tmp = ft_strdup(sh_info->input);
+//	free(sh_info->input);
+//	sh_info->input = ps_join_char(tmp, '\n');
+//	while(len && len != -1)
 //	{
-//		condition = read(to_add, &read_buff, 1);
-//		if ((read_buff >= 'a' && read_buff <= 'z') || (read_buff >= 'A' && read_buff <= 'Z') || read_buff == '\n')
-//			ps_join_and_free(&tmp_input, &read_buff);
+//		len = read(to_add, &str, 1);
+//		tmp = ft_strdup(sh_info->input);
+//		free(sh_info->input);
+//		sh_info->input = ps_join_char(tmp, str);
 //	}
-//	ps_join_and_free(&tmp_input, "\0");
-//	ps_join_and_free(&sh_info->input, tmp_input);
-//	free(tmp_input);
+//	tmp = ft_strdup(sh_info->input);
+//	free(sh_info->input);
+//	sh_info->input = ft_strndup(tmp, 0, ft_strlen(tmp) - 1);
+//	if (for_sig == 5)
+//	{
+//		tmp = ft_strdup(sh_info->input);
+//		free(sh_info->input);
+//		sh_info->input = ft_strjoin(tmp, hdoc->file);
+//	}
+//	for_sig = 0;
 //	close(to_add);
 //}
 
@@ -92,7 +100,6 @@ int	ps_handler_HDOC(t_list_redirection *hdoc, t_shell_info *sh_info)
 {
 	pid_t		pid;
 	int			fd[2];
-	char		*tmp;
 
 	(void)sh_info;
 	if (pipe(fd) == -1)
@@ -100,12 +107,9 @@ int	ps_handler_HDOC(t_list_redirection *hdoc, t_shell_info *sh_info)
 	pid = fork();
 	if (pid == 0)
 	{
-		//signal(SIGINT, &ps_hdoc_handler_signal);
+		signal(SIGINT, &ps_hdoc_handler_signal);
 		close(fd[0]);
-		//ps_hdoc_insert(hdoc, fd);
-		tmp = ft_strdup(sh_info->input);
-		free(sh_info->input);
-		sh_info->input = ft_strjoin(tmp, ps_hdoc_insert(hdoc, fd));
+		ps_hdoc_insert(hdoc, fd);
 	}
 	waitpid(pid, 0, 0);
 	if (pid == 0)
@@ -113,7 +117,6 @@ int	ps_handler_HDOC(t_list_redirection *hdoc, t_shell_info *sh_info)
 	hdoc->fd_of_file = dup(fd[0]);
 	close(fd[1]);
 	close(fd[0]);
-	ft_for_debug(sh_info->input);
 	//ps_update_input(hdoc, sh_info);
 	return(1);
 }

@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 03:43:42 by afalconi          #+#    #+#             */
-/*   Updated: 2023/10/27 18:37:03 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/11/07 15:51:56 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,12 +88,10 @@ static void	ps_swap_list(struct s_lx_list_token *lx_ls_token, struct s_lx_list_t
 
 void	ft_parser(t_shell_info *sh_info, struct s_minitree *tree_node)
 {
+	for_sig = 1;
 	ps_swap_list(sh_info->lx_ls_token, NULL, sh_info);
 	sh_info->lx_ls_token = sh_info->lx_ls_token_h;
 	ps_recursiv_tree(sh_info, tree_node);
 	ps_redirection_setup(sh_info->node, sh_info->node_h, sh_info);
 	sh_info->node = sh_info->node_h;
-	//ft_for_debug(sh_info->input);
-	//ft_for_debug("\n");
-	add_history(sh_info->input);
 }

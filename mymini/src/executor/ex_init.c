@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 06:46:09 by afalconi          #+#    #+#             */
-/*   Updated: 2023/10/23 16:08:39 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/11/09 22:10:42 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,12 @@ static void	ex_all_node(t_minitree *node, t_minitree *node_h, t_shell_info *sh_i
 		ex_ck_redirection(node, sh_info, exit_stat);
 	ex_pipe(node, sh_info);
 	ex_handler_and_or(node, node_h, sh_info, exit_stat);
-	if (*exit_stat == -1)
+	if (*exit_stat == -1 && node != node_h)
 		ck_tree_error(node);
+	if (node != node_h && (node->token->token == ARG || node->token->token == CMD))
+	{
+		sh_info->last_exit = node->exit_status;
+	}
 }
 
 void	ft_executor(t_shell_info *sh_info)

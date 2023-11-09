@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isdigit_str.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: misidori <misidori@student.42.fr>          +#+  +:+       +#+        */
+/*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 17:49:13 by misidori          #+#    #+#             */
-/*   Updated: 2023/10/04 17:54:13 by misidori         ###   ########.fr       */
+/*   Updated: 2023/11/09 18:15:18 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 bool	ft_isdigit_str(char *str)
 {
 	int	i;
-	
+
+	i = 0;
 	if (!str)
 		return (false);
-	i = 0;
 	while (str[i])
 	{
 		if (ft_isdigit(str[i]) == true)

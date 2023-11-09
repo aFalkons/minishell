@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/28 15:18:16 by misidori          #+#    #+#             */
-/*   Updated: 2023/10/11 16:07:12 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/11/02 19:25:56 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,6 @@
 # include <stdbool.h>
 # include <stdint.h>
 # include <dirent.h>
+# include "./libft/include/libft.h"
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 16:14:19 by afalconi          #+#    #+#             */
-/*   Updated: 2023/09/19 18:27:53 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/11/09 21:00:20 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 static void	lx_add_redi_arg(t_shell_info *sh_info, char **str, char **str2, int *fi, int *st)
 {
-	int end_redi;
+	int		end_redi;
+	char	*tmp;
 
 	end_redi = *fi - 1;
 	while(ft_isnumeric(sh_info->input[end_redi]))
@@ -34,10 +35,12 @@ static void	lx_add_redi_arg(t_shell_info *sh_info, char **str, char **str2, int 
 	else
 	{
 		*str2 = ft_strndup(sh_info->input, *st, end_redi);
-		*str = ft_strjoin(*str, *str2);
+		tmp = ft_strdup(*str);
+		free(*str);
+		*str = ft_strjoin(tmp, *str2);
+		free(tmp);
 		free(*str2);
 	}
-	//printf("--%s--\n", *str);
 	*st = *fi;
 }
 
@@ -72,11 +75,6 @@ static void	 lx_insert_arg(t_shell_info *sh_info, int *i)
 		*i = st - 1;
 		return ;
 	}
-	//if (sh_info->input[st + 1] == ' ' && sh_info->input[st] == ' ')
-	//{
-	//	st ++;
-	//	lx_skip_space(sh_info, &st);
-	//}
 	if (sh_info->input[st] == OR && sh_info->input[st] != PIPE && sh_info->input[st] != '&' && sh_info->input[st] != OP_S && sh_info->input[st] != CL_S && sh_info->input[st] != '\0' && sh_info->input[st] != INP && sh_info->input[st] != OUT )
 	{
 		*i = st - 1;
@@ -91,13 +89,10 @@ static void	 lx_insert_arg(t_shell_info *sh_info, int *i)
 		else
 			fi++;
 	}
-	//if (st < fi)
-	//{
 	str2 = ft_strndup(sh_info->input, st, fi);
 	str = ft_strjoin(str, str2);
 	free(str2);
 	lx_create_or_insert(sh_info, str, ARG);
-	//}
 	*i = fi - 1;
 }
 

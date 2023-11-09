@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 13:17:04 by afalconi          #+#    #+#             */
-/*   Updated: 2023/10/26 18:12:05 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/11/09 21:06:41 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,28 +34,35 @@ static void	lx_redirections(t_shell_info *sh_info, int i)
 	}
 }
 
-static int	complete_quotes(t_shell_info *sh_info, char quotes, int i)
+static int	lx_complete_quotes(t_shell_info *sh_info, char quotes, int i)
 {
 	char	*str;
 	char	*complite;
+	char	*tmp;
 
 	str = NULL;
-	complite = NULL;
-	sh_info->complete_quote = 1;
-	while (ft_count_char(str, quotes) % 2 == 0 || ft_count_char(str, quotes) == 0)
+	complite = ft_strdup("\n");
+	for_sig = 1;
+	while ((ft_count_char(str, quotes) % 2 == 0 || ft_count_char(str, quotes) == 0) && for_sig != 3)
 	{
-		complite = ft_strjoin(complite, "\n");
-		str = readline("quote> ");
+		str = ft_strdup(readline("quote> "));
 		if (!str)
 		{
 			sh_info->lx_error = 2;
 			break ;
 		}
-		complite = ft_strjoin(complite, str);
+		tmp = ft_strdup(complite);
+		free(complite);
+		complite = ft_strjoin(tmp, str);
+		free(tmp);
+		free(str);
 	}
-	sh_info->complete_quote = 0;
-	sh_info->input = ft_strjoin(sh_info->input, complite);
-	if (sh_info->lx_error == 2)
+	tmp = ft_strdup(sh_info->input);
+	free(sh_info->input);
+	sh_info->input = ft_strjoin(tmp, complite);
+	free(tmp);
+	free(complite);
+	if (sh_info->lx_error == 2 || for_sig == 3)
 		return(-1);
 	while (sh_info->input[i] != quotes)
 		i ++;
@@ -78,7 +85,7 @@ void	lx_check_quotes(t_shell_info *sh_info, int *i)
 				break;
 			if (!sh_info->input[*i])
 			{
-				*i = complete_quotes(sh_info, sing_doub_q, *i);
+				*i = lx_complete_quotes(sh_info, sing_doub_q, *i);
 				sing_doub_q = 0;
 				break ;
 			}
@@ -114,11 +121,16 @@ void	ft_lexical(t_shell_info *sh_info)
 	while (sh_info->input[++i])
 	{
 		lx_check_quotes(sh_info, &i);
-		if (sh_info->lx_error == 2)
+		if (sh_info->lx_error == 2 || for_sig == 3)
+		{
+			if (for_sig == 3)
+				sh_info->last_exit = 130;
 			return;
+		}
 		lx_check_subsh(sh_info, i);
 		lx_redirections(sh_info, i);
 	}
+	for_sig = 0;
 	i = -1;
 	while(sh_info->input[++i])
 	{

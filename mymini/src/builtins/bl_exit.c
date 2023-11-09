@@ -3,22 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   bl_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: matteo <matteo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/06 23:47:50 by matteo            #+#    #+#             */
-/*   Updated: 2023/10/04 21:06:55 by matteo           ###   ########.fr       */
+/*   Updated: 2023/11/07 18:09:03 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	bl_exit(char **split, int argc)
+void	bl_exit(char **split, int argc, int stat)
 {
 	int	num_error;
 
 	num_error = 0;
 	if (argc == 1)
-		ft_exit(1, "exit", 0);
+		ft_exit(1, "exit", stat);
 	else
 	{
 		ft_check_exit_error(split);

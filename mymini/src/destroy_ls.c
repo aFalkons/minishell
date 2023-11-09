@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/05 00:42:57 by afalconi          #+#    #+#             */
-/*   Updated: 2023/10/11 19:25:49 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/11/09 18:30:21 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void	bl_free_list_var(t_node *node)
 	ft_free_node(node);
 }
 
-static void	ls_free_ls_recursiv(struct s_lx_list_token	*tmp)
+static void	ls_free_ls_recursiv(struct s_lx_list_token *tmp)
 {
 	if (tmp->next)
 		ls_free_ls_recursiv(tmp->next);
@@ -38,10 +38,10 @@ void	lx_free_ls(t_shell_info *sh_info)
 
 static void	ps_free_redire(struct s_list_redirection *redire)
 {
-	struct s_list_redirection *tmp;
+	struct s_list_redirection	*tmp;
 
 	tmp = NULL;
-	while(redire)
+	while (redire)
 	{
 		if (redire->file != NULL)
 			free(redire->file);
@@ -51,7 +51,7 @@ static void	ps_free_redire(struct s_list_redirection *redire)
 	}
 }
 
-static void	ps_free_tree_recursiv(struct s_minitree *tree_node)
+void	ps_free_tree_recursiv(struct s_minitree *tree_node)
 {
 	if (tree_node->subsh)
 		ps_free_tree_recursiv(tree_node->subsh);
@@ -61,11 +61,3 @@ static void	ps_free_tree_recursiv(struct s_minitree *tree_node)
 		ps_free_redire(tree_node->redire);
 	free(tree_node);
 }
-
-void	ps_free_tree(t_shell_info *sh_info)
-{
-	ps_free_tree_recursiv(sh_info->node_h);
-	sh_info->node = NULL;
-	sh_info->node_h = NULL;
-}
-

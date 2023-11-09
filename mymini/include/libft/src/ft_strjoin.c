@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 15:49:07 by matteo            #+#    #+#             */
-/*   Updated: 2023/08/08 08:18:23 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/11/09 18:08:27 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@ char	*ft_strjoin(char *s1, char *s2)
 	size_t	i;
 	size_t	j;
 
-	// if (!s1 || !s2)
-	// 	return (NULL);
 	i = 0;
 	j = 0;
 	joined_str = malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
