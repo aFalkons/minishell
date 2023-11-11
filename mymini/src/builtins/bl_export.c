@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 12:17:08 by matteo            #+#    #+#             */
-/*   Updated: 2023/10/11 19:03:18 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/11/10 19:18:31 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 int	bl_export(t_shell_info *sh_info, char **env, int argc, char **split)
 {
+	t_node	*tmp;
 	int		i;
 	int		index_egual_sign;
 	int		return_value;
@@ -23,6 +24,12 @@ int	bl_export(t_shell_info *sh_info, char **env, int argc, char **split)
 	return_value = 1;
 	if (argc == 1)
 	{
+		tmp = sh_info->var->node;
+		while(tmp)
+		{
+			printf("---%s\n", tmp->full_info);
+			tmp = tmp ->next;
+		}
 		ft_sort_list(&sh_info->var->head);
 		ft_print_list(sh_info->var);
 		return_value = 1;

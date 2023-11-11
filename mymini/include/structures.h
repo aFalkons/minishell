@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 13:09:57 by afalconi          #+#    #+#             */
-/*   Updated: 2023/11/09 17:53:25 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/11/11 19:17:55 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ typedef struct s_lx_list_token
 
 typedef struct s_list_redirection
 {
-	int							inp_error;
 	char						*file;
 	int							fd_input;
 	char						token;

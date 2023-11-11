@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 12:07:42 by afalconi          #+#    #+#             */
-/*   Updated: 2023/11/09 18:49:52 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/11/10 19:43:53 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	handler_sig(int sig)
 		}
 		else if (for_sig == 1)
 		{
-			write(1, "\n", 1);
+			write(1, "\npremi pure invio <3\n", 1);
 			rl_replace_line("", 0);
 			rl_on_new_line();
 			rl_redisplay();
@@ -84,6 +84,10 @@ void	ft_init_variables(char **env, t_shell_info *sh_info)
 	sh_info->fd_stdin = dup(0);
 	signal(SIGQUIT, &handler_sig);
 	signal(SIGINT, &handler_sig);
+	sh_info->var = (t_list_var_env *) malloc(sizeof(t_list_var_env));
+	sh_info->var = ft_fill_the_list_with_env(env, sh_info);
+	sh_info->var->head = ft_get_list_head(sh_info->var);
+	sh_info->var->tail = ft_get_list_tail(sh_info->var);
 }
 
 static void	ft_init_var_newcmd2(t_shell_info *sh_info)
@@ -103,6 +107,7 @@ static void	ft_init_var_newcmd2(t_shell_info *sh_info)
 
 void	ft_init_var_newcmd(t_shell_info *sh_info, char **env)
 {
+	(void)env;
 	for_sig = 0;
 	sh_info->flag_hdoc_sig = 0;
 	sh_info->complete_quote = 0;
@@ -117,8 +122,4 @@ void	ft_init_var_newcmd(t_shell_info *sh_info, char **env)
 	sh_info->node->env = NULL;
 	sh_info->node->exit_status = 0;
 	ft_init_var_newcmd2(sh_info);
-	sh_info->var = (t_list_var_env *) malloc(sizeof(t_list_var_env));
-	sh_info->var = ft_fill_the_list_with_env(env, sh_info);
-	sh_info->var->head = ft_get_list_head(sh_info->var);
-	sh_info->var->tail = ft_get_list_tail(sh_info->var);
 }

@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 15:04:23 by afalconi          #+#    #+#             */
-/*   Updated: 2023/10/13 12:23:56 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/11/11 19:17:48 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,14 @@
 
 int	ex_inp(struct s_list_redirection *redire, int flag, int *exit_stat)
 {
-	if (redire->inp_error == 1)
+	if (redire->dont_say_that == -1)
+		return (0);
+	if (access(redire->file, R_OK) == -1)
 	{
+		redire->dont_say_that = -1;
 		*exit_stat = -1;
 		return(1);
 	}
-	if (redire->dont_say_that == -1)
-		return (0);
 	if (flag == 0)
 	{
 		redire->dont_say_that = 1;
@@ -29,9 +30,9 @@ int	ex_inp(struct s_list_redirection *redire, int flag, int *exit_stat)
 		dup2(redire->fd_of_file, redire->fd_input);
 		return(0) ;
 	}
-	dup2(redire->fd_copy, redire->fd_input);
-	close(redire->fd_copy);
-	close(redire->fd_of_file);
+		dup2(redire->fd_copy, redire->fd_input);
+		close(redire->fd_copy);
+		close(redire->fd_of_file);
 	return(0);
 }
 

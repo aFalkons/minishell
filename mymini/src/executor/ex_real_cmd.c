@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 16:31:11 by afalconi          #+#    #+#             */
-/*   Updated: 2023/11/08 22:01:09 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/11/11 18:25:49 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,10 @@ void	ex_real_esecution(char *path_cmd, char **arr_cmd_arg,  struct s_minitree *n
 	{
 		pid = fork();
 		if (pid == 0)
+		{
+			//for_sig = 100;
 			execve(path_cmd, arr_cmd_arg, node->env);
+		}
 		waitpid(pid, 0, 0);
 	}
 }

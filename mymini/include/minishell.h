@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 23:16:57 by afalconi          #+#    #+#             */
-/*   Updated: 2023/11/09 18:30:43 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/11/10 19:50:28 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void				lx_create_or_insert(t_shell_info *sh_info,
 						char *str, char token);
 void				lx_insert_cmd_arg(t_shell_info *sh_info, int *i);
 void				lx_check_quotes(t_shell_info *sh_info, int *i);
-void				lx_free_ls(t_shell_info *sh_info);
+void				lx_free_ls(t_shell_info *sh_info, int flag);
 void				lx_skip_space(t_shell_info *sh_info, int *i);
 void				lx_ck_list_token(t_shell_info *sh_info);
 void				lx_remove_usleschar(t_lx_list_token *token);
