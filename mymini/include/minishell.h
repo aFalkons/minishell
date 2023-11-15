@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 23:16:57 by afalconi          #+#    #+#             */
-/*   Updated: 2023/11/10 19:50:28 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/11/15 18:07:00 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -223,5 +223,31 @@ void				ft_init_variables(char **env, t_shell_info *sh_info);
 /*	FT_FREE_ARRAY.C	*/
 
 void				ft_free_array(char **array);
+
+/*	EXPANSION.C	*/
+
+int					ft_expansion(t_shell_info *sh_info, t_lx_list_token *token);
+char				**ft_get_sub_str(char *str);
+char				*ft_check_type_quotes(t_shell_info *sh_info, char *str);
+void				ft_expand_dollar_in_input_str(char **sub_strs, t_lx_list_token *token);
+
+/*	EXPANSION_UTILS.C	*/
+
+char				*dl_dollar_expander(char **env, char *name);
+char				*ft_replace_substring(char *str, char *sub_str, char *replace_str);
+
+/*	QUOTES_AND_DOLLAR.C	*/
+
+void				ft_free_exp_variables(t_expansion	*exp);
+void				ft_replace_dollar_with_value(t_shell_info *sh_info, char **sub_str,
+						t_expansion *exp, int k);
+char				*ft_dollar_sign_without_quotes(t_shell_info *sh_info, char *sub_str);
+char				*ft_work_on_double_quotes(t_shell_info *sh_info, char *sub_str);
+char				*ft_work_on_all_quotes(t_shell_info *sh_info, char *str);
+
+/*	WILDCARD.C	*/
+
+char	**wc_star(char **arr_cmd_arg);
+
 
 #endif

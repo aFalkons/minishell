@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 23:56:26 by afalconi          #+#    #+#             */
-/*   Updated: 2023/10/11 16:46:58 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/11/15 17:53:07 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,5 +48,10 @@ int		ft_count_char_array(char const **array, char c);
 void	ft_remove_char_in_str(char *str, char c);
 bool	ft_isdigit_str(char *str);
 int		ft_get_size_array(char **array);
+int		ft_find_index_next_char(char *str, char c, int i);
+char	*ft_strncpy(char *dest, const char *src, size_t n);
+void	*ft_memcpy(void *dst, const void *src, size_t n);
+char	*ft_strstr(const char *haystack, const char *needle);
+void	*ft_realloc(void *ptr, size_t size);
 
 #endif

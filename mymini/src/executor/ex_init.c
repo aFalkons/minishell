@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 06:46:09 by afalconi          #+#    #+#             */
-/*   Updated: 2023/11/11 19:23:53 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/11/11 19:40:47 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,15 @@ static void ex_handler_and_or(t_minitree *node, t_minitree *node_h, t_shell_info
 
 static void	ex_all_node(t_minitree *node, t_minitree *node_h, t_shell_info *sh_info, int *exit_stat)
 {
+	int	test;
+
+	test = 0;
 	if (node->next)
 		ex_all_node(node->next, node_h, sh_info, exit_stat);
 	if (node->subsh)
 	{
+		test = for_sig;
+		for_sig = 100;
 		sh_info->pid = fork();
 		if (sh_info->pid == 0)
 		{
@@ -65,6 +70,7 @@ static void	ex_all_node(t_minitree *node, t_minitree *node_h, t_shell_info *sh_i
 		waitpid(sh_info->pid , 0, 0);
 		if (sh_info->pid == 0)
 			exit(1);
+		for_sig = test;
 	}
 	if ((node->close_redire || node->redire) && sh_info->pipe_flag != 1)
 		ex_ck_redirection(node, sh_info, exit_stat);

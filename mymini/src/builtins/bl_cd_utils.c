@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bl_cd_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: matteo <matteo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 17:45:16 by misidori          #+#    #+#             */
-/*   Updated: 2023/10/09 17:04:16 by matteo           ###   ########.fr       */
+/*   Updated: 2023/11/15 18:36:48 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ char	**ft_get_list_files(t_program *program)
 	char	**list;
 	int		i;
 
-	list = (char **) malloc(4096 * sizeof(char *));
+	list = NULL;
+	list = (char **) ft_calloc(4096 * sizeof(char *), 1);
 	if (!list)
 		return (NULL);
 	i = 0;

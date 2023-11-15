@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 13:09:57 by afalconi          #+#    #+#             */
-/*   Updated: 2023/11/11 19:17:55 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/11/15 18:06:04 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,24 @@ typedef struct s_program
 	struct dirent	*dir_entry;
 	DIR				*dir;
 }	t_program;
+
+typedef struct s_index_match
+{
+	int	name_in_folder;
+	int	input_str;
+	int	star;
+	int	match;
+}	t_index_match;
+
+typedef struct s_expansion
+{
+	char	*name_w_dollar;
+	char	*name_var;
+	char	*value_var;
+	char	*temp_str;
+	int		index_dollar_sign;
+	int		n_dollar_sign;
+}	t_expansion;
 
 typedef struct s_node
 {

@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 02:20:42 by afalconi          #+#    #+#             */
-/*   Updated: 2023/11/11 19:12:32 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/11/11 19:36:21 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,6 @@ static void	ex_close_redirection(struct s_list_redirection *close, t_shell_info 
 			sh_info->stdout_flag = 0;
 		close = close->next;
 	}
-	//sh_info->stdout_flag = 0;
-	//sh_info->stdin_flag = 0;
 }
 
 
