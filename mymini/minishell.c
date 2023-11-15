@@ -6,15 +6,13 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 23:09:31 by afalconi          #+#    #+#             */
-/*   Updated: 2023/11/15 19:05:23 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/11/15 21:11:57 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 int	for_sig;
-
-//$test echo ciao
 
 static void	heart(t_shell_info *sh_info)
 {

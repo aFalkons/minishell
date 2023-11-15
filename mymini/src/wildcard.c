@@ -6,36 +6,26 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 16:57:14 by matteo            #+#    #+#             */
-/*   Updated: 2023/11/15 20:32:57 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/11/15 21:24:10 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char **add_string(char **array, int *size, const char *string)
+char	**add_string(char **array, int *size, const char *string)
 {
-	// Aumenta la dimensione dell'array
-	char **new_array = ft_realloc(array, (*size + 2) * sizeof(char *));
-	if (new_array == NULL) {
-		printf("Errore di allocazione della memoria.\n");
-		return NULL;
-	}
+	char	**new_array;
 
-	// Aggiungi la nuova stringa all'array
+	new_array = ft_realloc(array, (*size + 2) * sizeof(char *));
+	if (new_array == NULL)
+		return (NULL);
 	new_array[*size] = malloc(strlen(string) + 1);
-	if (new_array[*size] == NULL) {
-		printf("Errore di allocazione della memoria.\n");
-		return NULL;
-	}
+	if (new_array[*size] == NULL)
+		return (NULL);
 	strcpy(new_array[*size], string);
-
-	// Aggiorna la dimensione dell'array
 	(*size)++;
-
-	// Aggiungi un elemento NULL alla fine dell'array
 	new_array[*size] = NULL;
-
-	return new_array;
+	return (new_array);
 }
 
 
