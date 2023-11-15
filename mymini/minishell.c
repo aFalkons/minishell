@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 23:09:31 by afalconi          #+#    #+#             */
-/*   Updated: 2023/11/11 19:27:13 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/11/15 19:05:23 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ static void	heart(t_shell_info *sh_info)
 			&& for_sig != 3)
 		{
 			ft_parser(sh_info, sh_info->node);
-			//print_tree(sh_info->node_h, sh_info->node_h, 1);
 			add_history(sh_info->input);
 			ft_executor(sh_info);
 			ps_free_tree_recursiv(sh_info->node_h);

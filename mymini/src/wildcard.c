@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 16:57:14 by matteo            #+#    #+#             */
-/*   Updated: 2023/11/15 18:25:53 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/11/15 20:32:57 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ void	ft_copy_array(char ***new_array, char **original_array, int size_array)
 	int	i;
 
 	i = 0;
-	*new_array = (char **) malloc(sizeof(char *) * (size_array + 1));
+	*new_array = ft_calloc(sizeof(char *) * (size_array + 1), 1);
 	if (!*new_array)
 		return ;
 	while (original_array[i])
@@ -177,7 +177,6 @@ char	**wc_star(char **arr_cmd_arg)
 			i++;
 		}
 		ft_free_array(list_of_files);
-	//	ft_for_debug("pummolo\n");
 	}
 	if (count > 0)
 	{

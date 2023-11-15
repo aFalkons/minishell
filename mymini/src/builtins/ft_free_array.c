@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_free_array.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: misidori <misidori@student.42.fr>          +#+  +:+       +#+        */
+/*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 01:34:41 by matteo            #+#    #+#             */
-/*   Updated: 2023/10/07 22:44:02 by misidori         ###   ########.fr       */
+/*   Updated: 2023/11/15 20:22:53 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	ft_free_array(char **array)
 {
-	int	i;
 	char	*tmp;
+	int		i;
 
 	if (array == NULL)
 		return ;
