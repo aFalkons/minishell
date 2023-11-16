@@ -6,13 +6,35 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 02:20:42 by afalconi          #+#    #+#             */
-/*   Updated: 2023/11/11 19:36:21 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/11/16 18:06:50 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	ex_redire_to_do(struct s_list_redirection *open, t_shell_info *sh_info)
+static void	ex_redire_to_do2(struct s_list_redirection *open,
+	int number, char token)
+{
+	while (open)
+	{
+		if ((token == OUT && (open->token == OUT || open->token == APP))
+			&& number == open->fd_input)
+			open->dont_say_that = -1;
+		if ((token == APP && (open->token == OUT || open->token == APP))
+			&& number == open->fd_input)
+			open->dont_say_that = -1;
+		if ((token == INP && (open->token == INP || open->token == HDOC))
+			&& number == open->fd_input)
+			open->dont_say_that = -1;
+		if ((token == HDOC && (open->token == INP || open->token == HDOC))
+			&& number == open->fd_input)
+			open->dont_say_that = -1;
+		open = open->next;
+	}
+}
+
+static void	ex_redire_to_do(struct s_list_redirection *open,
+	t_shell_info *sh_info)
 {
 	int		number;
 	char	token;
@@ -20,29 +42,18 @@ static void	ex_redire_to_do(struct s_list_redirection *open, t_shell_info *sh_in
 	if (open->dont_say_that == -1)
 		return ;
 	number = open->fd_input;
-	token =open->token;
+	token = open->token;
 	open->dont_say_that = 1;
 	open = open->next;
 	if (number == 1 && (token == OUT || token == APP))
 		sh_info->stdout_flag = 1;
 	else if (number == 0 && (token == HDOC || token == INP))
 		sh_info->stdin_flag = 1;
-	while (open)
-	{
-		if ((token == OUT && (open->token == OUT || open->token == APP)) && number == open->fd_input)
-			open->dont_say_that = -1;
-		if ((token == APP && (open->token == OUT || open->token == APP)) && number == open->fd_input)
-			open->dont_say_that = -1;
-		if ((token == INP && (open->token == INP || open->token == HDOC)) && number == open->fd_input)
-			open->dont_say_that = -1;
-		 if ((token == HDOC && (open->token == INP || open->token == HDOC)) && number == open->fd_input)
-		 	open->dont_say_that = -1;
-		open = open->next;
-	}
+	ex_redire_to_do2(open, number, token);
 }
 
-
-static void	ex_open_redirection(struct s_list_redirection *open, t_shell_info *sh_info, int *exit_stat, t_minitree *node)
+static void	ex_open_redirection(struct s_list_redirection *open,
+	t_shell_info *sh_info, int *exit_stat, t_minitree *node)
 {
 	struct s_list_redirection	*head;
 
@@ -53,7 +64,7 @@ static void	ex_open_redirection(struct s_list_redirection *open, t_shell_info *s
 		open = open->next;
 	}
 	open = head;
-	while(open)
+	while (open)
 	{
 		if (open->token == OUT)
 			ex_out(open, 0);
@@ -67,9 +78,10 @@ static void	ex_open_redirection(struct s_list_redirection *open, t_shell_info *s
 	}
 }
 
-static void	ex_close_redirection(struct s_list_redirection *close, t_shell_info *sh_info)
+static void	ex_close_redirection(struct s_list_redirection *close,
+	t_shell_info *sh_info)
 {
-	while(close)
+	while (close)
 	{
 		if (close->token == OUT && close->dont_say_that == 1)
 			ex_out(close, 1);
@@ -78,17 +90,19 @@ static void	ex_close_redirection(struct s_list_redirection *close, t_shell_info 
 		else if (close->token == HDOC && close->dont_say_that == 1)
 			ex_hdoc(close, 1);
 		else if (close->token == APP && close->dont_say_that == 1)
-			ex_app(close , 1);
-		if ((close->token == OUT || close->token == APP) && close->dont_say_that == 1)
+			ex_app(close, 1);
+		if ((close->token == OUT || close->token == APP)
+			&& close->dont_say_that == 1)
 			sh_info->stdin_flag = 0;
-		else if ((close->token == HDOC || close->token == INP) && close->dont_say_that == 1)
+		else if ((close->token == HDOC || close->token == INP)
+			&& close->dont_say_that == 1)
 			sh_info->stdout_flag = 0;
 		close = close->next;
 	}
 }
 
-
-void	ex_ck_redirection(t_minitree *node, t_shell_info *sh_info, int *exit_stat)
+void	ex_ck_redirection(t_minitree *node
+	, t_shell_info *sh_info, int *exit_stat)
 {
 	if (node->close_redire)
 		ex_close_redirection(node->close_redire, sh_info);

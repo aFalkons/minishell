@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 00:58:00 by matteo            #+#    #+#             */
-/*   Updated: 2023/11/10 19:17:13 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/11/16 17:24:27 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,11 @@ void	ft_name_doesnt_exists_add_new_node(t_node *new_node,
 {
 	char	*temp;
 
+	temp = NULL;
 	new_node->value = ft_strdup(value);
 	new_node->full_info = ft_strjoin(name, "=");
-	temp = new_node->full_info;
+	temp = ft_strdup(new_node->full_info);
+	free(new_node->full_info);
 	new_node->full_info = ft_strjoin(temp, value);
 	free(temp);
 }

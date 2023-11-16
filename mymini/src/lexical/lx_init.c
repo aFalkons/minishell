@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 13:17:04 by afalconi          #+#    #+#             */
-/*   Updated: 2023/11/09 21:06:41 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/11/16 19:48:41 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,9 +96,15 @@ void	lx_check_quotes(t_shell_info *sh_info, int *i)
 
 void	lx_check_subsh(t_shell_info *sh_info, int i)
 {
+	static int	ck;
+	if (i == -42)
+	{
+		ck = 0;
+		return;
+	}
 	if (sh_info->input[i] == '(')
 	{
-		while (sh_info->input[i] != ')')
+		while (sh_info->input[i] != ')' || ck == i)
 		{
 			if (!sh_info->input[i])
 			{
@@ -107,6 +113,7 @@ void	lx_check_subsh(t_shell_info *sh_info, int i)
 			}
 			i ++;
 		}
+		ck = i;
 	}
 }
 
@@ -130,6 +137,7 @@ void	ft_lexical(t_shell_info *sh_info)
 		lx_check_subsh(sh_info, i);
 		lx_redirections(sh_info, i);
 	}
+	lx_check_subsh(NULL, -42);
 	for_sig = 0;
 	i = -1;
 	while(sh_info->input[++i])

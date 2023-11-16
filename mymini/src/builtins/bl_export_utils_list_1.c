@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 15:43:37 by misidori          #+#    #+#             */
-/*   Updated: 2023/11/10 19:17:23 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/11/16 17:04:53 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	ft_add_node_in_list(t_node **head, char *name, char *value)
 	t_node	*new_node;
 
 	current = *head;
-	new_node = (t_node *) malloc(sizeof(t_node));
+	new_node = (t_node *) ft_calloc(sizeof(t_node), 1);
 	new_node->name = ft_strdup(name);
 	if (value)
 		ft_name_doesnt_exists_add_new_node(new_node, name, value);

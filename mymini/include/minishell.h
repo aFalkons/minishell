@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 23:16:57 by afalconi          #+#    #+#             */
-/*   Updated: 2023/11/15 21:12:06 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/11/16 18:26:33 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void				ft_check_lexical_error(t_shell_info *sh_info);
 void				ft_init_var_newcmd(t_shell_info *sh_info, char **env);
 void				ping(void);
 void				ck_tree_error(t_minitree *node);
+
 
 /*	lexical	*/
 void				ft_lexical(t_shell_info *sh_info);
@@ -86,7 +87,7 @@ int					ex_inp(struct s_list_redirection *redire,
 						int flag, int *exit_stat);
 void				ex_pipe(t_minitree *node, t_shell_info *sh_info);
 void				ex_hdoc(struct s_list_redirection *redire, int flag);
-
+void				ex_all_node(t_minitree *node, t_minitree *node_h , t_shell_info *sh_info, int *exit_stat);
 /*	bultins.c	*/
 
 int					bl_ck_builtins(int *exit, char **arr_cmd_arg, char **env,
