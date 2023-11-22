@@ -6,7 +6,7 @@
 #    By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/16 23:09:28 by afalconi          #+#    #+#              #
-#    Updated: 2023/11/15 18:02:19 by afalconi         ###   ########.fr        #
+#    Updated: 2023/11/19 21:01:16 by afalconi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ SRCS =	minishell.c src/check_errors.c src/setup.c src/lexical/lx_init.c \
 		src/parser/ps_init.c src/executor/ex_init.c src/executor/ex_cmd.c src/executor/ex_cl_s.c \
 		src/executor/ex_ck_cmd.c src/executor/ex_out_app.c src/executor/ex_real_cmd.c src/ping.c\
 		src/parser/ps_redirection_setup.c src/executor/ex_ck_redirection.c src/executor/ex_inp_hdoc.c \
-		src/lexical/lx_remove_usleschar.c src/lexical/lx_set_redirection.c src/executor/ex_or.c\
+		src/lexical/lx_set_redirection.c src/executor/ex_or.c\
 		src/executor/ex_pipe.c src/parser/ps_handler_HDOC.c src/parser/ps_pipe_setup.c\
 		src/builtins/bl_cd.c src/builtins/bl_cd_utils.c src/builtins/bl_echo.c src/builtins/bl_env.c \
 		src/builtins/bl_exit.c src/builtins/bl_export_add_node.c src/builtins/bl_export.c \

@@ -6,13 +6,13 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 19:29:04 by afalconi          #+#    #+#             */
-/*   Updated: 2023/09/08 04:49:48 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/11/19 18:37:45 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	lx_therd_token_ck(char token , char *old_token)
+static int	lx_therd_token_ck(char token, char *old_token)
 {
 	if (token == INP || token == HDOC || token == OUT || token == APP)
 	{
@@ -36,7 +36,9 @@ static int	lx_second_token_ck(char token, char *old_token)
 {
 	if (token == OP_S)
 	{
-		if (*old_token == AND || *old_token == OR || *old_token == PIPE || *old_token == INP || *old_token == OUT || *old_token == HDOC || *old_token == APP)
+		if (*old_token == AND || *old_token == OR || *old_token == PIPE
+			|| *old_token == INP || *old_token == OUT || *old_token == HDOC
+			|| *old_token == APP)
 		{
 			*old_token = token;
 			return (0);
@@ -46,7 +48,8 @@ static int	lx_second_token_ck(char token, char *old_token)
 	}
 	else if (token == CL_S)
 	{
-		if (*old_token == AND || *old_token == OR || *old_token == PIPE || *old_token == OP_S)
+		if (*old_token == AND || *old_token == OR || *old_token == PIPE
+			|| *old_token == OP_S)
 		{
 			*old_token = token;
 			return (-1);
@@ -54,7 +57,7 @@ static int	lx_second_token_ck(char token, char *old_token)
 		*old_token = token;
 		return (0);
 	}
-	return (lx_therd_token_ck(token , old_token));
+	return (lx_therd_token_ck(token, old_token));
 }
 
 static int	lx_all_token_ck(char token, int flag)
@@ -69,14 +72,15 @@ static int	lx_all_token_ck(char token, int flag)
 	if (!old_token)
 	{
 		old_token = token;
-		if (token != CMD && token != OP_S && token && token != INP && token != OUT && token != HDOC && token != APP)
+		if (token != CMD && token != OP_S && token && token != INP
+			&& token != OUT && token != HDOC && token != APP)
 			return (-1);
 		return (0);
 	}
 	else if (token == CMD || token == ARG)
 	{
 		old_token = token;
-		if (old_token == CL_S )
+		if (old_token == CL_S)
 		{
 			return (-1);
 		}
@@ -85,11 +89,11 @@ static int	lx_all_token_ck(char token, int flag)
 	return (lx_second_token_ck(token, &old_token));
 }
 
-static int lx_ck_last_token(char token)
+static int	lx_ck_last_token(char token)
 {
 	if (token == AND || token == OR || token == PIPE)
-		return(-1);
-	return(0);
+		return (-1);
+	return (0);
 }
 
 void	lx_ck_list_token(t_shell_info *sh_info)

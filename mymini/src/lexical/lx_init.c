@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 13:17:04 by afalconi          #+#    #+#             */
-/*   Updated: 2023/11/16 19:48:41 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/11/22 20:43:36 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,32 +38,24 @@ static int	lx_complete_quotes(t_shell_info *sh_info, char quotes, int i)
 {
 	char	*str;
 	char	*complite;
-	char	*tmp;
 
 	str = NULL;
 	complite = ft_strdup("\n");
-	for_sig = 1;
-	while ((ft_count_char(str, quotes) % 2 == 0 || ft_count_char(str, quotes) == 0) && for_sig != 3)
+	g_for_sig = 1;
+	while ((ft_count_char(str, quotes) % 2 == 0
+			|| ft_count_char(str, quotes) == 0) && g_for_sig != 3)
 	{
-		str = ft_strdup(readline("quote> "));
+		str = readline("quote> ");
 		if (!str)
 		{
 			sh_info->lx_error = 2;
 			break ;
 		}
-		tmp = ft_strdup(complite);
-		free(complite);
-		complite = ft_strjoin(tmp, str);
-		free(tmp);
-		free(str);
+		lx_free_and_join(complite, str);
 	}
-	tmp = ft_strdup(sh_info->input);
-	free(sh_info->input);
-	sh_info->input = ft_strjoin(tmp, complite);
-	free(tmp);
-	free(complite);
-	if (sh_info->lx_error == 2 || for_sig == 3)
-		return(-1);
+	lx_free_and_join(sh_info->input, complite);
+	if (sh_info->lx_error == 2 || g_for_sig == 3)
+		return (-1);
 	while (sh_info->input[i] != quotes)
 		i ++;
 	return (i);
@@ -81,8 +73,8 @@ void	lx_check_quotes(t_shell_info *sh_info, int *i)
 		*i = *i + 1;
 		while (1)
 		{
-			if (sh_info->input[*i] == sing_doub_q && sh_info->input[*i - 1] != '\\')
-				break;
+			if (sh_info->input[*i] == sing_doub_q)
+				break ;
 			if (!sh_info->input[*i])
 			{
 				*i = lx_complete_quotes(sh_info, sing_doub_q, *i);
@@ -97,10 +89,11 @@ void	lx_check_quotes(t_shell_info *sh_info, int *i)
 void	lx_check_subsh(t_shell_info *sh_info, int i)
 {
 	static int	ck;
+
 	if (i == -42)
 	{
 		ck = 0;
-		return;
+		return ;
 	}
 	if (sh_info->input[i] == '(')
 	{
@@ -121,32 +114,24 @@ void	lx_check_subsh(t_shell_info *sh_info, int i)
 void	ft_lexical(t_shell_info *sh_info)
 {
 	int	i;
-	int	flag;
 
 	i = -1;
-	flag = 1;
 	while (sh_info->input[++i])
 	{
 		lx_check_quotes(sh_info, &i);
-		if (sh_info->lx_error == 2 || for_sig == 3)
+		if (sh_info->lx_error == 2 || g_for_sig == 3)
 		{
-			if (for_sig == 3)
+			if (g_for_sig == 3)
 				sh_info->last_exit = 130;
-			return;
+			return ;
 		}
 		lx_check_subsh(sh_info, i);
 		lx_redirections(sh_info, i);
 	}
 	lx_check_subsh(NULL, -42);
-	for_sig = 0;
-	i = -1;
-	while(sh_info->input[++i])
-	{
-		if (sh_info->input[i] != ' ')
-			flag = 0;
-	}
-	sh_info->is_emty = flag;
+	g_for_sig = 0;
+	lx_ck_is_empty(sh_info);
 	if (sh_info->is_emty == 1)
-		return;
+		return ;
 	lx_list_token(sh_info);
 }

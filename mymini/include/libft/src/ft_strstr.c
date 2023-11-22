@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strstr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: matteo <matteo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 22:01:58 by matteo            #+#    #+#             */
-/*   Updated: 2023/11/14 22:02:05 by matteo           ###   ########.fr       */
+/*   Updated: 2023/11/22 20:42:40 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ char	*ft_strstr(const char *haystack, const char *needle)
 		}
 		if (!*n)
 		{
-			return (char *)h;
+			return ((char *)h);
 		}
 		haystack = h + 1;
 	}

@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 16:54:47 by afalconi          #+#    #+#             */
-/*   Updated: 2023/11/15 20:23:33 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/11/19 20:58:58 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	lx_insert_out_app(t_shell_info *sh_info, int *i)
 	char	token;
 
 	st = *i;
-	while(ft_isnumeric(sh_info->input[st - 1]))
+	while (ft_isnumeric(sh_info->input[st - 1]))
 		st --;
 	if (sh_info->input[*i + 1] == '>')
 	{
@@ -62,14 +62,11 @@ void	lx_insert_out_app(t_shell_info *sh_info, int *i)
 		token = OUT;
 	fi = *i + 1;
 	lx_skip_space(sh_info, &fi);
-	while (sh_info->input[fi] != ' ')
-	{
-		if (sh_info->input[fi] == PIPE || sh_info->input[fi] == INP
-			|| sh_info->input[fi] == OUT || sh_info->input[fi] == '&'
-			|| sh_info->input[fi] == 0 || sh_info->input[fi] == OP_S || sh_info->input[fi] == CL_S)
-			break ;
+	while (sh_info->input[fi] != ' ' && sh_info->input[fi] != PIPE
+		&& sh_info->input[fi] != INP && sh_info->input[fi] != OUT
+		&& sh_info->input[fi] != '&' && sh_info->input[fi] != 0
+		&& sh_info->input[fi] != OP_S && sh_info->input[fi] != CL_S)
 		fi++;
-	}
 	lx_create_or_insert(sh_info, ft_strndup(sh_info->input, st, fi), token);
 	*i = fi - 1;
 }
@@ -83,7 +80,7 @@ void	lx_insert_inp_hdoc(t_shell_info *sh_info, int *i)
 	char	token;
 
 	st = *i;
-	while(ft_isnumeric(sh_info->input[st - 1]))
+	while (ft_isnumeric(sh_info->input[st - 1]))
 		st --;
 	if (sh_info->input[*i + 1] == '<')
 	{
@@ -94,14 +91,11 @@ void	lx_insert_inp_hdoc(t_shell_info *sh_info, int *i)
 		token = INP;
 	fi = *i + 1;
 	lx_skip_space(sh_info, &fi);
-	while (sh_info->input[fi] != ' ')
-	{
-		if (sh_info->input[fi] == PIPE || sh_info->input[fi] == INP
-			|| sh_info->input[fi] == OUT || sh_info->input[fi] == '&'
-			|| sh_info->input[fi] == 0 || sh_info->input[fi] == OP_S || sh_info->input[fi] == CL_S)
-			break ;
+	while (sh_info->input[fi] != ' ' && sh_info->input[fi] != PIPE
+		&& sh_info->input[fi] != INP && sh_info->input[fi] != OUT
+		&& sh_info->input[fi] != '&' && sh_info->input[fi] != 0
+		&& sh_info->input[fi] != OP_S && sh_info->input[fi] != CL_S)
 		fi++;
-	}
 	lx_create_or_insert(sh_info, ft_strndup(sh_info->input, st, fi), token);
 	*i = fi - 1;
 }
@@ -130,9 +124,7 @@ void	lx_list_token(t_shell_info *sh_info)
 			lx_insert_cmd_arg(sh_info, &i);
 	}
 	sh_info->lx_ls_token = sh_info->lx_ls_token_h;
-	//lx_remove_usleschar(sh_info->lx_ls_token_h);
 	ft_expansion(sh_info, sh_info->lx_ls_token_h);
-	
 	lx_set_redirection(sh_info->lx_ls_token_h);
 	lx_ck_list_token(sh_info);
 }

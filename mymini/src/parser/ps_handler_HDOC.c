@@ -6,14 +6,13 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 12:22:15 by afalconi          #+#    #+#             */
-/*   Updated: 2023/11/09 20:29:45 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/11/22 20:43:36 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-
-void ps_hdoc_handler_signal(int sig)
+void	ps_hdoc_handler_signal(int sig)
 {
 	if (sig == SIGINT)
 	{
@@ -28,22 +27,23 @@ static void	ps_hdoc_insert(t_list_redirection *hdoc, int *fd)
 	char	*str;
 
 	str = NULL;
-	while(1)
+	while (1)
 	{
 		str = readline("> ");
 		if (!str || ft_strncmp(str, hdoc->file, ft_strlen(hdoc->file)) == 0)
-			break;
+			break ;
 		write(fd[1], str, ft_strlen(str));
 		write(fd[1], "\n", 1);
 	}
 	if (!str)
 	{
 		ft_putstr_fd("\033[93m", 1);
-		ft_putstr_fd(" minishell : warning: here-document delimited by end-of-file (wanted '", 1);
+		ft_putstr_fd(" minishell : warning: here-document", 1);
+		ft_putstr_fd(" delimited by end-of-file (wanted '", 1);
 		ft_putstr_fd(hdoc->file, 1);
 		ft_putstr_fd("')", 1);
 		ft_putstr_fd("\n\e[0m", 1);
-		for_sig = 5;
+		g_for_sig = 5;
 	}
 }
 
@@ -86,24 +86,24 @@ static void	ps_hdoc_insert(t_list_redirection *hdoc, int *fd)
 //	tmp = ft_strdup(sh_info->input);
 //	free(sh_info->input);
 //	sh_info->input = ft_strndup(tmp, 0, ft_strlen(tmp) - 1);
-//	if (for_sig == 5)
+//	if (g_for_sig == 5)
 //	{
 //		tmp = ft_strdup(sh_info->input);
 //		free(sh_info->input);
 //		sh_info->input = ft_strjoin(tmp, hdoc->file);
 //	}
-//	for_sig = 0;
+//	g_for_sig = 0;
 //	close(to_add);
 //}
 
-int	ps_handler_HDOC(t_list_redirection *hdoc, t_shell_info *sh_info)
+int	ps_handler_hdoc(t_list_redirection *hdoc, t_shell_info *sh_info)
 {
 	pid_t		pid;
 	int			fd[2];
 
 	(void)sh_info;
 	if (pipe(fd) == -1)
-		return(-1);
+		return (-1);
 	pid = fork();
 	if (pid == 0)
 	{
@@ -117,6 +117,5 @@ int	ps_handler_HDOC(t_list_redirection *hdoc, t_shell_info *sh_info)
 	hdoc->fd_of_file = dup(fd[0]);
 	close(fd[1]);
 	close(fd[0]);
-	//ps_update_input(hdoc, sh_info);
-	return(1);
+	return (1);
 }

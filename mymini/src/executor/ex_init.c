@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 06:46:09 by afalconi          #+#    #+#             */
-/*   Updated: 2023/11/16 19:54:18 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/11/22 20:43:36 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ static void	ex_subshell(t_minitree *node
 	int	test;
 
 	test = 0;
-	test = for_sig;
-	for_sig = 100;
+	test = g_for_sig;
+	g_for_sig = 100;
 	sh_info->pid = fork();
 	if (sh_info->pid == 0)
 	{
@@ -29,7 +29,7 @@ static void	ex_subshell(t_minitree *node
 	waitpid(sh_info->pid, 0, 0);
 	if (sh_info->pid == 0)
 		exit(1);
-	for_sig = test;
+	g_for_sig = test;
 }
 
 static int	ex_chose_token(t_minitree *node

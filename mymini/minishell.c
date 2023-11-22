@@ -6,44 +6,40 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 23:09:31 by afalconi          #+#    #+#             */
-/*   Updated: 2023/11/16 19:48:51 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/11/22 20:43:36 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	for_sig;
+int	g_for_sig;
 
 static void	heart(t_shell_info *sh_info)
 {
-	if (for_sig == 2)
+	if (g_for_sig == 2)
 		sh_info->last_exit = 130;
 	else if (sh_info->input)
 	{
 		ft_lexical(sh_info);
-		//print_list(sh_info->lx_ls_token_h);
-		if (sh_info->lx_error != 0 || for_sig == 3)
+		if (sh_info->lx_error != 0 || g_for_sig == 3)
 			add_history(sh_info->input);
 		if (sh_info->lx_error == 1)
 			ft_print_message("Error: lexical error", 2);
 		else if (sh_info->lx_error == 2)
 			ft_print_message("\nError: unexpected EOF", 2);
 		else if (sh_info->is_emty == 0 && sh_info->lx_error != 1
-			&& for_sig != 3)
+			&& g_for_sig != 3)
 		{
 			ft_parser(sh_info, sh_info->node);
 			add_history(sh_info->input);
-		//	print_tree(sh_info->node_h, sh_info->node_h, 1);
 			ft_executor(sh_info);
 			ps_free_tree_recursiv(sh_info->node_h);
 		}
-		if (sh_info->is_emty == 0 && sh_info->lx_error != 2 && for_sig != 3)
+		if (sh_info->is_emty == 0 && sh_info->lx_error != 2 && g_for_sig != 3)
 			lx_free_ls(sh_info, 0);
 	}
 	else
-	{
 		ft_exit(1, "exit", sh_info->last_exit);
-	}
 }
 
 int	main(int argc, char **argv, char **env)

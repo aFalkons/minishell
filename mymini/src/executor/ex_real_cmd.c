@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 16:31:11 by afalconi          #+#    #+#             */
-/*   Updated: 2023/11/11 18:25:49 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/11/19 19:52:41 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,58 +14,74 @@
 
 static int	bl_ck_builtins2(int *exit, char **arr_cmd_arg, char **env, int n_ac)
 {
-	if (ft_strncmp(arr_cmd_arg[0], "env", 3) == 0 && ft_strlen(arr_cmd_arg[0]) == 3)
+	if (ft_strncmp(arr_cmd_arg[0], "env", 3) == 0
+		&& ft_strlen(arr_cmd_arg[0]) == 3)
 	{
 		if (bl_env(env, n_ac, arr_cmd_arg) != 1)
 			*exit = -1;
-		return(1);
+		return (1);
 	}
-	else if(ft_strncmp(arr_cmd_arg[0], "pwd", 3) == 0 && ft_strlen(arr_cmd_arg[0]) == 3)
+	else if (ft_strncmp(arr_cmd_arg[0], "pwd", 3) == 0
+		&& ft_strlen(arr_cmd_arg[0]) == 3)
 	{
 		if (bl_pwd() != 1)
 			*exit = -1;
-		return(1);
+		return (1);
 	}
-	else if (ft_strncmp(arr_cmd_arg[0], "cd", 2) == 0 && ft_strlen(arr_cmd_arg[0]) == 2)
+	else if (ft_strncmp(arr_cmd_arg[0], "cd", 2) == 0
+		&& ft_strlen(arr_cmd_arg[0]) == 2)
 	{
 		if (bl_cd(env, arr_cmd_arg) != 1)
 			*exit = -1;
-		return(1);
+		return (1);
 	}
-	return(0);
+	return (0);
 }
 
-int	bl_ck_builtins(int *exit, char **arr_cmd_arg, char **env, t_shell_info *sh_info)
+static int	bl_ck_echo(char **arr_cmd_arg, int n_ac, int *exit)
+{
+	if (ft_strncmp(arr_cmd_arg[0], "echo", 4) == 0
+		&& ft_strlen(arr_cmd_arg[0]) == 4)
+	{
+		bl_echo(arr_cmd_arg, n_ac);
+		*exit = 1;
+		return (1);
+	}
+	return (0);
+}
+
+int	bl_ck_builtins(int *exit, char **arr_cmd_arg,
+	char **env, t_shell_info *sh_info)
 {
 	int	n_ac;
 
 	n_ac = 0;
-	while(arr_cmd_arg[n_ac] != NULL)
+	while (arr_cmd_arg[n_ac] != NULL)
 		n_ac ++;
-	if (ft_strncmp(arr_cmd_arg[0], "export", 6) == 0 && ft_strlen(arr_cmd_arg[0]) == 6)
+	if (ft_strncmp(arr_cmd_arg[0], "export", 6) == 0
+		&& ft_strlen(arr_cmd_arg[0]) == 6)
 	{
 		if (bl_export(sh_info, env, n_ac, arr_cmd_arg) != 1)
 			*exit = -1;
-		return(1);
+		return (1);
 	}
-	else if (ft_strncmp(arr_cmd_arg[0], "unset", 5) == 0 && ft_strlen(arr_cmd_arg[0]) == 5)
+	else if (ft_strncmp(arr_cmd_arg[0], "unset", 5) == 0
+		&& ft_strlen(arr_cmd_arg[0]) == 5)
 	{
 		if (bl_unset(env, arr_cmd_arg, sh_info, n_ac) != 1)
 			*exit = -1;
-		return(1);
+		return (1);
 	}
-	else if (ft_strncmp(arr_cmd_arg[0], "echo", 4) == 0 && ft_strlen(arr_cmd_arg[0]) == 4)
-	{
-		bl_echo(arr_cmd_arg, n_ac);
-		*exit = 1;
-		return(1);
-	}
-	else if (ft_strncmp(arr_cmd_arg[0], "exit", 4) == 0 && ft_strlen(arr_cmd_arg[0]) == 4)
+	else if (ft_strncmp(arr_cmd_arg[0], "exit", 4) == 0
+		&& ft_strlen(arr_cmd_arg[0]) == 4)
 		bl_exit(arr_cmd_arg, n_ac, sh_info->last_exit);
-	return(bl_ck_builtins2(exit, arr_cmd_arg, env, n_ac));
+	if (bl_ck_echo(arr_cmd_arg, n_ac, exit) == 1)
+		return (1);
+	return (bl_ck_builtins2(exit, arr_cmd_arg, env, n_ac));
 }
 
-void	ex_real_esecution(char *path_cmd, char **arr_cmd_arg,  struct s_minitree *node, t_shell_info *sh_info)
+void	ex_real_esecution(char *path_cmd, char **arr_cmd_arg,
+	struct s_minitree *node, t_shell_info *sh_info)
 {
 	pid_t	pid;
 
@@ -76,7 +92,6 @@ void	ex_real_esecution(char *path_cmd, char **arr_cmd_arg,  struct s_minitree *n
 		pid = fork();
 		if (pid == 0)
 		{
-			//for_sig = 100;
 			execve(path_cmd, arr_cmd_arg, node->env);
 		}
 		waitpid(pid, 0, 0);

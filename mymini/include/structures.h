@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 13:09:57 by afalconi          #+#    #+#             */
-/*   Updated: 2023/11/15 18:06:04 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/11/22 20:21:20 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,14 @@ typedef struct s_minitree
 	struct s_minitree			*next;
 	struct s_minitree			*subsh;
 }	t_minitree;
+
+typedef struct s_setup_redire
+{
+	t_list_redirection	*redire_list;
+	t_list_redirection	*redire_list_h;
+	t_minitree			*last;
+	t_minitree			*first;
+}	t_setup_redire;
 
 typedef struct s_shell_info
 {

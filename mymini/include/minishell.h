@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 23:16:57 by afalconi          #+#    #+#             */
-/*   Updated: 2023/11/16 18:26:33 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/11/22 20:43:36 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 # define OP_S	'('
 # define CL_S	')'
 
-extern int	for_sig;
+extern int	g_for_sig;
 
 void				ft_check_args(int argc, char **argv);
 void				ft_init_variables(char **env, t_shell_info *sh_info);
@@ -37,7 +37,6 @@ void				ft_check_lexical_error(t_shell_info *sh_info);
 void				ft_init_var_newcmd(t_shell_info *sh_info, char **env);
 void				ping(void);
 void				ck_tree_error(t_minitree *node);
-
 
 /*	lexical	*/
 void				ft_lexical(t_shell_info *sh_info);
@@ -53,6 +52,10 @@ void				lx_remove_usleschar(t_lx_list_token *token);
 void				lx_insert_inp_hdoc(t_shell_info *sh_info, int *i);
 void				lx_insert_out_app(t_shell_info *sh_info, int *i);
 void				lx_set_redirection(struct s_lx_list_token *token_list);
+void				lx_free_and_join(char *to_join, char *to_free);
+void				lx_ck_is_empty(t_shell_info *sh_info);
+void				lx_add_redi_arg(t_shell_info *sh_info, char **str,
+						int *fi, int *st);
 
 /*	parser	*/
 void				ft_parser(t_shell_info *sh_info,
@@ -63,10 +66,11 @@ void				ps_free_tree_recursiv(struct s_minitree *tree_node);
 struct s_minitree	*ps_create_or_insert(t_shell_info *sh_info);
 void				ps_redirection_setup(t_minitree *node, t_minitree *node_h,
 						t_shell_info *sh_info);
-int					ps_handler_HDOC(t_list_redirection *hdoc,
+int					ps_handler_hdoc(t_list_redirection *hdoc,
 						t_shell_info *sh_info);
 void				ps_set_struct_pipe(t_minitree *last, t_minitree *first,
 						t_list_redirection *redire_list_h, t_minitree *node_h);
+int					ps_file_befor_token(char *str);
 
 /*	executor	*/
 void				ft_executor(t_shell_info *sh_info);
@@ -87,7 +91,8 @@ int					ex_inp(struct s_list_redirection *redire,
 						int flag, int *exit_stat);
 void				ex_pipe(t_minitree *node, t_shell_info *sh_info);
 void				ex_hdoc(struct s_list_redirection *redire, int flag);
-void				ex_all_node(t_minitree *node, t_minitree *node_h , t_shell_info *sh_info, int *exit_stat);
+void				ex_all_node(t_minitree *node, t_minitree *node_h,
+						t_shell_info *sh_info, int *exit_stat);
 /*	bultins.c	*/
 
 int					bl_ck_builtins(int *exit, char **arr_cmd_arg, char **env,
@@ -230,25 +235,29 @@ void				ft_free_array(char **array);
 int					ft_expansion(t_shell_info *sh_info, t_lx_list_token *token);
 char				**ft_get_sub_str(char *str);
 char				*ft_check_type_quotes(t_shell_info *sh_info, char *str);
-void				ft_expand_dollar_in_input_str(char **sub_strs, t_lx_list_token *token);
+void				ft_expand_dollar_in_input_str(char **sub_strs,
+						t_lx_list_token *token);
 
 /*	EXPANSION_UTILS.C	*/
 
 char				*dl_dollar_expander(char **env, char *name);
-char				*ft_replace_substring(char *str, char *sub_str, char *replace_str);
+char				*ft_replace_substring(char *str,
+						char *sub_str, char *replace_str);
 
 /*	QUOTES_AND_DOLLAR.C	*/
 
 void				ft_free_exp_variables(t_expansion	*exp);
-void				ft_replace_dollar_with_value(t_shell_info *sh_info, char **sub_str,
-						t_expansion *exp, int k);
-char				*ft_dollar_sign_without_quotes(t_shell_info *sh_info, char *sub_str);
-char				*ft_work_on_double_quotes(t_shell_info *sh_info, char *sub_str);
-char				*ft_work_on_all_quotes(t_shell_info *sh_info, char *str);
+void				ft_replace_dollar_with_value(t_shell_info *sh_info,
+						char **sub_str, t_expansion *exp, int k);
+char				*ft_dollar_sign_without_quotes(t_shell_info *sh_info,
+						char *sub_str);
+char				*ft_work_on_double_quotes(t_shell_info *sh_info,
+						char *sub_str);
+char				*ft_work_on_all_quotes(t_shell_info *sh_info,
+						char *str);
 
 /*	WILDCARD.C	*/
 
-char	**wc_star(char **arr_cmd_arg);
-
+char				**wc_star(char **arr_cmd_arg);
 
 #endif

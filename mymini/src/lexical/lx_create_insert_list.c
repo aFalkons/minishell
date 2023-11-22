@@ -6,11 +6,37 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 17:16:43 by afalconi          #+#    #+#             */
-/*   Updated: 2023/10/13 15:19:47 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/11/19 19:09:38 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	lx_ck_is_empty(t_shell_info *sh_info)
+{
+	int	flag;
+	int	i;
+
+	i = -1;
+	flag = 1;
+	while (sh_info->input[++i])
+	{
+		if (sh_info->input[i] != ' ')
+			flag = 0;
+	}
+	sh_info->is_emty = flag;
+}
+
+void	lx_free_and_join(char *to_join, char *to_free)
+{
+	char	*tmp;
+
+	tmp = NULL;
+	tmp = ft_strdup(to_join);
+	to_join = ft_strjoin(tmp, to_free);
+	free(to_free);
+	free(tmp);
+}
 
 static void	lx_insert_list(t_shell_info *sh_info, char *str, char token)
 {
