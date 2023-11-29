@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 23:16:57 by afalconi          #+#    #+#             */
-/*   Updated: 2023/11/29 17:31:07 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/11/29 20:29:01 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void				lx_add_redi_arg(t_shell_info *sh_info, char **str,
 						int *fi, int *st);
 
 /*	parser	*/
-void				ft_parser(t_shell_info *sh_info,
+int					ft_parser(t_shell_info *sh_info,
 						struct s_minitree *tree_node);
 void				ps_recursiv_tree(t_shell_info *sh_info,
 						struct s_minitree *tree_node);
@@ -71,6 +71,8 @@ int					ps_handler_hdoc(t_list_redirection *hdoc,
 void				ps_set_struct_pipe(t_minitree *last, t_minitree *first,
 						t_list_redirection *redire_list_h, t_minitree *node_h);
 int					ps_file_befor_token(char *str);
+int					ps_set_hdoc(t_minitree *node,
+						t_minitree *node_h, t_shell_info *sh_info);
 
 /*	executor	*/
 void				ft_executor(t_shell_info *sh_info);

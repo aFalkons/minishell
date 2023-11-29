@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 12:22:15 by afalconi          #+#    #+#             */
-/*   Updated: 2023/11/22 20:43:36 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/11/29 20:57:31 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,8 @@ void	ps_hdoc_handler_signal(int sig)
 {
 	if (sig == SIGINT)
 	{
-		write(1, "\n", 1);
-		rl_redisplay();
 		exit(130);
+		g_for_sig = 3;
 	}
 }
 
@@ -30,7 +29,8 @@ static void	ps_hdoc_insert(t_list_redirection *hdoc, int *fd)
 	while (1)
 	{
 		str = readline("> ");
-		if (!str || ft_strncmp(str, hdoc->file, ft_strlen(hdoc->file)) == 0)
+		if (!str || ((ft_strncmp(str, hdoc->file, ft_strlen(hdoc->file)) == 0)
+			&& ft_strlen(hdoc->file) == ft_strlen(str)))
 			break ;
 		write(fd[1], str, ft_strlen(str));
 		write(fd[1], "\n", 1);
@@ -117,5 +117,40 @@ int	ps_handler_hdoc(t_list_redirection *hdoc, t_shell_info *sh_info)
 	hdoc->fd_of_file = dup(fd[0]);
 	close(fd[1]);
 	close(fd[0]);
-	return (1);
+	if (g_for_sig == 3)
+	{
+		g_for_sig = 4;
+		return(1);
+	}
+	return (0);
+}
+
+int	ps_set_hdoc(t_minitree *node
+	, t_minitree *node_h, t_shell_info *sh_info)
+{
+	t_list_redirection	*hdoc;
+	int					h_error;
+
+	(void)node_h;
+	hdoc = NULL;
+	h_error = 0;
+	if (node->next)
+		h_error = ps_set_hdoc(node->next, sh_info->node_h, sh_info);
+	if (node->subsh)
+		h_error = ps_set_hdoc(node->subsh, sh_info->node_h, sh_info);
+	if (h_error == 1)
+		return(1);
+	if (node->redire)
+	{
+		hdoc = node->redire;
+		while(hdoc)
+		{
+			if (hdoc->token == HDOC)
+				h_error = ps_handler_hdoc(hdoc, sh_info);
+			if (h_error == 1)
+				return(1);
+			hdoc = hdoc->next;
+		}
+	}
+	return (0);
 }

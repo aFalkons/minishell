@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 12:07:42 by afalconi          #+#    #+#             */
-/*   Updated: 2023/11/22 20:43:36 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/11/29 20:43:38 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,10 @@ void	handler_sig(int sig)
 			rl_replace_line("", 0);
 			rl_on_new_line();
 			rl_redisplay();
+			g_for_sig = 3;
+		}
+		else if (g_for_sig == 4)
+		{
 			g_for_sig = 3;
 		}
 	}
@@ -76,7 +80,7 @@ void	ft_init_variables(char **env, t_shell_info *sh_info)
 	sh_info->flag_hdoc_sig = 0;
 	sh_info->complete_quote = 0;
 	sh_info->lx_error = 0;
-	sh_info->env = env;
+	sh_info->env = ft_copy_array(env, ft_get_size_array(env));
 	sh_info->input = NULL;
 	sh_info->pwd = 0;
 	sh_info->lx_ls_token = NULL;

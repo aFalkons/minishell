@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bl_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: misidori <misidori@student.42.fr>          +#+  +:+       +#+        */
+/*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 19:36:19 by matteo            #+#    #+#             */
-/*   Updated: 2023/11/27 23:23:08 by misidori         ###   ########.fr       */
+/*   Updated: 2023/11/29 20:05:04 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,8 @@ int	ft_remove_string_from_array(char **env, char *name)
 	while (i < size_array)
 	{
 		index_equal_sign = ft_find_char_index_str(env[i], '=');
-		if (ft_strncmp(env[i], name, ft_strlen(name) == 0
-				&& env[i][index_equal_sign] == '='))
+		if ((ft_strncmp(env[i], name, ft_strlen(name) == 0))
+				&& (env[i][index_equal_sign] == '='))
 		{
 			ft_resize_array(env, size_array, i);
 			break ;
