@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 11:52:02 by afalconi          #+#    #+#             */
-/*   Updated: 2023/11/16 17:48:13 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/11/28 18:53:24 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,8 @@ static int	ex_ck_exist_cmd(char **path)
 	return (-1);
 }
 
-char	*ex_ck_cmd(struct s_lx_list_token *cmd, struct s_minitree *node)
+char	*ex_ck_cmd(struct s_lx_list_token *cmd, struct s_minitree *node,
+					t_shell_info *sh_info)
 {
 	char	*path;
 	char	**paths_cmd;
@@ -95,7 +96,7 @@ char	*ex_ck_cmd(struct s_lx_list_token *cmd, struct s_minitree *node)
 	path = NULL;
 	if (access(cmd->str, X_OK) == 0)
 		return (ft_strdup(cmd->str));
-	path = ex_create_path(node->env);
+	path = ex_create_path(sh_info->env);
 	paths_cmd = ex_create_paths(path, cmd->str);
 	free(path);
 	pos = ex_ck_exist_cmd(paths_cmd);

@@ -1,28 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_free_array.c                                    :+:      :+:    :+:   */
+/*   ft_find_char_index_str.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: misidori <misidori@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/29 01:34:41 by matteo            #+#    #+#             */
-/*   Updated: 2023/11/29 13:08:58 by misidori         ###   ########.fr       */
+/*   Created: 2023/11/24 00:19:32 by misidori          #+#    #+#             */
+/*   Updated: 2023/11/24 00:20:03 by misidori         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
-
-void	ft_free_array(char **array)
+int	ft_find_char_index_str(char *str, char c)
 {
 	int	i;
 
-	if (array == NULL)
-		return ;
 	i = 0;
-	while (array[i])
+	if (!str || !c)
+		return (-1);
+	while (str[i])
 	{
-		free(array[i]);
+		if (str[i] == c)
+			return (i);
 		i++;
 	}
-	free(array);
+	return (-1);
 }

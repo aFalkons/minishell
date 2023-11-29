@@ -1,28 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_free_array.c                                    :+:      :+:    :+:   */
+/*   ft_swap_strings.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: misidori <misidori@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/29 01:34:41 by matteo            #+#    #+#             */
-/*   Updated: 2023/11/29 13:08:58 by misidori         ###   ########.fr       */
+/*   Created: 2023/11/24 16:14:28 by misidori          #+#    #+#             */
+/*   Updated: 2023/11/24 16:15:13 by misidori         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "../include/libft.h"
 
-void	ft_free_array(char **array)
+void	ft_swap_strings(char **a, char **b)
 {
-	int	i;
+	char	*temp;
 
-	if (array == NULL)
-		return ;
-	i = 0;
-	while (array[i])
-	{
-		free(array[i]);
-		i++;
-	}
-	free(array);
+	temp = *a;
+	*a = *b;
+	*b = temp;
 }

@@ -6,7 +6,7 @@
 #    By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/16 23:56:29 by afalconi          #+#    #+#              #
-#    Updated: 2023/11/15 17:54:06 by afalconi         ###   ########.fr        #
+#    Updated: 2023/11/29 17:19:40 by afalconi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,8 @@ SRCS	=	src/ft_strlen.c src/ft_calloc.c src/ft_exit.c src/ft_strndup.c \
 			src/ft_print_array.c src/ft_remove_char_in_str.c \
 			src/ft_strchr.c src/ft_strcmp.c src/ft_find_index_next_char.c \
 			src/ft_strncpy.c src/ft_memcpy.c src/ft_strstr.c src/ft_realloc.c \
+			src/ft_copy_array.c src/ft_find_char_index_str.c \
+			src/ft_swap_strings.c src/ft_add_string.c src/ft_cmp_len_and_str.c
 
 OBJS	=	$(SRCS:.c=.o)
 CC		=	gcc

@@ -44,7 +44,7 @@ include/libft/src/ft_strstr.c: OK!
 src/setup.c: OK!
 src/wildcard.c: Error!
 Error: CONSECUTIVE_NEWLINES (line:  31, col:   1):	Consecutive newlines
-Error: CONSECUTIVE_NEWLINES (line:  32, col:   1):	Consecutive newlines
+Error: CONSECUTIVE_NEWLINES (line:+6  32, col:   1):	Consecutive newlines
 Error: TOO_MANY_FUNCS       (line: 110, col:   1):	Too many functions in file
 Error: TOO_MANY_FUNCS       (line: 126, col:   1):	Too many functions in file
 Error: TOO_MANY_VARS_FUNC   (line: 133, col:   1):	Too many variables declarations in a function
@@ -223,7 +223,6 @@ src/executor/ex_cmd.c: OK!
 src/executor/ex_real_cmd.c: OK!
 src/executor/ex_inp_hdoc.c: OK!
 src/executor/ex_pipe.c: OK!
-src/executor/ex_cl_s.c: OK!
 src/executor/ex_out_app.c: OK!
 src/executor/ex_ck_cmd.c: OK!
 src/executor/ex_or.c: OK!

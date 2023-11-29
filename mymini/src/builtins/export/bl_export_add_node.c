@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bl_export_add_node.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: misidori <misidori@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 00:58:00 by matteo            #+#    #+#             */
-/*   Updated: 2023/11/16 17:24:27 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/11/29 13:50:58 by misidori         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,8 @@ void	ft_name_doesnt_exists_add_new_node(t_node *new_node,
 {
 	char	*temp;
 
-	temp = NULL;
 	new_node->value = ft_strdup(value);
-	new_node->full_info = ft_strjoin(name, "=");
-	temp = ft_strdup(new_node->full_info);
-	free(new_node->full_info);
+	temp = ft_strjoin(name, "=");
 	new_node->full_info = ft_strjoin(temp, value);
 	free(temp);
 }

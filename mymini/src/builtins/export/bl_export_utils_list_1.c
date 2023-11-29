@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bl_export_utils_list_1.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: misidori <misidori@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 15:43:37 by misidori          #+#    #+#             */
-/*   Updated: 2023/11/16 17:04:53 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/11/29 14:05:45 by misidori         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	ft_add_node_in_list(t_node **head, char *name, char *value)
 	t_node	*new_node;
 
 	current = *head;
-	new_node = (t_node *) ft_calloc(sizeof(t_node), 1);
+	new_node = (t_node *) malloc(sizeof(t_node));
 	new_node->name = ft_strdup(name);
 	if (value)
 		ft_name_doesnt_exists_add_new_node(new_node, name, value);
@@ -65,26 +65,10 @@ void	ft_add_node_in_list(t_node **head, char *name, char *value)
 		ft_add_new_node_at_the_end_of_list(head, current, new_node);
 }
 
-int	ft_add_arg_without_egual_sign(t_shell_info *sh_info, char *arg)
-{
-	int	return_value;
-
-	return_value = 1;
-	if (ft_isalnum_str(arg) == true && ft_isdigit(arg[0]) == false)
-	{
-		ft_add_or_update_node_in_list(&sh_info->var->node, arg, NULL);
-	}
-	else
-	{
-		printf("minishell: export: `%s': not a valid identifier\n", arg);
-		return_value = -1;
-	}
-	return (return_value);
-}
-
 int	ft_attach_string_to_list(t_shell_info *sh_info, char *name, char *value)
 {
 	t_node	*head;
+	char	*temp;
 	int		i;
 
 	head = ft_get_list_head(sh_info->var);
@@ -98,8 +82,10 @@ int	ft_attach_string_to_list(t_shell_info *sh_info, char *name, char *value)
 	if (ft_strncmp(name, sh_info->var->node->name, ft_strlen(name)) == 0
 		&& ft_strlen(name) == ft_strlen(sh_info->var->node->name))
 	{
-		sh_info->var->node->value = ft_strjoin
-			(sh_info->var->node->value, value);
+		temp = ft_strjoin(sh_info->var->node->value, value);
+		free(sh_info->var->node->value);
+		sh_info->var->node->value = ft_strdup(temp);
+		free(temp);
 	}
 	sh_info->var->node = head;
 	return (1);

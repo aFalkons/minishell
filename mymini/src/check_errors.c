@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 03:16:57 by afalconi          #+#    #+#             */
-/*   Updated: 2023/11/15 21:21:53 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/11/29 17:55:00 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,12 @@ static void	error_messag(t_minitree *node)
 	char	*str;
 
 	str = NULL;
-	if (node->token->token == ARG)
+	if (node->token->token == ARG && bl_is_builtins(node->token->next->str) == 0)
 	{
 		str = ft_strjoin("Error: comand not found --",
 				node->token->next->str);
 	}
-	else if (node->token->token == CMD)
+	else if (node->token->token == CMD && bl_is_builtins(node->token->str) == 0)
 	{
 		str = ft_strjoin("Error: comand not found --",
 				node->token->str);
@@ -40,7 +40,7 @@ void	ck_tree_error(t_minitree *node)
 	{
 		error_messag(node);
 	}
-	if (node->exit_status == 1)
+	if (node->exit_status == 1 && node->redire != NULL && node->redire->token == INP)
 	{
 		str = ft_strjoin("Error:  No such file or directory --",
 				node->redire->file);

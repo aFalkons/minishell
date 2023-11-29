@@ -1,28 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_free_array.c                                    :+:      :+:    :+:   */
+/*   ft_add_string.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: misidori <misidori@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/29 01:34:41 by matteo            #+#    #+#             */
-/*   Updated: 2023/11/29 13:08:58 by misidori         ###   ########.fr       */
+/*   Created: 2023/11/25 16:05:36 by misidori          #+#    #+#             */
+/*   Updated: 2023/11/29 14:02:25 by misidori         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "../include/libft.h"
 
-void	ft_free_array(char **array)
+char	**ft_add_string(char **array, int *size, const char *string)
 {
-	int	i;
+	char	**new_array;
 
-	if (array == NULL)
-		return ;
-	i = 0;
-	while (array[i])
-	{
-		free(array[i]);
-		i++;
-	}
-	free(array);
+	new_array = (char **) ft_realloc(array, (*size + 2) * sizeof(char *));
+	if (new_array == NULL)
+		return (NULL);
+	new_array[*size] = ft_strdup(string);
+	(*size)++;
+	new_array[*size] = NULL;
+	return (new_array);
 }

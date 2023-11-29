@@ -1,28 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_free_array.c                                    :+:      :+:    :+:   */
+/*   ft_copy_array.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: misidori <misidori@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/29 01:34:41 by matteo            #+#    #+#             */
-/*   Updated: 2023/11/29 13:08:58 by misidori         ###   ########.fr       */
+/*   Created: 2023/11/19 19:24:07 by misidori          #+#    #+#             */
+/*   Updated: 2023/11/29 14:12:22 by misidori         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "../include/libft.h"
 
-void	ft_free_array(char **array)
+char	**ft_copy_array(char **original_array, int size_array)
 {
-	int	i;
+	char	**new_array;
+	int		i;
 
-	if (array == NULL)
-		return ;
 	i = 0;
-	while (array[i])
+	new_array = ft_calloc((size_array + 1), sizeof(char *));
+	if (!new_array)
+		return (NULL);
+	while (original_array[i])
 	{
-		free(array[i]);
+		new_array[i] = ft_strdup(original_array[i]);
 		i++;
 	}
-	free(array);
+	new_array[i] = NULL;
+	return (new_array);
 }

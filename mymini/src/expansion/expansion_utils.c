@@ -3,14 +3,50 @@
 /*                                                        :::      ::::::::   */
 /*   expansion_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: matteo <matteo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: misidori <misidori@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 22:06:59 by matteo            #+#    #+#             */
-/*   Updated: 2023/11/15 17:41:32 by matteo           ###   ########.fr       */
+/*   Updated: 2023/11/21 18:00:04 by misidori         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+char	*ft_make_sub_str_with_quotes(char *str, int *i)
+{
+	char	*new_substr;
+	char	quote;
+	int		j;
+
+	quote = str[*i];
+	j = *i + 1;
+	while (str[j] != quote && str[j] != '\0')
+		j++;
+	new_substr = (char *) malloc(j - *i + 2);
+	if (!new_substr)
+		return (NULL);
+	ft_strncpy(new_substr, &str[*i], j - *i + 1);
+	new_substr[j - *i + 1] = '\0';
+	*i = j + 1;
+	return (new_substr);
+}
+
+char	*ft_make_sub_str_without_quotes(char *str, int *i)
+{
+	char	*new_substr;
+	int		j;
+
+	j = *i;
+	while (str[j] != '\'' && str[j] != '\"' && str[j] != '\0')
+		j++;
+	new_substr = (char *) malloc(j - *i + 1);
+	if (!new_substr)
+		return (NULL);
+	ft_strncpy(new_substr, &str[*i], j - *i);
+	new_substr[j - *i] = '\0';
+	*i = j;
+	return (new_substr);
+}
 
 char	*dl_dollar_expander(char **env, char *name)
 {
@@ -60,6 +96,5 @@ char	*ft_replace_substring(char *str, char *sub_str, char *replace_str)
 		str += len_front + ft_strlen(sub_str);
 	}
 	ft_memcpy(temp, str, strlen(str) + 1);
-//	free(temp);
 	return (result);
 }

@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 23:56:26 by afalconi          #+#    #+#             */
-/*   Updated: 2023/11/15 17:53:07 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/11/29 17:16:03 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,5 +53,11 @@ char	*ft_strncpy(char *dest, const char *src, size_t n);
 void	*ft_memcpy(void *dst, const void *src, size_t n);
 char	*ft_strstr(const char *haystack, const char *needle);
 void	*ft_realloc(void *ptr, size_t size);
+char	**ft_copy_array(char **original_array, int size_array);
+int		ft_find_char_index_str(char *str, char c);
+int		ft_find_char_array(char **array, char c);
+void	ft_swap_strings(char **a, char **b);
+char	**ft_add_string(char **array, int *size, const char *string);
+int 	ft_cmp_len_and_str(char *str1, char *str2, int len);
 
 #endif

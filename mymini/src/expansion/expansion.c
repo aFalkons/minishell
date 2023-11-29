@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: matteo <matteo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: misidori <misidori@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 13:46:00 by matteo            #+#    #+#             */
-/*   Updated: 2023/11/15 17:10:56 by matteo           ###   ########.fr       */
+/*   Updated: 2023/11/21 22:10:53 by misidori         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,42 +36,22 @@ int	ft_expansion(t_shell_info *sh_info, t_lx_list_token *token)
 char	**ft_get_sub_str(char *str)
 {
 	char	**sub_strs;
-	char	quote;
-	int		i;
-	int		j;
+	int		index;
+	int		*i;
 	int		k;
 
 	sub_strs = (char **) malloc(sizeof(char *) * (strlen(str) + 1));
-	i = 0;
-	j = 0;
+	if (!sub_strs)
+		return (NULL);
+	index = 0;
+	i = &index;
 	k = 0;
-	while (str[i])
+	while (str[*i])
 	{
-		if (str[i] == '\'' || str[i] == '\"')
-		{
-			quote = str[i];
-			j = i + 1;
-			while (str[j] != quote && str[j] != '\0')
-				j++;
-			sub_strs[k] = (char *) malloc(j - i + 2);
-			if (!sub_strs[k])
-				return (NULL);
-			ft_strncpy(sub_strs[k], &str[i], j - i + 1);
-			sub_strs[k][j - i + 1] = '\0';
-			i = j + 1;
-		}
+		if (str[*i] == '\'' || str[*i] == '\"')
+			sub_strs[k] = ft_make_sub_str_with_quotes(str, i);
 		else
-		{
-			j = i;
-			while (str[j] != '\'' && str[j] != '\"' && str[j] != '\0')
-				j++;
-			sub_strs[k] = (char *) malloc(j - i + 1);
-			if (!sub_strs[k])
-				return (NULL);
-			ft_strncpy(sub_strs[k], &str[i], j - i);
-			sub_strs[k][j - i] = '\0';
-			i = j;
-		}
+			sub_strs[k] = ft_make_sub_str_without_quotes(str, i);
 		k++;
 	}
 	sub_strs = ft_realloc(sub_strs, sizeof(char *) * (k + 1));
@@ -81,7 +61,6 @@ char	**ft_get_sub_str(char *str)
 
 char	*ft_check_type_quotes(t_shell_info *sh_info, char *str)
 {
-	char	*temp;
 	int		n_single_quote;
 	int		n_double_quotes;
 	int		n_dollar_sign;
@@ -91,20 +70,16 @@ char	*ft_check_type_quotes(t_shell_info *sh_info, char *str)
 	n_dollar_sign = ft_count_char(str, '$');
 	if ((n_single_quote + n_double_quotes == 0) && n_dollar_sign > 0)
 	{
-		temp = ft_strdup(str);
-		free(str);
-		str = ft_dollar_sign_without_quotes(sh_info, temp);
-		free(temp);
+		str = ft_dollar_sign_without_quotes(sh_info, str);
 	}
 	else if ((n_double_quotes > 0 && n_single_quote == 0) && n_dollar_sign > 0)
 	{
-		temp = ft_strdup(str);
-		free(str);
-		str = ft_work_on_double_quotes(sh_info, temp);
-		free(temp);
+		str = ft_work_on_double_quotes(sh_info, str);
 	}
 	else if ((n_double_quotes > 0 && n_single_quote > 0) && n_dollar_sign > 0)
+	{
 		str = ft_work_on_all_quotes(sh_info, str);
+	}
 	return (str);
 }
 

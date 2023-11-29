@@ -6,37 +6,63 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/06 23:47:50 by matteo            #+#    #+#             */
-/*   Updated: 2023/11/07 18:09:03 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/11/29 17:57:30 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	bl_exit(char **split, int argc, int stat)
+void	ft_free_list(t_list_var_env *var)
+{
+	t_node	*current;
+	t_node	*next;
+
+	current = var->node;
+	while (current != NULL)
+	{
+		next = current->next;
+		ft_free_node(current);
+		free(current);
+		current = next;
+	}
+}
+
+int	ft_exit_with_args(char **split, int argc)
 {
 	int	num_error;
 
 	num_error = 0;
-	if (argc == 1)
-		ft_exit(1, "exit", stat);
-	else
+	ft_check_exit_error(split);
+	num_error = ft_atoi(split[1]);
+	if (argc == 2)
 	{
-		ft_check_exit_error(split);
-		num_error = ft_atoi(split[1]);
-		if (argc == 2)
+		if (num_error > 256)
 		{
-			if (num_error > 256)
-			{
-				num_error = num_error % 256;
-				ft_free_array(split);
-				ft_exit(2, "exit", num_error);
-			}
+			num_error = num_error % 256;
 			ft_free_array(split);
 			ft_exit(2, "exit", num_error);
 		}
-		else
-			printf("exit\nbash: exit: too many arguments\n");
+		ft_free_array(split);
+		ft_exit(2, "exit", num_error);
 	}
+	else
+		printf("exit\nminishell: exit: too many arguments\n");
+	return (-1);
+}
+
+int	bl_exit(t_shell_info *sh_info, char **split, int argc, int stat)
+{
+	(void)sh_info;
+	if (argc == 1)
+	{
+		ft_free_array(split);
+		ft_exit(1, "exit", stat);
+	}
+	else
+	{
+		ft_exit_with_args(split, argc);
+	}
+	return (-1);
 }
 
 void	ft_check_exit_error(char **split)

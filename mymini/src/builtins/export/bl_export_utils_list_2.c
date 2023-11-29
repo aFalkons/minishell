@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bl_export_utils_list_2.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: misidori <misidori@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 18:17:25 by misidori          #+#    #+#             */
-/*   Updated: 2023/11/10 19:17:32 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/11/24 00:34:18 by misidori         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,14 +73,7 @@ void	ft_sort_list(t_node **head)
 void	ft_print_list(t_list_var_env *list)
 {
 	t_node	*current;
-	//t_node	*tmp;
 
-	//tmp = list->node;
-	//while(tmp)
-	//{
-	//	printf("---%s\n", tmp->full_info);
-	//	tmp = tmp ->next;
-	//}
 	current = list->node;
 	while (current)
 	{

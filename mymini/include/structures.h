@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 13:09:57 by afalconi          #+#    #+#             */
-/*   Updated: 2023/11/22 20:21:20 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/11/29 17:08:52 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,31 @@ typedef struct s_expansion
 	char	*value_var;
 	char	*temp_str;
 	int		index_dollar_sign;
+	int 	len_new_value;
 	int		n_dollar_sign;
+	int		i;
+	int		k;
+	int		j;
 }	t_expansion;
+
+typedef struct s_wildcard
+{
+	char		**list_of_files;
+	char		**new_array;
+	char		**temp;
+	int			size_array;
+	int			count;
+	int			i;
+	int			j;
+}	t_wildcard;
+
+typedef struct s_export_var
+{
+	char	*name;
+	int		index_egual_sign;
+	int		return_value;
+	int		i;
+}	t_export_var;
 
 typedef struct s_node
 {

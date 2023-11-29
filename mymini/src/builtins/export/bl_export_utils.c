@@ -6,49 +6,11 @@
 /*   By: misidori <misidori@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 15:50:06 by misidori          #+#    #+#             */
-/*   Updated: 2023/10/10 16:49:34 by misidori         ###   ########.fr       */
+/*   Updated: 2023/11/29 14:39:55 by misidori         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-int	ft_find_char_index_str(char *str, char c)
-{
-	int	i;
-
-	i = 0;
-	if (!str || !c)
-		return (-1);
-	while (str[i])
-	{
-		if (str[i] == c)
-			return (i);
-		i++;
-	}
-	return (-1);
-}
-
-int	ft_find_char_array(char **array, char c)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	if (!array || !c)
-		return (0);
-	while (array[i])
-	{
-		j = 0;
-		while (array[i][j])
-		{
-			if (array[i][j] == c)
-				return (i);
-			j++;
-		}
-		i++;
-	}
-	return (-1);
-}
 
 int	ft_check_exclamation_mark(char **split)
 {
@@ -86,4 +48,37 @@ int	ft_check_if_variable_name_exists(t_shell_info *sh_info, char *name)
 		current = current->next;
 	}
 	return (return_value);
+}
+
+bool	ft_check_name_is_correct(char *name)
+{
+	int	i;
+
+	i = 0;
+	while (name[i])
+	{
+		if ((name[i] >= 'a' && name[i] <= 'z')
+			|| (name[i] >= 'A' && name[i] <= 'Z')
+			|| (name[i] >= '0' && name[i] <= '9') || (name[i] == '_'))
+		{
+			i++;
+		}
+		else
+		{
+			return (false);
+		}
+	}
+	return (true);
+}
+
+int	ft_check_name(t_export_var *exp_var, char *arg)
+{
+	exp_var->return_value = 1;
+	if (ft_check_name_is_correct(exp_var->name) == false
+		|| ft_isdigit(exp_var->name[0]) == true)
+	{
+		printf("minishell: export: `%s': not a valid identifier\n", arg);
+		exp_var->return_value = -1;
+	}
+	return (exp_var->return_value);
 }
