@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 03:16:57 by afalconi          #+#    #+#             */
-/*   Updated: 2023/11/29 17:55:00 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/11/30 13:19:38 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,16 +34,21 @@ static void	error_messag(t_minitree *node)
 void	ck_tree_error(t_minitree *node)
 {
 	char	*str;
+	struct s_list_redirection	*redire;
 
 	str = NULL;
+	redire = NULL;
 	if (node->exit_status == 127)
 	{
 		error_messag(node);
 	}
-	if (node->exit_status == 1 && node->redire != NULL && node->redire->token == INP)
+	redire = node->redire;
+	while(redire && redire->fd_copy != 42)
+		redire = redire->next;
+	if (node->exit_status == 1 && redire != NULL && redire->token == INP)
 	{
 		str = ft_strjoin("Error:  No such file or directory --",
-				node->redire->file);
+				redire->file);
 		ft_print_message(str, 2);
 		free(str);
 	}

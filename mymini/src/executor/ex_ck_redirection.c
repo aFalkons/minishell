@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 02:20:42 by afalconi          #+#    #+#             */
-/*   Updated: 2023/11/16 18:06:50 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/11/30 13:05:25 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ static void	ex_open_redirection(struct s_list_redirection *open,
 		open = open->next;
 	}
 	open = head;
-	while (open)
+	while (open && node->exit_status != 1)
 	{
 		if (open->token == OUT)
 			ex_out(open, 0);

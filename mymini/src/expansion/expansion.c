@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: misidori <misidori@student.42.fr>          +#+  +:+       +#+        */
+/*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 13:46:00 by matteo            #+#    #+#             */
-/*   Updated: 2023/11/21 22:10:53 by misidori         ###   ########.fr       */
+/*   Updated: 2023/11/30 15:16:07 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	ft_expansion(t_shell_info *sh_info, t_lx_list_token *token)
 	while (token)
 	{
 		i = -1;
-		if (token->token == ARG)
+		if (token->token == ARG && ft_count_char(token->str, '$') != 0)
 		{
 			sub_strs = ft_get_sub_str(token->str);
 			while (sub_strs[++i])
