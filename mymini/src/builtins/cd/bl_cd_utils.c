@@ -6,7 +6,7 @@
 /*   By: misidori <misidori@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 17:45:16 by misidori          #+#    #+#             */
-/*   Updated: 2023/11/24 00:36:35 by misidori         ###   ########.fr       */
+/*   Updated: 2023/11/30 12:10:12 by misidori         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,9 +84,9 @@ char	*ft_get_home(char **env)
 	return (home_dir);
 }
 
-int	ft_change_folder(char *new_folder, char **split)
+int	ft_change_folder(char *new_folder, char **arr_cmd_arg)
 {
-	if (!split[1])
+	if (!arr_cmd_arg[1])
 	{
 		if (chdir(new_folder) != 0)
 		{
@@ -98,7 +98,7 @@ int	ft_change_folder(char *new_folder, char **split)
 	{
 		if (chdir(new_folder) != 0)
 		{
-			printf("minishell: cd: %s: %s\n", split[1], strerror(errno));
+			printf("minishell: cd: %s: %s\n", arr_cmd_arg[1], strerror(errno));
 			return (-1);
 		}
 	}

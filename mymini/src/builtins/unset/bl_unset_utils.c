@@ -3,27 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   bl_unset_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: misidori <misidori@student.42.fr>          +#+  +:+       +#+        */
+/*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 19:36:19 by matteo            #+#    #+#             */
-/*   Updated: 2023/11/29 13:58:02 by misidori         ###   ########.fr       */
+/*   Updated: 2023/12/01 19:19:32 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-void	ft_resize_array(char **env, int size_array, int i)
-{
-	while (i < size_array - 1)
-	{
-		if (env[i + 1])
-			env[i] = ft_strdup(env[i + 1]);
-		else
-			env[i] = NULL;
-		i++;
-	}
-	env[size_array - 1] = NULL;
-}
 
 int	ft_node_to_remove_is_head(t_list_var_env *env, char *name)
 {
@@ -31,9 +18,9 @@ int	ft_node_to_remove_is_head(t_list_var_env *env, char *name)
 
 	if (ft_strcmp(env->head->name, name) == 0)
 	{
-		temp = env->head;
-		env->head = env->head->next;
-		ft_free_node(temp);
+		temp = env->node->next;
+		ft_free_node(env->node);
+		env->node = temp;
 		return (1);
 	}
 	return (-1);

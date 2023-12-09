@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 06:46:09 by afalconi          #+#    #+#             */
-/*   Updated: 2023/11/22 20:43:36 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/12/01 22:24:12 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ void	ex_all_node(t_minitree *node, t_minitree *node_h
 		&& (node->token->token == ARG || node->token->token == CMD))
 	{
 		sh_info->last_exit = node->exit_status;
+		ft_add_last_exit_to_array(sh_info);
 	}
 }
 

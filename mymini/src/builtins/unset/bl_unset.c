@@ -6,22 +6,22 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 19:36:19 by matteo            #+#    #+#             */
-/*   Updated: 2023/11/29 20:05:04 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/12/01 20:43:43 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	bl_unset(char **env, char **split, t_shell_info *sh_info, int argc)
+int	bl_unset(t_shell_info *sh_info, char **arr_cmd_arg, int argc)
 {
 	int		i;
 
 	i = 1;
 	if (argc > 1)
 	{
-		while (split[i])
+		while (arr_cmd_arg[i])
 		{
-			if (ft_unset(sh_info, split, env, i) != 1)
+			if (ft_unset(sh_info, arr_cmd_arg, i) != 1)
 				return (-1);
 			i++;
 		}
@@ -29,49 +29,57 @@ int	bl_unset(char **env, char **split, t_shell_info *sh_info, int argc)
 	return (1);
 }
 
-int	ft_unset(t_shell_info *sh_info, char **split, char **env, int i)
+int	ft_unset(t_shell_info *sh_info, char **arr_cmd_arg, int i)
 {
 	int		index_egual_sign;
 
-	index_egual_sign = ft_find_char_index_str(split[i], '=');
-	ft_remove_char_in_str(split[i], '\"');
-	ft_remove_char_in_str(split[i], '\'');
+	index_egual_sign = ft_find_char_index_str(arr_cmd_arg[i], '=');
+	ft_remove_char_in_str(arr_cmd_arg[i], '\"');
+	ft_remove_char_in_str(arr_cmd_arg[i], '\'');
 	if (index_egual_sign > -1)
 	{
-		printf("minishell: unset: `%s': not a valid identifier\n", split[i]);
+		printf("minishell: unset: `%s': not a valid identifier\n",
+			arr_cmd_arg[i]);
 		return (-1);
 	}
-	if (ft_check_if_variable_name_exists(sh_info, split[i]) != -1)
+	if (ft_check_if_variable_name_exists(sh_info, arr_cmd_arg[i]) != -1)
 	{
-		if (ft_remove_string_from_array(env, split[i]) != 1)
+		if (ft_check_if_variable_name_exists(sh_info, arr_cmd_arg[i]) == 2)
+			ft_remove_node_from_list(sh_info->var, arr_cmd_arg[i]);
+		else
 		{
-			return (-1);
+			if (ft_remove_string_from_array(sh_info, arr_cmd_arg[i]) == -1)
+				return (-1);
+			ft_remove_node_from_list(sh_info->var, arr_cmd_arg[i]);
 		}
-		ft_remove_node_from_list(sh_info->var, split[i]);
 	}
 	return (1);
 }
 
-int	ft_remove_string_from_array(char **env, char *name)
+int	ft_remove_string_from_array(t_shell_info *sh_info, char *name)
 {
+	char	**temp_env;
 	int		index_equal_sign;
-	int		size_array;
 	int		i;
+	int		j;
 
+	temp_env = (char **) ft_calloc(ft_get_size_array(sh_info->env),
+			sizeof(char *));
 	index_equal_sign = 0;
-	size_array = ft_get_size_array(env);
-	i = 0;
-	while (i < size_array)
+	i = -1;
+	j = 0;
+	while (++i < ft_get_size_array(sh_info->env))
 	{
-		index_equal_sign = ft_find_char_index_str(env[i], '=');
-		if ((ft_strncmp(env[i], name, ft_strlen(name) == 0))
-				&& (env[i][index_equal_sign] == '='))
+		index_equal_sign = ft_find_char_index_str(sh_info->env[i], '=');
+		if (!((ft_strncmp(sh_info->env[i], name, ft_strlen(name)) == 0)
+				&& (sh_info->env[i][index_equal_sign] == '=')))
 		{
-			ft_resize_array(env, size_array, i);
-			break ;
+			temp_env[j] = ft_strdup(sh_info->env[i]);
+			j++;
 		}
-		i++;
 	}
+	ft_free_array(sh_info->env);
+	sh_info->env = temp_env;
 	return (1);
 }
 

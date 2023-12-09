@@ -6,7 +6,7 @@
 /*   By: misidori <misidori@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 18:17:25 by misidori          #+#    #+#             */
-/*   Updated: 2023/11/24 00:34:18 by misidori         ###   ########.fr       */
+/*   Updated: 2023/11/30 17:09:31 by misidori         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	ft_sort_list(t_node **head)
 	}
 }
 
-void	ft_print_list(t_list_var_env *list)
+void	ft_print_list_export(t_list_var_env *list)
 {
 	t_node	*current;
 
@@ -79,7 +79,8 @@ void	ft_print_list(t_list_var_env *list)
 	{
 		if (current->value)
 		{
-			printf("declare -x %s=\"%s\"\n", current->name, current->value);
+			if (current->name[0] != '?')
+				printf("declare -x %s=\"%s\"\n", current->name, current->value);
 		}
 		else
 			printf("declare -x %s\n", current->name);

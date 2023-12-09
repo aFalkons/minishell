@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 03:43:42 by afalconi          #+#    #+#             */
-/*   Updated: 2023/11/29 20:59:13 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/12/01 19:20:20 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ int	ft_parser(t_shell_info *sh_info, struct s_minitree *tree_node)
 	if (ps_set_hdoc(sh_info->node, sh_info->node_h, sh_info) == 1)
 	{
 		sh_info->last_exit = 130;
-		return(1);
+		return (1);
 	}
-	return(0);
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: misidori <misidori@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 00:58:00 by matteo            #+#    #+#             */
-/*   Updated: 2023/11/29 13:50:58 by misidori         ###   ########.fr       */
+/*   Updated: 2023/11/30 17:14:19 by misidori         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,7 @@ void	ft_name_and_value_dont_exist_add_name(t_node *new_node, char *name)
 	char	*temp;
 
 	new_node->value = ft_strdup("\"\"");
-	new_node->full_info = ft_strjoin(name, "=");
-	temp = new_node->full_info;
+	temp = ft_strjoin(name, "=");
 	new_node->full_info = ft_strjoin(temp, "\"\"");
 	free(temp);
 }

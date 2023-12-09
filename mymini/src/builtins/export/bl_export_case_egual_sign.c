@@ -6,7 +6,7 @@
 /*   By: misidori <misidori@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 00:06:35 by misidori          #+#    #+#             */
-/*   Updated: 2023/11/29 15:01:56 by misidori         ###   ########.fr       */
+/*   Updated: 2023/11/29 22:26:27 by misidori         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ int	ft_init_exp_var(t_export_var *exp_var, char *arg,
 	else
 		exp_var->name = ft_substr(arg, 0, exp_var->index_egual_sign);
 	exp_var->return_value = 1;
+	if (exp_var->name[0] == '?' && !exp_var->name[1])
+		return (exp_var->return_value);
 	if (ft_check_name(exp_var, arg) == -1)
 	{
 		free(exp_var->name);

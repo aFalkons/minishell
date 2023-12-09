@@ -6,13 +6,13 @@
 /*   By: misidori <misidori@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 17:13:39 by misidori          #+#    #+#             */
-/*   Updated: 2023/11/27 23:48:34 by misidori         ###   ########.fr       */
+/*   Updated: 2023/11/30 12:10:12 by misidori         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	bl_echo(char **split, int argc)
+void	bl_echo(char **arr_cmd_arg, int argc)
 {
 	bool	only_n;
 	int		i;
@@ -21,31 +21,31 @@ void	bl_echo(char **split, int argc)
 	only_n = true;
 	i = 0;
 	j = 1;
-	while (split[++i])
-		ft_echo_check_quotes(split[i]);
+	while (arr_cmd_arg[++i])
+		ft_echo_check_quotes(arr_cmd_arg[i]);
 	if (argc == 1)
 		write(1, "\n", 1);
 	else
 	{
-		while (split[1][j])
+		while (arr_cmd_arg[1][j])
 		{
-			if (split[1][j] != 'n')
+			if (arr_cmd_arg[1][j] != 'n')
 			{
 				only_n = false;
 				break ;
 			}
 			j++;
 		}
-		ft_echo(split, only_n);
+		ft_echo(arr_cmd_arg, only_n);
 	}
 }
 
-void	ft_echo(char **split, bool only_n)
+void	ft_echo(char **arr_cmd_arg, bool only_n)
 {
-	if (ft_strncmp(split[1], "-n", 2) == 0 && only_n == true)
-		ft_echo_n_option(split);
+	if (ft_strncmp(arr_cmd_arg[1], "-n", 2) == 0 && only_n == true)
+		ft_echo_n_option(arr_cmd_arg);
 	else
-		ft_echo_no_options(split);
+		ft_echo_no_options(arr_cmd_arg);
 }
 
 void	ft_echo_check_quotes(char *arg)
@@ -69,42 +69,42 @@ void	ft_echo_check_quotes(char *arg)
 		ft_remove_char_in_str(arg, '\'');
 }
 
-int	ft_echo_n_option(char **split)
+int	ft_echo_n_option(char **arr_cmd_arg)
 {
 	int	i;
 
 	i = 1;
-	while (split[i + 1])
+	while (arr_cmd_arg[i + 1])
 	{
-		if (split[i + 2] != NULL)
+		if (arr_cmd_arg[i + 2] != NULL)
 		{
-			printf("%s ", split[i + 1]);
+			printf("%s ", arr_cmd_arg[i + 1]);
 			i++;
 		}
 		else
 		{
-			printf("%s", split[i + 1]);
+			printf("%s", arr_cmd_arg[i + 1]);
 			break ;
 		}
 	}
 	return (0);
 }
 
-int	ft_echo_no_options(char **split)
+int	ft_echo_no_options(char **arr_cmd_arg)
 {
 	int	i;
 
 	i = 1;
-	while (split[i])
+	while (arr_cmd_arg[i])
 	{
-		if (split[i + 1] != NULL)
+		if (arr_cmd_arg[i + 1] != NULL)
 		{
-			printf("%s ", split[i]);
+			printf("%s ", arr_cmd_arg[i]);
 			i++;
 		}
 		else
 		{
-			printf("%s\n", split[i]);
+			printf("%s\n", arr_cmd_arg[i]);
 			break ;
 		}
 	}

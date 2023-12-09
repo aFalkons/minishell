@@ -3,49 +3,60 @@
 /*                                                        :::      ::::::::   */
 /*   bl_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: misidori <misidori@student.42.fr>          +#+  +:+       +#+        */
+/*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 12:17:08 by matteo            #+#    #+#             */
-/*   Updated: 2023/11/29 15:00:22 by misidori         ###   ########.fr       */
+/*   Updated: 2023/12/01 21:44:40 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	bl_export(t_shell_info *sh_info, char **env, int argc, char **split)
+int	bl_export(t_shell_info *sh_info, char **env, int argc, char **arr_cmd_arg)
 {
 	t_export_var	exp_var;
 
 	exp_var.i = 0;
 	exp_var.return_value = 1;
 	if (argc == 1)
-		return (ft_export(sh_info));
-	if (ft_check_exclamation_mark(split) == -1)
-		return (-1);
-	while (split[++exp_var.i])
 	{
-		exp_var.index_egual_sign = ft_find_char_index_str(split[exp_var.i],
-				'=');
-		if (exp_var.index_egual_sign > -1)
-		{
-			if (ft_egual_sign_exists(sh_info, env, split[exp_var.i],
-					exp_var.index_egual_sign) == -1)
-				exp_var.return_value = -1;
-		}
-		else
-		{
-			if (ft_add_arg_without_egual_sign(sh_info, split[exp_var.i]) == -1)
-				exp_var.return_value = -1;
-		}
+		ft_export_without_args(sh_info);
+		return (1);
+	}
+	if (ft_check_exclamation_mark(arr_cmd_arg) == -1)
+		return (-1);
+	while (arr_cmd_arg[++exp_var.i])
+	{
+		if (ft_export_with_args(sh_info, env, arr_cmd_arg, &exp_var) == -1)
+			return (exp_var.return_value);
 	}
 	return (exp_var.return_value);
 }
 
-int	ft_export(t_shell_info *sh_info)
+void	ft_export_without_args(t_shell_info *sh_info)
 {
 	ft_sort_list(&sh_info->var->head);
-	ft_print_list(sh_info->var);
-	return (1);
+	ft_print_list_export(sh_info->var);
+}
+
+int	ft_export_with_args(t_shell_info *sh_info, char **env,
+	char **arr_cmd_arg, t_export_var *exp_var)
+{
+	exp_var->index_egual_sign = ft_find_char_index_str(arr_cmd_arg[exp_var->i],
+			'=');
+	if (exp_var->index_egual_sign > -1)
+	{
+		if (ft_egual_sign_exists(sh_info, env, arr_cmd_arg[exp_var->i],
+				exp_var->index_egual_sign) == -1)
+			exp_var->return_value = -1;
+	}
+	else
+	{
+		if (ft_add_arg_without_egual_sign(sh_info,
+				arr_cmd_arg[exp_var->i]) == -1)
+			exp_var->return_value = -1;
+	}
+	return (exp_var->return_value);
 }
 
 int	ft_egual_sign_exists(t_shell_info *sh_info, char **env, char *arg,

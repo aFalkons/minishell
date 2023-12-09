@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 12:07:42 by afalconi          #+#    #+#             */
-/*   Updated: 2023/11/29 20:43:38 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/12/01 21:26:27 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,12 @@ void	handler_sig(int sig)
 			rl_redisplay();
 			g_for_sig = 3;
 		}
-		else if (g_for_sig == 4)
-		{
-			g_for_sig = 3;
-		}
+	}
+	else if (sig == SIGQUIT)
+	{
+		printf("\r");
+		rl_on_new_line();
+		rl_redisplay();
 	}
 }
 
@@ -63,6 +65,11 @@ static t_list_var_env	*ft_fill_the_list_with_env(char **env,
 
 static void	ft_init_var_newcmd2(t_shell_info *sh_info)
 {
+	char	*tmp;
+	int		i;
+	int		sh_level;
+
+	i = -1;
 	sh_info->is_emty = 0;
 	sh_info->stdin_flag = 0;
 	sh_info->stdout_flag = 0;
@@ -70,6 +77,19 @@ static void	ft_init_var_newcmd2(t_shell_info *sh_info)
 	sh_info->pid = 2;
 	sh_info->sub_level = 1;
 	sh_info->pipe_flag = 0;
+	while (sh_info->env[++i])
+	{
+		if (ft_cmp_len_and_str(sh_info->env[i], "SHLVL=", 6) == 1)
+			break ;
+	}
+	tmp = ft_strndup(sh_info->env[i], 6, ft_strlen(sh_info->env[i]));
+	sh_level = ft_atoi(tmp);
+	free(tmp);
+	free(sh_info->env[i]);
+	sh_level ++;
+	tmp = ft_itoa(sh_level);
+	sh_info->env[i] = ft_strjoin("SHLVL=", tmp);
+	free(tmp);
 }
 
 //inizializzazione delle variabili d'ambiente
@@ -97,6 +117,7 @@ void	ft_init_variables(char **env, t_shell_info *sh_info)
 	sh_info->var->head = ft_get_list_head(sh_info->var);
 	sh_info->var->tail = ft_get_list_tail(sh_info->var);
 	ft_init_var_newcmd2(sh_info);
+	ft_add_last_exit_to_array(sh_info);
 }
 
 void	ft_init_var_newcmd(t_shell_info *sh_info, char **env)

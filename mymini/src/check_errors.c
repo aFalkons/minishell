@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 03:16:57 by afalconi          #+#    #+#             */
-/*   Updated: 2023/11/30 13:19:38 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/12/01 19:23:45 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,14 @@ static void	error_messag(t_minitree *node)
 	char	*str;
 
 	str = NULL;
-	if (node->token->token == ARG && bl_is_builtins(node->token->next->str) == 0)
+	if (node->token->token == ARG
+		&& bl_is_builtins(node->token->next->str) == 0)
 	{
-		str = ft_strjoin("Error: comand not found --",
-				node->token->next->str);
+		str = ft_strjoin(node->token->next->str, ": command not found");
 	}
 	else if (node->token->token == CMD && bl_is_builtins(node->token->str) == 0)
 	{
-		str = ft_strjoin("Error: comand not found --",
-				node->token->str);
+		str = ft_strjoin(node->token->str, ": command not found");
 	}
 	ft_print_message(str, 2);
 	free(str);
@@ -33,8 +32,8 @@ static void	error_messag(t_minitree *node)
 
 void	ck_tree_error(t_minitree *node)
 {
-	char	*str;
 	struct s_list_redirection	*redire;
+	char						*str;
 
 	str = NULL;
 	redire = NULL;
@@ -43,7 +42,7 @@ void	ck_tree_error(t_minitree *node)
 		error_messag(node);
 	}
 	redire = node->redire;
-	while(redire && redire->fd_copy != 42)
+	while (redire && redire->fd_copy != 42)
 		redire = redire->next;
 	if (node->exit_status == 1 && redire != NULL && redire->token == INP)
 	{

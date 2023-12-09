@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 12:22:15 by afalconi          #+#    #+#             */
-/*   Updated: 2023/11/30 12:59:24 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/12/01 19:22:21 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static void	ps_hdoc_insert(t_list_redirection *hdoc, int *fd)
 	{
 		str = readline("> ");
 		if (!str || ((ft_strncmp(str, hdoc->file, ft_strlen(hdoc->file)) == 0)
-			&& ft_strlen(hdoc->file) == ft_strlen(str)))
+				&& ft_strlen(hdoc->file) == ft_strlen(str)))
 			break ;
 		write(fd[1], str, ft_strlen(str));
 		write(fd[1], "\n", 1);
@@ -104,8 +104,6 @@ int	ps_handler_hdoc(t_list_redirection *hdoc, t_shell_info *sh_info)
 	(void)sh_info;
 	if (pipe(fd) == -1)
 		return (-1);
-	ft_for_debug(hdoc->file);
-	ft_for_debug("\n");
 	pid = fork();
 	if (pid == 0)
 	{
@@ -122,12 +120,13 @@ int	ps_handler_hdoc(t_list_redirection *hdoc, t_shell_info *sh_info)
 	if (g_for_sig == 3)
 	{
 		g_for_sig = 4;
-		return(1);
+		return (1);
 	}
 	return (0);
 }
 
-void	ps_ck_hdoc_input(t_list_redirection *hdoc, t_shell_info *sh_info, int *h_error)
+void	ps_ck_hdoc_input(t_list_redirection *hdoc,
+	t_shell_info *sh_info, int *h_error)
 {
 	if (hdoc->next)
 		ps_ck_hdoc_input(hdoc->next, sh_info, h_error);
@@ -147,7 +146,7 @@ int	ps_set_hdoc(t_minitree *node
 	if (node->subsh)
 		h_error = ps_set_hdoc(node->subsh, sh_info->node_h, sh_info);
 	if (h_error == 1)
-		return(1);
+		return (1);
 	if (node->redire)
 		ps_ck_hdoc_input(node->redire, sh_info, &h_error);
 	return (0);

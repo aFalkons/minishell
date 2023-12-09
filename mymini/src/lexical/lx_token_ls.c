@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lx_token_ls.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: misidori <misidori@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 16:54:47 by afalconi          #+#    #+#             */
-/*   Updated: 2023/11/30 14:52:28 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/11/30 16:21:39 by misidori         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,9 +124,7 @@ void	lx_list_token(t_shell_info *sh_info)
 			lx_insert_cmd_arg(sh_info, &i);
 	}
 	sh_info->lx_ls_token = sh_info->lx_ls_token_h;
-	print_list(sh_info->lx_ls_token);
 	ft_expansion(sh_info, sh_info->lx_ls_token_h);
-	print_list(sh_info->lx_ls_token);
 	lx_set_redirection(sh_info->lx_ls_token_h);
 	lx_ck_list_token(sh_info);
 }

@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 13:09:57 by afalconi          #+#    #+#             */
-/*   Updated: 2023/11/29 17:08:52 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/12/01 21:59:08 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ typedef struct s_expansion
 	char	*value_var;
 	char	*temp_str;
 	int		index_dollar_sign;
-	int 	len_new_value;
+	int		len_new_value;
 	int		n_dollar_sign;
 	int		i;
 	int		k;
@@ -98,7 +98,7 @@ typedef struct s_minitree
 {
 	int							flag_pipe;
 	struct s_lx_list_token		*token;
-	int8_t						exit_status;
+	int							exit_status;
 	int8_t						dont_say_that;
 	int							*fd_file;
 	struct s_list_redirection	*redire;

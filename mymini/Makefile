@@ -6,65 +6,101 @@
 #    By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/16 23:09:28 by afalconi          #+#    #+#              #
-#    Updated: 2023/11/29 17:20:22 by afalconi         ###   ########.fr        #
+#    Updated: 2023/12/01 23:23:25 by afalconi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = minishell
-LIBFT = ./include/libft
-LIB_L = $(LIBFT)/bin/libft.a
-LIBS = $(LIB_L)
-SRCS =	minishell.c src/check_errors.c src/setup.c src/lexical/lx_init.c \
-		src/lexical/lx_token_ls.c src/lexical/lx_create_insert_list.c src/destroy_ls.c\
-		src/lexical/lx_list_CMD_ARG.c src/lexical/lx_ck_list_token.c \
-		src/parser/ps_init.c src/executor/ex_init.c src/executor/ex_cmd.c \
-		src/executor/ex_ck_cmd.c src/executor/ex_out_app.c src/executor/ex_real_cmd.c src/ping.c\
-		src/parser/ps_redirection_setup.c src/executor/ex_ck_redirection.c src/executor/ex_inp_hdoc.c \
-		src/lexical/lx_set_redirection.c src/executor/ex_or.c\
-		src/executor/ex_pipe.c src/parser/ps_handler_HDOC.c src/parser/ps_pipe_setup.c\
-				\
-		src/builtins/cd/bl_cd.c src/builtins/cd/bl_cd_utils.c \
-		src/builtins/echo/bl_echo.c \
-		src/builtins/env/bl_env.c \
-		src/builtins/exit/bl_exit.c \
-		src/builtins/export/bl_export_add_node.c \
-		src/builtins/export/bl_export_case_egual_sign.c \
-		src/builtins/export/bl_export_update_node.c \
-		src/builtins/export/bl_export_utils_array.c \
-		src/builtins/export/bl_export_utils_list_1.c \
-		src/builtins/export/bl_export_utils_list_2.c \
-		src/builtins/export/bl_export_utils.c src/builtins/export/bl_export.c \
-		src/builtins/pwd/bl_pwd.c \
-		src/builtins/unset/bl_unset.c src/builtins/unset/bl_unset_utils.c \
-		src/builtins/bl_ls.c \
-		src/builtins/ft_free_array.c \
-		\
-		src/expansion/expansion.c src/expansion/expansion_utils.c \
-		src/expansion/expansion_cases.c src/expansion/expansion_replace.c\
-		\
-		src/wildcard/wildcard.c src/wildcard/wildcard_utils.c
+NAME		= bin/minishell
+LIBFT		= ./include/libft
+LIB_L		= $(LIBFT)/bin/libft.a
+LIBS		= $(LIB_L)
+BUILTINS	= ./src/builtins
+EXECUTOR	= ./src/executor
+EXPANSION	= ./src/expansion
+LEXICAL		= ./src/lexical
+PARSER		= ./src/parser
+WILDCARD	= ./src/wildcard
 
-OBJS = $(SRCS:.c=.o)
-CC = gcc
-CFLAGS = -g -Wall -Wextra -Werror -Iinclude
+SRCS =	minishell.c \
+		src/check_errors.c \
+		src/setup.c \
+		src/destroy_ls.c \
+		\
+		$(LEXICAL)/lx_set_redirection.c $(LEXICAL)/lx_list_CMD_ARG.c \
+		$(LEXICAL)/lx_ck_list_token.c $(LEXICAL)/lx_init.c \
+		$(LEXICAL)/lx_token_ls.c $(LEXICAL)/lx_create_insert_list.c \
+		\
+		$(PARSER)/ps_pipe_setup.c $(PARSER)/ps_handler_HDOC.c \
+		$(PARSER)/ps_init.c $(PARSER)/ps_redirection_setup.c \
+		\
+		$(EXECUTOR)/ex_init.c $(EXECUTOR)/ex_cmd.c\
+		$(EXECUTOR)/ex_ck_redirection.c $(EXECUTOR)/ex_inp_hdoc.c \
+		$(EXECUTOR)/ex_real_cmd.c src/ping.c $(EXECUTOR)/ex_pipe.c \
+		$(EXECUTOR)/ex_ck_cmd.c $(EXECUTOR)/ex_out_app.c \
+		\
+		$(BUILTINS)/cd/bl_cd.c $(BUILTINS)/cd/bl_cd_utils.c \
+		$(BUILTINS)/echo/bl_echo.c $(BUILTINS)/env/bl_env.c \
+		$(BUILTINS)/exit/bl_exit.c $(BUILTINS)/pwd/bl_pwd.c \
+		$(BUILTINS)/export/bl_export_add_node.c \
+		$(BUILTINS)/export/bl_export_case_egual_sign.c \
+		$(BUILTINS)/export/bl_export_update_node.c \
+		$(BUILTINS)/export/bl_export_utils_array.c \
+		$(BUILTINS)/export/bl_export_utils_list_1.c \
+		$(BUILTINS)/export/bl_export_utils_list_2.c \
+		$(BUILTINS)/export/bl_export_utils.c $(BUILTINS)/export/bl_export.c \
+		$(BUILTINS)/unset/bl_unset.c $(BUILTINS)/unset/bl_unset_utils.c \
+		\
+		$(EXPANSION)/expansion.c $(EXPANSION)/expansion_utils.c \
+		$(EXPANSION)/expansion_cases.c $(EXPANSION)/expansion_replace.c \
+		$(EXPANSION)/question_mark/ft_add_last_exit_to_array.c \
+		\
+		$(WILDCARD)/wildcard.c $(WILDCARD)/wildcard_utils.c \
+
+OBJS		=	$(addprefix obj/, $(notdir $(SRCS:.c=.o)))
+VPATH		=	$(sort $(dir $(SRCS)))
+CC			=	gcc
+CFLAGS		=	-g -Wall -Wextra -Werror -Iinclude
+BIN_DIR		=	bin
+
+
+RED			=	\033[0;31m
+YELLOW		=	\033[93m
+ORANGE		=	\033[38;5;208m
+GREEN		=	\033[32m
+RESET		=	\033[0m
 
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	@mkdir -p obj
-	@mkdir -p bin
+	@echo .
+	@echo "$(YELLOW)compiling...$(RESET)"
 	@make -s -C $(LIBFT)
+	@echo .
+	@echo "$(YELLOW)compiling...$(RESET)"
+	@if [ ! -d $(BIN_DIR) ]; then mkdir -p $(BIN_DIR); fi
 	@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(LIBS) -lncurses -lreadline -L /Users/$(USER)/.brew/opt/readline/lib -I /Users/$(USER)/.brew/opt/readline/include
-	@mv $(OBJS) ./obj
-	@mv $(NAME) ./bin
+	@echo .
+	@echo "$(YELLOW)compiling...$(RESET)"
+	@echo .
+	@echo "$(GREEN)minishell is ready$(RESET)"
+
+obj/%.o: %.c
+	@mkdir -p obj
+	@$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
+	@echo "."
 	@make clean -s -C $(LIBFT)
 	@rm -rf obj
+	@sleep 0.5
+	@echo "$(RED)the object files have been removed$(RESET)"
 
 fclean: clean
+	@echo "."
 	@make fclean -s -C $(LIBFT)
 	@rm -rf bin
+	@sleep 0.5
+	@echo "$(ORANGE)the executable has been removed$(RESET)"
 
 re: fclean all
 	@make re -s -C $(LIBFT)

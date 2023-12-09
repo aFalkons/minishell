@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 23:16:57 by afalconi          #+#    #+#             */
-/*   Updated: 2023/11/29 20:29:01 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/12/09 20:45:36 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,15 @@
 # include "./libraries.h"
 # include "./structures.h"
 
-# define AND	0b01000001
-# define OR		0b01000010
+# define AND	1
+# define OR		2
 # define PIPE	'|'
-# define CMD	0b01000011
-# define ARG	0b01000100
+# define CMD	3
+# define ARG	4
 # define INP	'<'
-# define HDOC	0b01000101
+# define HDOC	5
 # define OUT	'>'
-# define APP	0b01000110
+# define APP	6
 # define OP_S	'('
 # define CL_S	')'
 
@@ -48,7 +48,6 @@ void				lx_check_quotes(t_shell_info *sh_info, int *i);
 void				lx_free_ls(t_shell_info *sh_info, int flag);
 void				lx_skip_space(t_shell_info *sh_info, int *i);
 void				lx_ck_list_token(t_shell_info *sh_info);
-void				lx_remove_usleschar(t_lx_list_token *token);
 void				lx_insert_inp_hdoc(t_shell_info *sh_info, int *i);
 void				lx_insert_out_app(t_shell_info *sh_info, int *i);
 void				lx_set_redirection(struct s_lx_list_token *token_list);
@@ -106,35 +105,36 @@ int					ft_cd_check_quotes(char *arg);
 int					ft_remove_quotes(char *arg, int n_single_quote,
 						int n_double_quotes, int index_double_quotes);
 char				*ft_get_home(char **env);
-int					ft_change_folder(char *new_folder, char **split);
+int					ft_change_folder(char *new_folder, char **arr_cmd_arg);
 
 /*	BL_CD.C	*/
 
-int					bl_cd(t_shell_info *sh_info, char **env, char **split);
+int					bl_cd(t_shell_info *sh_info,
+						char **env, char **arr_cmd_arg);
 void				ft_set_pwd_and_oldpwd(t_shell_info *sh_info, char **env,
 						char *current_directory);
 void				ft_set_pwd(t_shell_info *sh_info, char **env,
 						char *new_directory);
 void				ft_set_oldpwd(t_shell_info *sh_info, char **env,
-					char *old_directory);
-
+						char *old_directory);
 
 /*	BL_ECHO.C	*/
 
-void				bl_echo(char **split, int argc);
-void				ft_echo(char **split, bool only_n);
+void				bl_echo(char **arr_cmd_arg, int argc);
+void				ft_echo(char **arr_cmd_arg, bool only_n);
 void				ft_echo_check_quotes(char *arg);
-int					ft_echo_n_option(char **split);
-int					ft_echo_no_options(char **split);
+int					ft_echo_n_option(char **arr_cmd_arg);
+int					ft_echo_no_options(char **arr_cmd_arg);
 
 /*	BL_ENV.C	*/
 
-int					bl_env(char **env, int argc, char **split);
+int					bl_env(char **env, int argc, char **arr_cmd_arg);
 
 /*	BL_EXIT.C	*/
 
-int					bl_exit(t_shell_info *sh_info, char **split, int argc, int stat);
-void				ft_check_exit_error(char **split);
+int					bl_exit(t_shell_info *sh_info,
+						char **arr_cmd_arg, int argc, int stat);
+void				ft_check_exit_error(char **arr_cmd_arg);
 
 /*	BL_EXPORT_ADD_NODE.c	*/
 
@@ -187,11 +187,11 @@ t_node				*ft_get_list_head(t_list_var_env *var);
 t_node				*ft_get_list_tail(t_list_var_env *var);
 void				ft_swap_nodes(t_node *a, t_node *b);
 void				ft_sort_list(t_node **head);
-void				ft_print_list(t_list_var_env *list);
+void				ft_print_list_export(t_list_var_env *list);
 
 /*	BL_EXPORT_UTILS.C	*/
 
-int					ft_check_exclamation_mark(char **split);
+int					ft_check_exclamation_mark(char **arr_cmd_arg);
 int					ft_check_if_variable_name_exists(t_shell_info *sh_info,
 						char *name);
 bool				ft_check_name_is_correct(char *name);
@@ -200,8 +200,10 @@ int					ft_check_name(t_export_var *exp_var, char *arg);
 /*	BL_EXPORT.C	*/
 
 int					bl_export(t_shell_info *sh_info,
-						char **env, int argc, char **split);
-int					ft_export(t_shell_info *sh_info);
+						char **env, int argc, char **arr_cmd_arg);
+void				ft_export_without_args(t_shell_info *sh_info);
+int					ft_export_with_args(t_shell_info *sh_info, char **env,
+						char **arr_cmd_arg, t_export_var *exp_var);
 int					ft_egual_sign_exists(t_shell_info *sh_info,
 						char **env, char *arg, int index_egual_sign);
 int					ft_arg_has_egual_sign(t_shell_info *sh_info,
@@ -223,11 +225,12 @@ void				ft_free_node(t_node *node);
 
 /*	BL_UNSET.C	*/
 
-int					bl_unset(char **env, char **split,
-						t_shell_info *sh_info, int argc);
-int					ft_unset(t_shell_info *sh_info, char **split,
-						char **env, int i);
-int					ft_remove_string_from_array(char **env, char *name);
+int					bl_unset(t_shell_info *sh_info,
+						char **arr_cmd_arg, int argc);
+int					ft_unset(t_shell_info *sh_info,
+						char **arr_cmd_arg, int i);
+int					ft_remove_string_from_array(t_shell_info *sh_info,
+						char *name);
 void				ft_remove_node_from_list(t_list_var_env *env, char *name);
 
 /*	CHECK_ERRORS.C	*/
@@ -248,13 +251,15 @@ void				ft_free_array(char **array);
 int					ft_expansion(t_shell_info *sh_info, t_lx_list_token *token);
 char				**ft_get_sub_str(char *str);
 char				*ft_check_type_quotes(t_shell_info *sh_info, char *str);
-void				ft_expand_dollar_in_input_str(char **sub_strs, t_lx_list_token *token);
+void				ft_expand_dollar_in_input_str(char **sub_strs,
+						t_lx_list_token *token);
 
 /*	EXPANSIONS_CASES.C	*/
 
-void				ft_init_dollar_var(t_expansion *exp, char *sub_str);
-char				*ft_dollar_sign_without_quotes(t_shell_info *sh_info, char *sub_str);
-char				*ft_work_on_double_quotes(t_shell_info *sh_info, char *sub_str);
+char				*ft_dollar_sign_without_quotes(t_shell_info *sh_info,
+						char *sub_str);
+char				*ft_work_on_double_quotes(t_shell_info *sh_info,
+						char *sub_str);
 char				*ft_work_on_all_quotes(t_shell_info *sh_info, char *str);
 
 /*	EXPANSION_UTILS.C	*/
@@ -262,28 +267,31 @@ char				*ft_work_on_all_quotes(t_shell_info *sh_info, char *str);
 char				*ft_make_sub_str_with_quotes(char *str, int *i);
 char				*ft_make_sub_str_without_quotes(char *str, int *i);
 char				*dl_dollar_expander(char **env, char *name);
-char				*ft_replace_substring(char *str, char *sub_str, char *replace_str);
+char				*ft_replace_substring(char *str,
+						char *sub_str, char *replace_str);
 
 /*	EXPANSION_REPLACE.C	*/
 
 void				ft_free_exp_variables(t_expansion	*exp);
-char				*ft_replace_dollar_with_value(t_shell_info *sh_info, char *sub_str,
-						t_expansion *exp, int k);
-
+char				*ft_replace_dollar_with_value(t_shell_info *sh_info,
+						char *sub_str, t_expansion *exp, int k);
 
 /*	WILDCARD.C	*/
 
 char				**wc_wildcard(char **arr_cmd_arg);
 void				ft_init_wildcard_var(t_wildcard *star, char **arr_cmd_arg);
-void				ft_static_free_var_not_return(t_wildcard *star, char **arr_cmd_arg);
 char				**ft_get_list_files(t_program *program);
 void				ft_sort_array_ascend_order(char **arr, int size);
 
 /*	WILDCARD_UTILS.C	*/
 
-void				ft_check_match_and_replace(t_wildcard *star, char **arr_cmd_arg);
+void				ft_check_match_and_replace(t_wildcard *star,
+						char **arr_cmd_arg);
 int					ft_skip_invisible_files(char **list_of_files, int j);
-int					ft_find_match(t_index_match	*ind, char *name_in_folder, char *input_str);
+int					ft_find_match(t_index_match	*ind,
+						char *name_in_folder, char *input_str);
 bool				ft_is_match(char *name_in_folder, char *input_str);
+
+void				ft_add_last_exit_to_array(t_shell_info *sh_info);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 15:34:02 by misidori          #+#    #+#             */
-/*   Updated: 2023/11/29 19:13:52 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/12/01 19:20:05 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,7 @@ void	ft_add_element_to_array(t_shell_info *sh_info, char *name, char *value)
 	int		i;
 
 	env_count = ft_get_size_array(sh_info->env);
-	new_array = (char **) ft_calloc((ft_get_size_array(sh_info->env) + 2)
-			* sizeof(char *), 1);
+	new_array = (char **) ft_calloc(sizeof(char *), env_count + 2);
 	if (!new_array)
 		return ;
 	i = -1;
@@ -31,7 +30,7 @@ void	ft_add_element_to_array(t_shell_info *sh_info, char *name, char *value)
 	if (value != NULL || (ft_strcmp(value, "") != 0))
 	{
 		temp = ft_strjoin(name, "=");
-		new_array[env_count] = NULL;
+		free(new_array[env_count]);
 		new_array[env_count] = ft_strjoin(temp, value);
 		free(temp);
 	}
@@ -70,11 +69,7 @@ void	ft_edit_value_in_array(char **env, char *name, char *value)
 	i = ft_index_name_in_env(env, name);
 	if (i != -1)
 	{
-		free(env[i]);
-		temp = ft_strdup(name);
-		env[i] = ft_strjoin(temp, "=");
-		free(temp);
-		temp = ft_strdup(env[i]);
+		temp = ft_strjoin(name, "=");
 		free(env[i]);
 		env[i] = ft_strjoin(temp, value);
 		free(temp);

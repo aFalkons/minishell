@@ -6,7 +6,7 @@
 /*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 23:56:26 by afalconi          #+#    #+#             */
-/*   Updated: 2023/11/29 17:16:03 by afalconi         ###   ########.fr       */
+/*   Updated: 2023/12/01 19:24:41 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ int		ft_find_char_index_str(char *str, char c);
 int		ft_find_char_array(char **array, char c);
 void	ft_swap_strings(char **a, char **b);
 char	**ft_add_string(char **array, int *size, const char *string);
-int 	ft_cmp_len_and_str(char *str1, char *str2, int len);
+int		ft_cmp_len_and_str(char *str1, char *str2, int len);
+char	*ft_itoa(int n);
+void	ft_free_array(char **array);
 
 #endif

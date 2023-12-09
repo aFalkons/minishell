@@ -3,21 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   expansion_cases.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: misidori <misidori@student.42.fr>          +#+  +:+       +#+        */
+/*   By: afalconi <afalconi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 15:53:42 by misidori          #+#    #+#             */
-/*   Updated: 2023/11/29 16:02:24 by misidori         ###   ########.fr       */
+/*   Updated: 2023/12/01 23:13:44 by afalconi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_init_dollar_var(t_expansion *exp, char *sub_str)
+static void	ft_init_dollar_var(t_expansion *exp, char *sub_str)
 {
 	exp->index_dollar_sign = ft_find_char_index_str(sub_str, '$');
 	exp->i = exp->index_dollar_sign;
 	exp->j = -1;
 	exp->n_dollar_sign = ft_count_char(sub_str, '$');
+}
+
+static void	ft_increase_exp_counters(t_expansion *exp)
+{
+	exp->i++;
+	exp->k++;
 }
 
 char	*ft_dollar_sign_without_quotes(t_shell_info *sh_info, char *sub_str)
@@ -30,11 +36,13 @@ char	*ft_dollar_sign_without_quotes(t_shell_info *sh_info, char *sub_str)
 	{
 		exp.k = 0;
 		exp.i++;
-		while (sub_str[exp.i] && ft_isalnum_char(sub_str[exp.i]) == true)
+		while (sub_str[exp.i] && ((ft_isalnum_char(sub_str[exp.i]) == true)
+				|| sub_str[exp.i] == '_'))
 		{
-			exp.i++;
-			exp.k++;
+			ft_increase_exp_counters(&exp);
 		}
+		if (sub_str[exp.index_dollar_sign + 1] == '?')
+			ft_increase_exp_counters(&exp);
 		temp = ft_strdup(sub_str);
 		free(sub_str);
 		sub_str = ft_replace_dollar_with_value(sh_info, temp, &exp, exp.k);
@@ -58,10 +66,9 @@ char	*ft_work_on_double_quotes(t_shell_info *sh_info, char *sub_str)
 		exp.i++;
 		while (sub_str[exp.i] && ft_isalnum_char(sub_str[exp.i]) == true
 			&& sub_str[exp.i] != '\"' && sub_str[exp.i] != '\'')
-		{
-			exp.i++;
-			exp.k++;
-		}
+			ft_increase_exp_counters(&exp);
+		if (sub_str[exp.index_dollar_sign + 1] == '?')
+			ft_increase_exp_counters(&exp);
 		temp = ft_strdup(sub_str);
 		free(sub_str);
 		sub_str = ft_replace_dollar_with_value(sh_info, temp, &exp, exp.k);

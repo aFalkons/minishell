@@ -6,18 +6,18 @@
 /*   By: misidori <misidori@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 17:13:01 by misidori          #+#    #+#             */
-/*   Updated: 2023/11/29 12:20:40 by misidori         ###   ########.fr       */
+/*   Updated: 2023/11/30 12:10:12 by misidori         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_cd_with_no_arg(char **env, char **split)
+int	ft_cd_with_no_arg(char **env, char **arr_cmd_arg)
 {
 	char	*home_dir;
 
 	home_dir = ft_get_home(env);
-	if (ft_change_folder(home_dir, split) != 1)
+	if (ft_change_folder(home_dir, arr_cmd_arg) != 1)
 	{
 		free(home_dir);
 		return (-1);
@@ -26,29 +26,29 @@ int	ft_cd_with_no_arg(char **env, char **split)
 	return (1);
 }
 
-int	bl_cd(t_shell_info *sh_info, char **env, char **split)
+int	bl_cd(t_shell_info *sh_info, char **env, char **arr_cmd_arg)
 {
 	char	current_directory[PATH_MAX];
 
 	if (getcwd(current_directory, PATH_MAX) == NULL)
 		return (-1);
-	if (ft_get_size_array(split) > 2)
+	if (ft_get_size_array(arr_cmd_arg) > 2)
 	{
 		printf("minishell: cd: too many arguments\n");
 		return (-1);
 	}
-	if (ft_cd_check_quotes(split[1]) == -1)
+	if (ft_cd_check_quotes(arr_cmd_arg[1]) == -1)
 	{
-		printf("minishell: %s: No such file or directory\n", split[1]);
+		printf("minishell: %s: No such file or directory\n", arr_cmd_arg[1]);
 		return (-1);
 	}
-	if (!split[1])
+	if (!arr_cmd_arg[1])
 	{
-		if (ft_cd_with_no_arg(env, split) != 1)
+		if (ft_cd_with_no_arg(env, arr_cmd_arg) != 1)
 			return (-1);
 	}
 	else
-		if (ft_change_folder(split[1], split) != 1)
+		if (ft_change_folder(arr_cmd_arg[1], arr_cmd_arg) != 1)
 			return (-1);
 	ft_set_pwd_and_oldpwd(sh_info, env, current_directory);
 	return (1);
